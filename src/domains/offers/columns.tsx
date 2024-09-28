@@ -1,5 +1,4 @@
 import { ColumnDef } from "@tanstack/react-table";
-import { jobOffersState } from './atoms';
 
 export type JobOffer = {
   id: string;
