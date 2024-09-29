@@ -24,7 +24,7 @@ import { jobOffersState } from "../offers/atoms"
 import { scenarioState } from "./atoms"
 import { CompanyValuation } from "./columns"
 import { JobOffer } from "../offers/columns"
-import { MetricSelect } from "./components/metric_select"
+import { MetricSelect } from "./components/metric-select"
 import { Metric } from "./types"
 
 type LineChartContainerProps = {

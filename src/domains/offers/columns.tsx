@@ -66,13 +66,14 @@ export const columns: ColumnDef<JobOffer>[] = [
     accessorKey: "strike_price",
     header: "Strike Price",
     cell: ({ row }) => {
-      const strikePrice = parseFloat(row.getValue("strike_price"))
+      const rawValue: string = row.getValue("strike_price")
+      const strikePrice = parseFloat(rawValue)
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
       }).format(strikePrice)
 
-      return <div className="text-right">{formatted}</div>
+      return <div className="text-right">{rawValue ? formatted : '-'}</div>
     },
   },
   {
@@ -91,8 +92,8 @@ export const columns: ColumnDef<JobOffer>[] = [
       const formatted = new Intl.NumberFormat("en-US", {
         style: "percent",
         minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      }).format(percentageOwnership / 100)
+        maximumFractionDigits: 4,
+      }).format(percentageOwnership)
 
       return <div className="text-right">{formatted}</div>
     },
@@ -101,12 +102,13 @@ export const columns: ColumnDef<JobOffer>[] = [
     accessorKey: "total_number_of_outstanding_shares",
     header: "Total Outstanding Shares",
     cell: ({ row }) => {
-      const totalShares = parseFloat(row.getValue("total_number_of_outstanding_shares"))
+      const rawValue: string = row.getValue("total_number_of_outstanding_shares")
+      const totalShares = parseFloat(rawValue)
       const formatted = new Intl.NumberFormat("en-US", {
         useGrouping: true,
       }).format(totalShares)
 
-      return <div className="text-right">{formatted}</div>
+      return <div className="text-right">{rawValue ? formatted : '-'}</div>
     },
   },
 ];

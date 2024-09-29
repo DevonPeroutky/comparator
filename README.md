@@ -5,7 +5,6 @@
 
 ## Offers Graph
 - [ ] Formalize calculations
-- [ ] Styling
 
 ## Dilution Schedule Table
 - [ ] Build out Dilution Table 
@@ -15,6 +14,7 @@
 - [ ] Build out comparison table
 
 ## Overview
+- [ ] Styling
 - [ ] Logo
 - [ ] Title
 - [ ] Production-ize
