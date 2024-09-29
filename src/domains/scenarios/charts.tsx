@@ -18,34 +18,14 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { ReactNode } from "react"
+import { ReactNode, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { jobOffersState } from "../offers/atoms"
-import { equityJourniesState, scenarioState } from "./atoms"
-import { EquityJourney, Outcome, CompanyValuation } from "./columns"
+import { scenarioState } from "./atoms"
+import { CompanyValuation } from "./columns"
 import { JobOffer } from "../offers/columns"
-
-export const description = "A line chart with a label"
-
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
-]
-
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
-  },
-} satisfies ChartConfig
+import { MetricSelect } from "./components/metric_select"
+import { Metric } from "./types"
 
 type LineChartContainerProps = {
   title: string
@@ -54,22 +34,31 @@ type LineChartContainerProps = {
 export const LineChartContainer = ({ title, description }: LineChartContainerProps) => {
   const offers = useRecoilValue(jobOffersState);
   const scenarios: CompanyValuation[] = useRecoilValue(scenarioState);
-  const equityJournies: EquityJourney[] = useRecoilValue(equityJourniesState);
+  const [selectedMetric, setSelectedMetric] = useState(Metric.TotalCompensation);
 
   // TODO: Implement this for all possible metrics
-  const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer): number => {
+  const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer, metric: Metric): number => {
     const percentage_ownership = offer.percentage_ownership || offer.number_of_shares / offer.total_number_of_outstanding_shares;
     const total_stock_package_value = percentage_ownership * scenario.valuation;
     const total_compensation_value = (offer.salary * offer.vesting_years) + total_stock_package_value;
 
-    return total_stock_package_value
+    switch (metric) {
+      case Metric.TotalCompensation:
+        return total_compensation_value;
+      case Metric.TotalEquityPackage:
+        return total_stock_package_value;
+      case Metric.AnnualCompensation:
+        return total_compensation_value / offer.vesting_years;
+      case Metric.AnnualEquityPackage:
+        return total_stock_package_value / offer.vesting_years
+    }
   }
 
   const buildOutcome = (scenario: CompanyValuation, offers: JobOffer[]) => {
     const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
 
     offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
-      outcome[offer.company_name] = calculateOutcome(scenario, offer)
+      outcome[offer.company_name] = calculateOutcome(scenario, offer, selectedMetric)
     });
 
     return outcome
@@ -85,10 +74,16 @@ export const LineChartContainer = ({ title, description }: LineChartContainerPro
   }, {} as ChartConfig);
 
 
+  console.log("Selected Metric: ", selectedMetric);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+          <div className="flex items-center justify-between">
+            <span>{title}</span>
+            <MetricSelect selectedMetric={selectedMetric} onMetricChange={setSelectedMetric} />
+          </div>
+        </CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="px-8">
