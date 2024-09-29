@@ -1,4 +1,10 @@
-import { ColumnDef } from "@tanstack/react-table";
+import { Input } from "@/components/ui/input";
+import { ColumnDef, Row } from "@tanstack/react-table";
+import { useState } from 'react';
+import { useRecoilState } from "recoil";
+import { jobOffersState } from "./atoms";
+import { displayNumber } from "./utils";
+import { Edit } from "lucide-react";
 
 export type JobOffer = {
   id: string;
@@ -12,11 +18,42 @@ export type JobOffer = {
   vesting_years: number;
 };
 
+const EditableCurrencyCell: React.FC<{ row: Row<JobOffer>, fieldName: string, fall_back?: string, options?: Intl.NumberFormatOptions }> = ({ row, fieldName, options, fall_back = '-' }) => {
+  const rawValue: string = row.getValue(fieldName)
+  const parsedNumber = displayNumber(rawValue, '-', options)
+  const [v, setV] = useState(parsedNumber)
+  const [jobOffers, setJobOffers] = useRecoilState(jobOffersState)
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setV(e.target.value)
+  }
+
+  const handleBlur = () => {
+    const updatedValue = parseFloat(v.replace(/[^0-9.-]+/g, ""))
+    console.log(updatedValue)
+    if (!isNaN(updatedValue)) {
+      const updatedJobOffers = jobOffers.map(offer =>
+        offer.id === row.original.id ? { ...offer, [fieldName]: updatedValue } : offer
+      )
+      setJobOffers(updatedJobOffers)
+    } else {
+      console.log("Invalid value, resetting")
+      const offer = jobOffers.find(offer => offer.id === row.original.id)
+      console.log(offer)
+      setV(new Intl.NumberFormat("en-US", options).format(offer?.salary))
+    }
+  }
+
+  return <input
+    className="text-right"
+    value={v}
+    onSubmit={handleBlur}
+    onChange={handleChange}
+    onBlur={handleBlur}
+  />
+}
+
 export const columns: ColumnDef<JobOffer>[] = [
-  // {
-  //   accessorKey: "id",
-  //   header: "ID",
-  // },
   {
     accessorKey: "company_name",
     header: "Company Name",
@@ -24,91 +61,57 @@ export const columns: ColumnDef<JobOffer>[] = [
   {
     accessorKey: "salary",
     header: "Salary",
-    cell: ({ row }) => {
-      const salary = parseFloat(row.getValue("salary"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(salary)
-
-      return <div className="text-right">{formatted}</div>
-    },
-
+    cell: ({ row }) => <EditableCurrencyCell fieldName="salary" row={row} options={{
+      style: "currency",
+      currency: "USD",
+    }} />
   },
   {
     accessorKey: "number_of_shares",
     header: "Number of Shares",
-    cell: ({ row }) => {
-      const shares = parseFloat(row.getValue("number_of_shares"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        useGrouping: true,
-        maximumFractionDigits: 0,
-      }).format(shares)
-
-      return <div className="text-right">{formatted}</div>
-    },
+    cell: ({ row }) => <EditableCurrencyCell fieldName="number_of_shares" row={row} options={{
+      useGrouping: true,
+      maximumFractionDigits: 0,
+    }} />
   },
   {
     accessorKey: "latest_company_valuation",
     header: "Latest Company Valuation",
-    cell: ({ row }) => {
-      const latest_company_valuation = parseFloat(row.getValue("latest_company_valuation"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        maximumFractionDigits: 0,
-      }).format(latest_company_valuation)
-
-      return <div className="text-right">{formatted}</div>
-    },
+    cell: ({ row }) => <EditableCurrencyCell fieldName="latest_company_valuation" row={row} options={{
+      style: "currency",
+      currency: "USD",
+      maximumFractionDigits: 0,
+    }} />
   },
   {
     accessorKey: "strike_price",
     header: "Strike Price",
-    cell: ({ row }) => {
-      const rawValue: string = row.getValue("strike_price")
-      const strikePrice = parseFloat(rawValue)
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(strikePrice)
-
-      return <div className="text-right">{rawValue ? formatted : '-'}</div>
-    },
+    cell: ({ row }) => <EditableCurrencyCell fieldName="strike_price" row={row} options={{
+      style: "currency",
+      currency: "USD",
+    }} />
   },
   {
     accessorKey: "vesting_years",
     header: "Vesting Years",
-    cell: ({ row }) => {
-      const vestingYears = parseFloat(row.getValue("vesting_years"))
-      return <div className="text-right">{vestingYears}</div>
-    },
+    cell: ({ row }) => <EditableCurrencyCell fieldName="vesting_years" row={row} options={{
+      useGrouping: true,
+    }} />
   },
   {
     accessorKey: "percentage_ownership",
     header: "Percentage Ownership",
-    cell: ({ row }) => {
-      const percentageOwnership = parseFloat(row.getValue("percentage_ownership"))
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "percent",
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 4,
-      }).format(percentageOwnership)
-
-      return <div className="text-right">{formatted}</div>
-    },
+    cell: ({ row }) => <EditableCurrencyCell fieldName="percentage_ownership" row={row} options={{
+      style: "percent",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 4,
+    }} />
   },
   {
     accessorKey: "total_number_of_outstanding_shares",
     header: "Total Outstanding Shares",
-    cell: ({ row }) => {
-      const rawValue: string = row.getValue("total_number_of_outstanding_shares")
-      const totalShares = parseFloat(rawValue)
-      const formatted = new Intl.NumberFormat("en-US", {
-        useGrouping: true,
-      }).format(totalShares)
-
-      return <div className="text-right">{rawValue ? formatted : '-'}</div>
-    },
+    cell: ({ row }) => <EditableCurrencyCell fieldName="total_number_of_outstanding_shares" row={row} options={{
+      useGrouping: true,
+    }} />
   },
 ];

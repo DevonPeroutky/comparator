@@ -5,6 +5,7 @@ import { JobOfferTable } from './domains/offers/components/job-offers-table';
 
 export default function App() {
   const offers = useRecoilValue(jobOffersState);
+  console.log("Offers", offers);
 
   return (
     <div>
