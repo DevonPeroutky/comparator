@@ -1,3 +1,4 @@
+import React, { useState } from "react"
 import {
   ColumnDef,
   flexRender,
@@ -23,10 +24,47 @@ export function DataTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
+  const [tableData, setTableData] = useState(data)
+
+  const defaultColumn: Partial<ColumnDef<TData, TValue>> = {
+    cell: ({ getValue, row: { index }, column: { id }, table }) => {
+      const initialValue = getValue()
+      const [value, setValue] = useState(initialValue)
+
+      const onBlur = () => {
+        table.options.meta?.updateData(index, id, value)
+      }
+
+      return (
+        <input
+          value={value as string}
+          onChange={(e) => setValue(e.target.value)}
+          onBlur={onBlur}
+        />
+      )
+    },
+  }
+
   const table = useReactTable({
-    data,
+    data: tableData,
     columns,
+    defaultColumn,
     getCoreRowModel: getCoreRowModel(),
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: unknown) => {
+        setTableData((old) =>
+          old.map((row, index) => {
+            if (index === rowIndex) {
+              return {
+                ...old[rowIndex],
+                [columnId]: value,
+              }
+            }
+            return row
+          })
+        )
+      },
+    },
   })
 
   return (
