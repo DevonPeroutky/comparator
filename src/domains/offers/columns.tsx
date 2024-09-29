@@ -4,10 +4,10 @@ export type JobOffer = {
   id: string;
   company_name: string;
   salary: number;
-  number_of_shares: number;
-  total_number_of_outstanding_shares: number;
-  percentage_ownership: number;
-  strike_price: number;
+  number_of_shares?: number;
+  total_number_of_outstanding_shares?: number;
+  percentage_ownership?: number;
+  strike_price?: number;
   latest_company_valuation: number;
   vesting_years: number;
 };
@@ -42,6 +42,7 @@ export const columns: ColumnDef<JobOffer>[] = [
       const shares = parseFloat(row.getValue("number_of_shares"))
       const formatted = new Intl.NumberFormat("en-US", {
         useGrouping: true,
+        maximumFractionDigits: 0,
       }).format(shares)
 
       return <div className="text-right">{formatted}</div>
@@ -55,6 +56,7 @@ export const columns: ColumnDef<JobOffer>[] = [
       const formatted = new Intl.NumberFormat("en-US", {
         style: "currency",
         currency: "USD",
+        maximumFractionDigits: 0,
       }).format(latest_company_valuation)
 
       return <div className="text-right">{formatted}</div>
