@@ -1,5 +1,3 @@
-"use client"
-
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
@@ -23,7 +21,6 @@ import { useRecoilValue } from "recoil"
 import { jobOffersState } from "../offers/atoms"
 import { scenarioState } from "./atoms"
 import { CompanyValuation } from "./columns"
-import { JobOffer } from "../offers/columns"
 import { MetricSelect } from "./components/metric-select"
 import { Metric } from "./types"
 import { buildOutcomeList } from "./utils"

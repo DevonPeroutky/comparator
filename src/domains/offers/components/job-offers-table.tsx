@@ -1,13 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { jobOffersState } from '../atoms';
 import { columns } from '../columns';
-import { AddOfferModal } from './add-offer-modal';
+import { AddOfferModal } from './add-offer-modal/add-offer-modal';
+import React from 'react';
 
 
 export const JobOfferTable = () => {
-  const offers = useRecoilValue(jobOffersState);
+  const [offers, setOffers] = useRecoilState(jobOffersState);
+
+  // Use this to force the DataTable to fully re-render
+  const [tableKey, setTableKey] = React.useState(0);
+
+  const resetTable = () => {
+    setTableKey((prev) => prev + 1)
+  }
+
   return (
     <Card className='h-fit'>
       <CardHeader>

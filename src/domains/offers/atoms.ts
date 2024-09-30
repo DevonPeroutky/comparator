@@ -1,6 +1,5 @@
-import { atom, GetRecoilValue, selector } from 'recoil';
-import { DerivedJobOffer, JobOffer } from './types';
-import { Outcome } from '../scenarios/columns';
+import { atom } from 'recoil';
+import { JobOffer } from './types';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
   {

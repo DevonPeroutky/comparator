@@ -12,11 +12,11 @@ export default function App() {
         Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank'>open-source</a>) way of comparing job offers and equity packages. All the data is stored 100% on client (nothing is sent to a server).
       </p>
       <div className="flex flex-col gap-y-4">
+        <JobOfferTable />
         <div className='w-full grid grid-cols-1 md:grid-cols-[1fr,minmax(0,500px)] gap-4'>
-          <JobOfferTable />
+          <LineChartContainer title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />
           <DilutionTable />
         </div>
-        <LineChartContainer title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />
         <ComparisonTable />
       </div>
     </div>

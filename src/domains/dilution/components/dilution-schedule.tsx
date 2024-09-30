@@ -19,7 +19,7 @@ export const DilutionTable = () => {
   }
 
   return (
-    <Card>
+    <Card className='h-fit'>
       <CardHeader>
         <CardTitle>
           <div className='flex items-center justify-between'>
