@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { JobOffer } from './columns';
+import { JobOffer } from './types';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
   {
@@ -10,7 +10,6 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     latest_company_valuation: 55000000,
     vesting_years: 5,
     strike_price: 0.5,
-    total_number_of_outstanding_shares: 36000000,
     percentage_ownership: .0025,
   },
   {
@@ -22,7 +21,6 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     vesting_years: 4,
     strike_price: 34.70,
     total_number_of_outstanding_shares: 2698775,
-    percentage_ownership: .00121,
   },
   {
     id: "11x",
@@ -51,3 +49,4 @@ export const jobOffersState = atom<JobOffer[]>({
   key: 'jobOffersState',
   default: TEST_JOB_OFFERS,
 });
+

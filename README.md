@@ -4,11 +4,11 @@
 - [ ] Add modal and validation
 
 ## Offers Graph
-- [ ] Formalize calculations
+- [ ] Formalize calculations w/dilution
 
 ## Dilution Schedule Table
-- [ ] Build out Dilution Table 
-- [ ] Centralize calculations
+- [x] Build out Dilution Table 
+- [x] Add button to reset
 
 ## Side-by-Side Comparison
 - [ ] Build out comparison table
@@ -18,3 +18,5 @@
 - [ ] Logo
 - [ ] Title
 - [ ] Production-ize
+
+## Sharing Feature

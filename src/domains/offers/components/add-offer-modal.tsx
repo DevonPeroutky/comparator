@@ -10,12 +10,13 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { CirclePlus } from "lucide-react"
 
 export function AddOfferModal() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Add Job Offer</Button>
+        <Button variant="outline"><CirclePlus className="mr-2 h-4 w-4" /> Add Job Offer</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

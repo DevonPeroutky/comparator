@@ -26,45 +26,18 @@ import { CompanyValuation } from "./columns"
 import { JobOffer } from "../offers/columns"
 import { MetricSelect } from "./components/metric-select"
 import { Metric } from "./types"
+import { buildOutcomeList } from "./utils"
 
 type LineChartContainerProps = {
   title: string
   description: ReactNode
 }
-export const LineChartContainer = ({ title, description }: LineChartContainerProps) => {
+export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, description }) => {
   const offers = useRecoilValue(jobOffersState);
   const scenarios: CompanyValuation[] = useRecoilValue(scenarioState);
   const [selectedMetric, setSelectedMetric] = useState(Metric.TotalCompensation);
 
-  // TODO: Implement this for all possible metrics
-  const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer, metric: Metric): number => {
-    const percentage_ownership = offer.percentage_ownership || offer.number_of_shares / offer.total_number_of_outstanding_shares;
-    const total_stock_package_value = percentage_ownership * scenario.valuation;
-    const total_compensation_value = (offer.salary * offer.vesting_years) + total_stock_package_value;
-
-    switch (metric) {
-      case Metric.TotalCompensation:
-        return total_compensation_value;
-      case Metric.TotalEquityPackage:
-        return total_stock_package_value;
-      case Metric.AnnualCompensation:
-        return total_compensation_value / offer.vesting_years;
-      case Metric.AnnualEquityPackage:
-        return total_stock_package_value / offer.vesting_years
-    }
-  }
-
-  const buildOutcome = (scenario: CompanyValuation, offers: JobOffer[]) => {
-    const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
-
-    offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
-      outcome[offer.company_name] = calculateOutcome(scenario, offer, selectedMetric)
-    });
-
-    return outcome
-  }
-
-  const chartData = scenarios.map(scenario => buildOutcome(scenario, offers))
+  const chartData = scenarios.map(scenario => buildOutcomeList(scenario, offers, selectedMetric))
   const chartConfig = offers.reduce((config, offer, idx) => {
     config[offer.company_name] = {
       label: offer.company_name,
@@ -73,8 +46,6 @@ export const LineChartContainer = ({ title, description }: LineChartContainerPro
     return config;
   }, {} as ChartConfig);
 
-
-  console.log("Selected Metric: ", selectedMetric);
   return (
     <Card>
       <CardHeader>
@@ -116,6 +87,7 @@ export const LineChartContainer = ({ title, description }: LineChartContainerPro
             {
               offers.map((offer, idx) => (
                 <Line
+                  key={offer.company_name}
                   dataKey={offer.company_name}
                   type="natural"
                   stroke={`hsl(var(--chart-${idx + 1}))`}
