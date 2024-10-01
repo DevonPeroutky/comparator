@@ -31,7 +31,7 @@ export const columns: ColumnDef<FundingRound>[] = [
   },
   {
     accessorKey: "dilution_amount",
-    header: "Funding Round",
+    header: "Dilution Amount",
     cell: ({ row }) => <EditableNumberCell fieldName="dilution_amount" row={row} options={{
       style: "percent",
       minimumFractionDigits: 2,

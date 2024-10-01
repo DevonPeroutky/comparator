@@ -63,32 +63,44 @@ const invoices = [
   },
 ]
 
-const buildRow = (offers: JobOffer[], row_key: string, row_label: string, options: Intl.NumberFormatOptions): ReactNode => {
-  const tableCells = offers.map(offer => <TableCell key={offer.id}>{displayNumber(offer[row_key as keyof JobOffer], '-', options)}</TableCell>)
+const buildRow = (offers: JobOffer[], row_label: string, options: Intl.NumberFormatOptions, derive_value?: (offer: JobOffer) => number, row_key?: string): ReactNode => {
+  if (!derive_value && !row_key) {
+    throw new Error("Either derive_value or row_key must be provided");
+  }
+
+  if (derive_value && row_key) {
+    throw new Error("Only one of derive_value or row_key can be provided");
+  }
+
+  const tableCells = (row_key) ? offers.map(offer => <TableCell key={offer.id}>{displayNumber(offer[row_key as keyof JobOffer], '-', options)}</TableCell>) : offers.map(offer => <TableCell key={offer.id}>{derive_value(offer)}</TableCell>)
+
 
   // Prepend the Row Label
-  tableCells.unshift(<TableCell key="blank" className="w-[100px] captialize">{row_label}</TableCell>)
-
+  tableCells.unshift(<TableCell key="blank" className="w-fit captialize">{row_label}</TableCell>)
 
   return tableCells
+}
+
+const dericeExerciseCost = (offer: JobOffer): string => {
+  if (!offer.strike_price || !offer.number_of_shares) return '-';
+  return new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", "currency": "USD" }).format(offer.number_of_shares * offer.strike_price)
 }
 
 export const ComparisonTable = () => {
   const jobOffers = useRecoilValue(jobOffersState);
   const dilution = useRecoilValue(dilutionRoundsState);
   const rows = [
-    { row_key: "latest_company_valuation", label: "Valuation", options: { style: "currency", currency: "USD", maximumFractionDigits: 0 } },
     { row_key: "salary", label: "Salary", options: { style: "currency", currency: "USD" } },
+    { row_key: "latest_company_valuation", label: "Current Valuation", options: { style: "currency", currency: "USD", maximumFractionDigits: 0 } },
     { row_key: "strike_price", label: "Strike Price", options: { style: "currency", currency: "USD" } },
-    { row_key: "total_number_of_outstanding_shares", label: "# of Outstanding Shares", options: { useGrouping: true, maximumFractionDigits: 0 } },
+    { derive_value: dericeExerciseCost, label: "Exercise Cost (w/out Tax)" },
+    { derive_value: (offer: JobOffer) => "-", label: "Fully Diluted Percentage" },
+    { derive_value: (offer: JobOffer) => "-", label: "Equity Package Value" },
   ];
   const tableHeaders = jobOffers.map(offer => <TableHead key={offer.id}>{offer.company_name}</TableHead>)
 
   // Prepend the tableHeaders with a blank Cell
-  tableHeaders.unshift(<TableHead key="blank" className="w-[100px]"></TableHead>)
-
-  console.log("jobOffers", jobOffers)
-
+  tableHeaders.unshift(<TableHead key="blank" className="w-[250px]"></TableHead>)
 
   return (
     <Card>
@@ -110,15 +122,15 @@ export const ComparisonTable = () => {
           </TableHeader>
           <TableBody>
             {
-              rows.map(({ row_key, label, options }, index) =>
+              rows.map(({ row_key, label, options, derive_value }, index) =>
                 <TableRow key={index}>
-                  {buildRow(jobOffers, row_key, label, options)}
+                  {buildRow(jobOffers, label, options, derive_value, row_key)}
                 </TableRow>
               )}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell colSpan={3}>Total Annual Compensation</TableCell>
               <TableCell className="text-right">$2,500.00</TableCell>
             </TableRow>
           </TableFooter>

@@ -2,7 +2,7 @@
 import { atom, GetRecoilValue, selector } from 'recoil';
 import { CompanyValuation, Outcome, EquityJourney } from './columns';
 import { jobOffersState } from '../offers/atoms';
-import { JobOffer } from '../offers/columns';
+import { JobOffer } from '../offers/types';
 
 const DEFAULT_SCENARIOS: CompanyValuation[] = [
   {
@@ -41,8 +41,7 @@ export const scenarioState = atom<CompanyValuation[]>({
 });
 
 const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer): Outcome => {
-  const percentage_ownership = offer.percentage_ownership || offer.number_of_shares / offer.total_number_of_outstanding_shares;
-  const total_stock_package_value = percentage_ownership * scenario.valuation;
+  const total_stock_package_value = offer.percentage_ownership * scenario.valuation;
   const total_compensation_value = (offer.salary * offer.vesting_years) + total_stock_package_value;
 
   return {

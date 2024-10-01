@@ -12,13 +12,13 @@ export const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer, me
 
   switch (metric) {
     case Metric.TotalCompensation:
-      return total_compensation_value;
+      return Math.round(total_compensation_value);
     case Metric.TotalEquityPackage:
-      return total_stock_package_value;
+      return Math.round(total_stock_package_value);
     case Metric.AnnualCompensation:
-      return total_compensation_value / offer.vesting_years;
+      return Math.round(total_compensation_value / offer.vesting_years);
     case Metric.AnnualEquityPackage:
-      return total_stock_package_value / offer.vesting_years
+      return Math.round(total_stock_package_value / offer.vesting_years);
   }
 }
 

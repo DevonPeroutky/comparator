@@ -10,13 +10,10 @@ import React from 'react';
 export const JobOfferTable = () => {
   const [offers, setOffers] = useRecoilState(jobOffersState);
 
-  // Use this to force the DataTable to fully re-render
-  const [tableKey, setTableKey] = React.useState(0);
+  // Use this to force the DataTable to fully re-render when offers change
+  const tableKey = React.useMemo(() => JSON.stringify(offers), [offers]);
 
-  const resetTable = () => {
-    setTableKey((prev) => prev + 1)
-  }
-
+  console.log('Offers: ', offers);
   return (
     <Card className='h-fit'>
       <CardHeader>
@@ -29,7 +26,7 @@ export const JobOfferTable = () => {
         <CardDescription>Add your job offers here</CardDescription>
       </CardHeader>
       <CardContent>
-        <DataTable columns={columns} data={offers} />
+        <DataTable columns={columns} data={offers} key={tableKey} />
       </CardContent>
     </Card>
   )

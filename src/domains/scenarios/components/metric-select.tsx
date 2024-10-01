@@ -17,7 +17,7 @@ export const MetricSelect: React.FC<MetricSelectProps> = ({ selectedMetric, onMe
   return (
     <Select value={selectedMetric} onValueChange={(value) => onMetricChange(value as Metric)}>
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select Metric" />
+        <SelectValue placeholder="Select Metric" className="font-bold text-2xl" />
       </SelectTrigger>
       <SelectContent className="cursor-pointer">
         <SelectItem value="total_compensation" className="cursor-pointer">Total Compensation</SelectItem>

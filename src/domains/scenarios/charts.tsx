@@ -47,11 +47,9 @@ export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, d
     <Card>
       <CardHeader>
         <CardTitle>
-          <div className="flex items-center justify-between">
-            <span>{title}</span>
-            <MetricSelect selectedMetric={selectedMetric} onMetricChange={setSelectedMetric} />
-          </div>
+          <MetricSelect selectedMetric={selectedMetric} onMetricChange={setSelectedMetric} />
         </CardTitle>
+        {/* Change this to show the equation based on the Metric */}
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent className="px-8">

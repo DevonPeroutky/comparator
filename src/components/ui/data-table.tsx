@@ -48,7 +48,6 @@ export function DataTable<TData, TValue>({
   const table = useReactTable({
     data: tableData,
     columns,
-    defaultColumn,
     getCoreRowModel: getCoreRowModel(),
     meta: {
       updateData: (rowIndex: number, columnId: string, value: unknown) => {
