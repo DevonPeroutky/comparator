@@ -1,5 +1,5 @@
 import { Row } from "@tanstack/react-table";
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { JobOffer } from "@/domains/offers/types";
 import { RecoilState, useRecoilState } from "recoil";
 import { ComparatorPrimitive } from "@/domains/types";
@@ -38,7 +38,30 @@ export interface EditableCellProps<T> {
   formatter: (value: Primitive) => string
 }
 
-export const EditableCell = <T extends ComparatorPrimitive>({ row, fieldName, formatter, mapValue, validate, recoilState }) => {
+const useCommitToList = <T extends ComparatorPrimitive>(recoilState: RecoilState<T[]>, fieldName, formatter, mapValue, validate, recoilState) => {
+  const [items, setItems] = useRecoilState<T[]>(recoilState);
+
+  return (id: string, proposedValue: string, setValue: Dispatch<SetStateAction<string>>) => {
+    const updatedValue = mapValue(proposedValue);
+    if (validate(updatedValue)) {
+
+      // Update central state
+      const updatedJobOffers = items.map(item =>
+        item.id === id ? { ...item, [fieldName]: updatedValue } : item
+      );
+      setItems(updatedJobOffers);
+
+      // Update local cell state
+      setValue(formatter(updatedValue));
+    } else {
+      console.log("Invalid value, resetting");
+      const item = items.find(item => item.id === id);
+      setValue(formatter(item?.[fieldName as keyof JobOffer] as string));
+    }
+  }
+}
+
+export const EditableCell = <T extends ComparatorPrimitive>({ row, fieldName, formatter, mapValue, validate, recoilState }: EditableCellProps<T>) => {
   const [items, setItems] = useRecoilState<T[]>(recoilState);
 
   const rawValue: string = row.getValue(fieldName)

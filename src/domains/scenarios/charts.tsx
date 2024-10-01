@@ -19,10 +19,9 @@ import {
 import { ReactNode, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { jobOffersState } from "../offers/atoms"
-import { scenarioState } from "./atoms"
-import { CompanyValuation } from "./columns"
+import { scenarioState, DEFAULT_SCENARIOS } from "./atoms"
 import { MetricSelect } from "./components/metric-select"
-import { Metric } from "./types"
+import { Metric, Scenario } from "./types"
 import { buildOutcomeList } from "./utils"
 
 type LineChartContainerProps = {
@@ -31,7 +30,7 @@ type LineChartContainerProps = {
 }
 export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, description }) => {
   const offers = useRecoilValue(jobOffersState);
-  const scenarios: CompanyValuation[] = useRecoilValue(scenarioState);
+  const scenarios: Scenario[] = DEFAULT_SCENARIOS;
   const [selectedMetric, setSelectedMetric] = useState(Metric.TotalCompensation);
 
   const chartData = scenarios.map(scenario => buildOutcomeList(scenario, offers, selectedMetric))

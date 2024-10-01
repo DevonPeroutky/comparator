@@ -1,71 +1,74 @@
 
-import { atom, GetRecoilValue, selector } from 'recoil';
-import { CompanyValuation, Outcome, EquityJourney } from './columns';
-import { jobOffersState } from '../offers/atoms';
-import { JobOffer } from '../offers/types';
+import { atom, useRecoilState } from 'recoil';
+import { Scenario } from './types';
 
-const DEFAULT_SCENARIOS: CompanyValuation[] = [
+export const DEFAULT_SCENARIOS: Scenario[] = [
   {
     id: "728ed52fa",
-    valuation: 320000000
+    valuation: 320000000,
+    number_of_rounds: 1
   },
   {
     id: "728ed52fb",
-    valuation: 500000000
+    valuation: 500000000,
+    number_of_rounds: 2
   },
   {
     id: "728ed52fc",
-    valuation: 1000000000
+    valuation: 1000000000,
+    number_of_rounds: 3
   },
   {
     id: "728ed52fd",
-    valuation: 2000000000
+    valuation: 2000000000,
+    number_of_rounds: 4
   },
   {
     id: "728ed52fe",
-    valuation: 3000000000
+    valuation: 3000000000,
+    number_of_rounds: 5
   },
   {
     id: "728ed52ff",
-    valuation: 5000000000
+    valuation: 5000000000,
+    number_of_rounds: 6
   },
   {
     id: "728ed52fg",
-    valuation: 10000000000
+    valuation: 10000000000,
+    number_of_rounds: 7
   },
 ]
 
-export const scenarioState = atom<CompanyValuation[]>({
+export const scenarioState = atom<Scenario[]>({
   key: 'scenarioState',
   default: DEFAULT_SCENARIOS,
 });
 
-const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer): Outcome => {
-  const total_stock_package_value = offer.percentage_ownership * scenario.valuation;
-  const total_compensation_value = (offer.salary * offer.vesting_years) + total_stock_package_value;
+export const scenarioMapState = atom<Record<string, Scenario[]>>({
+  key: 'scenarioMapState',
+  default: {},
+});
 
-  return {
-    scenario_valuation: scenario.valuation,
-    total_stock_package_value: total_stock_package_value,
-    annual_stack_package_value: total_stock_package_value / offer.vesting_years,
-    total_compensation_value: total_compensation_value,
-    annual_compensation_value: total_compensation_value / offer.vesting_years,
-  }
+
+export const useUpdateScenario = () => {
+  const [scenarioMap, setScenarioMap] = useRecoilState(scenarioMapState);
+
+  return (offerId: string, scenario: Scenario) => {
+    setScenarioMap((prevMap) => ({
+      ...prevMap,
+      [offerId]: prevMap[offerId]?.map(s => s.id === scenario.id ? scenario : s) || []
+    }));
+  };
 }
 
-export const equityJourniesState = selector<EquityJourney[]>({
-  key: 'equityJourniesState',
-  get: ({ get }: { get: GetRecoilValue }) => {
-    const scenarios = get(scenarioState);
-    const jobOffers = get(jobOffersState);
+export const useAddScenario = () => {
+  const [scenarioMap, setScenarioMap] = useRecoilState(scenarioMapState);
 
-    return jobOffers.map(offer => {
-      const outcomes: Outcome[] = scenarios.map(scenario => calculateOutcome(scenario, offer));
-      return {
-        offer_id: offer.id,
-        company_name: offer.company_name,
-        outcomes: outcomes
-      };
-    });
-  }
-});
+  return (offerId: string, scenario: Scenario) => {
+    setScenarioMap((prevMap) => ({
+      ...prevMap,
+      [offerId]: [...(prevMap[offerId] || []), scenario]
+    }));
+  };
+}

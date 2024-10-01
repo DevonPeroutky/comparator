@@ -21,6 +21,7 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     vesting_years: 4,
     strike_price: 34.70,
     total_number_of_outstanding_shares: 2698775,
+    percentage_ownership: 3267 / 2698775,
   },
   {
     id: "11x",

@@ -1,11 +1,11 @@
 import { JobOffer } from "../offers/types";
-import { CompanyValuation } from "./columns";
+import { Scenario } from "./types";
 import { Metric } from "./types";
 
 
 
 /* TODO: Factor in dilution */
-export const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer, metric: Metric): number => {
+export const calculateOutcome = (scenario: Scenario, offer: JobOffer, metric: Metric): number => {
   const percentage_ownership = offer.percentage_ownership;
   const total_stock_package_value = percentage_ownership * scenario.valuation;
   const total_compensation_value = (offer.salary * offer.vesting_years) + total_stock_package_value;
@@ -22,7 +22,7 @@ export const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer, me
   }
 }
 
-export const buildOutcomeList = (scenario: CompanyValuation, offers: JobOffer[], selectedMetric: Metric) => {
+export const buildOutcomeList = (scenario: Scenario, offers: JobOffer[], selectedMetric: Metric) => {
   const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
 
   offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
