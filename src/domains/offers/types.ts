@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { ComparatorPrimitive } from "../types";
 
-export type JobOffer = {
+export type JobOffer = ComparatorPrimitive & {
   id: string;
   company_name: string;
   salary: number;

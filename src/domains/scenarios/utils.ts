@@ -1,4 +1,4 @@
-import { JobOffer } from "../offers/columns";
+import { JobOffer } from "../offers/types";
 import { CompanyValuation } from "./columns";
 import { Metric } from "./types";
 
@@ -6,7 +6,7 @@ import { Metric } from "./types";
 
 /* TODO: Factor in dilution */
 export const calculateOutcome = (scenario: CompanyValuation, offer: JobOffer, metric: Metric): number => {
-  const percentage_ownership = offer.percentage_ownership || offer.number_of_shares / offer.total_number_of_outstanding_shares;
+  const percentage_ownership = offer.percentage_ownership;
   const total_stock_package_value = percentage_ownership * scenario.valuation;
   const total_compensation_value = (offer.salary * offer.vesting_years) + total_stock_package_value;
 

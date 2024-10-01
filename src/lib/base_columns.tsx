@@ -1,28 +1,45 @@
-import { ColumnDef, Row } from "@tanstack/react-table";
-import { ReactNode, useState } from 'react';
-import { displayNumber } from "@/domains/offers/utils";
+import { Row } from "@tanstack/react-table";
+import { useState } from 'react';
 import { JobOffer } from "@/domains/offers/types";
-import { useRecoilState } from "recoil";
-import { jobOffersState } from "@/domains/offers/atoms";
+import { RecoilState, useRecoilState } from "recoil";
+import { ComparatorPrimitive } from "@/domains/types";
+import { Primitive } from "zod";
 
-export interface EditableJobOfferCellProps<T> {
-  row: Row<JobOffer>
-  fieldName: string
-  mapValue: (proposedValue: string) => T
-  validate: (proposedValue: T) => Boolean
-  formatter: (value: T) => string
+export const validateNumber = (proposedValue: number): Boolean => {
+  return !isNaN(proposedValue);
 }
 
-export interface EditableNumberCellProps<T> {
+export const mapNumber = (proposedValue: string): number => {
+  return parseFloat(proposedValue.replace(/[^0-9.-]+/g, ""));
+};
+
+export const formatNumber = (options: Intl.NumberFormatOptions) => (value: string): string => {
+  return value ? new Intl.NumberFormat("en-US", options).format(parseFloat(value)) : "-";
+}
+
+export const validateString = (proposedValue: string): Boolean => {
+  return proposedValue !== undefined && proposedValue.trim().length > 0;
+}
+
+export const mapString = (proposedValue: string): string => {
+  return proposedValue.trim();
+};
+
+export function identity<T>(value: T): T {
+  return value;
+}
+
+export interface EditableCellProps<T> {
   row: Row<T>
+  recoilState: RecoilState<T[]>
   fieldName: string
-  options: Intl.NumberFormatOptions
-  handleBlur: (row: Row<T>, fieldName: string, proposedValue: string, setValue: (value: string) => void, options: Intl.NumberFormatOptions) => void
-  fallback?: string
+  mapValue: (proposedValue: string) => Primitive
+  validate: (proposedValue: Primitive) => Boolean
+  formatter: (value: Primitive) => string
 }
 
-export const EditableJobOfferColumn: React.FC<EditableJobOfferCellProps<T>> = ({ row, fieldName, formatter, mapValue, validate }) => {
-  const [jobOffers, setJobOffers] = useRecoilState(jobOffersState);
+export const EditableCell = <T extends ComparatorPrimitive>({ row, fieldName, formatter, mapValue, validate, recoilState }) => {
+  const [items, setItems] = useRecoilState<T[]>(recoilState);
 
   const rawValue: string = row.getValue(fieldName)
   const [value, setValue] = useState(formatter(rawValue))
@@ -32,17 +49,17 @@ export const EditableJobOfferColumn: React.FC<EditableJobOfferCellProps<T>> = ({
     if (validate(updatedValue)) {
 
       // Update central state
-      const updatedJobOffers = jobOffers.map(offer =>
-        offer.id === row.original.id ? { ...offer, [fieldName]: updatedValue } : offer
+      const updatedJobOffers = items.map(item =>
+        item.id === row.original.id ? { ...item, [fieldName]: updatedValue } : item
       );
-      setJobOffers(updatedJobOffers);
+      setItems(updatedJobOffers);
 
       // Update local cell state
       setValue(formatter(updatedValue));
     } else {
       console.log("Invalid value, resetting");
-      const offer = jobOffers.find(offer => offer.id === row.original.id);
-      setValue(formatter(offer?.[fieldName as keyof JobOffer] as string));
+      const item = items.find(item => item.id === row.original.id);
+      setValue(formatter(item?.[fieldName as keyof JobOffer] as string));
     }
   }
 
@@ -53,21 +70,4 @@ export const EditableJobOfferColumn: React.FC<EditableJobOfferCellProps<T>> = ({
       onBlur={() => commitOrRollbackChange(value)}
     />
   )
-}
-export const EditableNumberCell = <T extends { id: string }>({ row, fieldName, options, fallback = '-', handleBlur }: EditableNumberCellProps<T>) => {
-  const rawValue: string = row.getValue(fieldName)
-  const parsedNumber = displayNumber(rawValue, undefined, options)
-  const [v, setV] = useState(parsedNumber)
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setV(e.target.value)
-  }
-
-  return <input
-    className="text-left"
-    value={v}
-    onSubmit={() => handleBlur(row, fieldName, v, setV)}
-    onChange={handleChange}
-    onBlur={() => handleBlur(row, fieldName, v, setV)}
-  />
 }
