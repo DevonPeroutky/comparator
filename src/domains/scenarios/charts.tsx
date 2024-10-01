@@ -1,4 +1,4 @@
-import { TrendingUp } from "lucide-react"
+import { Quote, TrendingUp } from "lucide-react"
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
@@ -109,13 +109,10 @@ export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, d
           </LineChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
-        <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
-        </div>
+      <CardFooter className="flex-col items-start gap-2">
+        <blockquote className="mt-6 border-l-2 pl-6 italic">
+          Money can't buy happiness, but it can make you awfully comfortable while you're being miserable. - Clare Boothe Luce
+        </blockquote>
       </CardFooter>
     </Card >
   )

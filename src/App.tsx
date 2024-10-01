@@ -2,13 +2,12 @@ import { LineChartContainer } from './domains/scenarios/charts';
 import { JobOfferTable } from './domains/offers/components/job-offers-table';
 import { DilutionTable } from './domains/dilution/components/dilution-schedule';
 import { ComparisonTable } from './domains/offers/compare_offer_table';
-import { EquityJourneyCard } from './domains/scenarios/components/equity-journey-card';
+import { AggegrateEquityJourneyCard, EquityJourneyCard } from './domains/scenarios/components/equity-journey-card';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { jobOffersState } from './domains/offers/atoms';
 import { scenarioMapState, scenarioState, useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
 import { generateScenarios } from './domains/scenarios/utils';
-import { Scenario } from './domains/scenarios/types';
 
 export default function App() {
   const offers = useRecoilValue(jobOffersState)
@@ -20,6 +19,7 @@ export default function App() {
     console.log('GENERATING SCENARIOS', scenarios)
     offers.forEach(offer => {
       const scenarios = generateScenarios(offer);
+
       addScenarios(offer.company_name, scenarios);
     })
   }, []);
@@ -41,12 +41,12 @@ export default function App() {
         </div>
         {offers.length > 0 && scenarios.length > 0 &&
           <div className='max-w-screen w-full overflow-x-auto'>
-            <div className='grid grid-cols-1 md:grid-cols-[repeat(4,minmax(250px,1fr))] gap-4'>
-              {Object.entries(scenarioMap).map(([company_name, scenarios]) => (
-                <EquityJourneyCard key={company_name} company_name={company_name} scenarios={scenarios} />
-              ))}
-              {/* {offers.map(offer => <EquityJourneyCard jobOffer={offer} scenarios={scenarios} />)} */}
-            </div>
+            <AggegrateEquityJourneyCard />
+            {/* <div className='grid grid-cols-1 md:grid-cols-[repeat(4,minmax(250px,1fr))] gap-4'> */}
+            {/*   {Object.entries(scenarioMap).map(([company_name, scenarios]) => ( */}
+            {/*     <EquityJourneyCard key={company_name} company_name={company_name} scenarios={scenarios} /> */}
+            {/*   ))} */}
+            {/* </div> */}
           </div>
         }
         <ComparisonTable />

@@ -42,14 +42,15 @@ const dericeExerciseCost = (offer: JobOffer): string => {
 
 export const ComparisonTable = () => {
   const jobOffers = useRecoilValue(jobOffersState);
+  const dilution = useRecoilValue(dilutionRoundsState);
   const rows = [
     { row_key: "salary", label: "Salary", options: { style: "currency", currency: "USD" } },
     { row_key: "latest_company_valuation", label: "Current Valuation", options: { style: "currency", currency: "USD", maximumFractionDigits: 0 } },
     { row_key: "strike_price", label: "Strike Price", options: { style: "currency", currency: "USD" } },
     { derive_value: dericeExerciseCost, label: "Exercise Cost (w/out Tax)" },
     { derive_value: (offer: JobOffer) => "-", label: "Fully Diluted Percentage" },
-    { derive_value: (offer: JobOffer) => "-", label: "Equity Value" },
-    { derive_value: (offer: JobOffer) => "-", label: "Annual Equity Value" },
+    { derive_value: (offer: JobOffer) => "-", label: "Equity Package Value" },
+    { derive_value: (offer: JobOffer) => "-", label: "Annual Package Value" },
   ];
   const tableHeaders = jobOffers.map(offer => <TableHead key={offer.id}>{offer.company_name}</TableHead>)
 
@@ -85,6 +86,7 @@ export const ComparisonTable = () => {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>Total Annual Compensation</TableCell>
+              <TableCell className="text-right">$2,500.00</TableCell>
             </TableRow>
           </TableFooter>
         </Table>

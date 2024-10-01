@@ -1,8 +1,9 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import {
   ColumnDef,
   flexRender,
   getCoreRowModel,
+  GroupingState,
   useReactTable,
 } from "@tanstack/react-table"
 
@@ -25,49 +26,19 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [tableData, setTableData] = useState(data)
-
-  const defaultColumn: Partial<ColumnDef<TData, TValue>> = {
-    cell: ({ getValue, row: { index }, column: { id }, table }) => {
-      const initialValue = getValue()
-      const [value, setValue] = useState(initialValue)
-
-      const onBlur = () => {
-        table.options.meta?.updateData(index, id, value)
-      }
-
-      return (
-        <input
-          value={value as string}
-          onChange={(e) => setValue(e.target.value)}
-          onBlur={onBlur}
-        />
-      )
-    },
-  }
+  const [grouping, setGrouping] = React.useState<GroupingState>([])
 
   const table = useReactTable({
     data: tableData,
     columns,
+    state: {
+      grouping,
+    },
+    onGroupingChange: setGrouping,
     getCoreRowModel: getCoreRowModel(),
-    meta: {
-      updateData: (rowIndex: number, columnId: string, value: unknown) => {
-        console.log("Updating row", rowIndex)
-        setTableData((old) => {
-          console.log(old);
-          old.map((row, index) => {
-            if (index === rowIndex) {
-              return {
-                ...old[rowIndex],
-                [columnId]: value,
-              }
-            }
-            return row
-          })
-        }
-        )
-      },
-    }
   })
+
+  const borderClass = `border-r border-solid border-[hsl(var(--border))]`
 
   return (
     <div className="rounded-md border">
@@ -75,15 +46,26 @@ export function DataTable<TData, TValue>({
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
+              {headerGroup.headers.map((header, index) => {
+                const isLastColumn = index === headerGroup.headers.length - 1;
                 return (
-                  <TableHead key={header.id}>
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
+                  <TableHead
+                    key={header.id}
+                    colSpan={header.colSpan}
+                    className={
+                      !isLastColumn && (header.depth == 1 || (header.depth == 2 && header.id.endsWith("funding-rounds")))
+                        ? borderClass
+                        : ""
+                    }
+                  >
+                    {
+                      header.isPlaceholder
+                        ? null
+                        : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )
+                    }
                   </TableHead>
                 )
               })}
@@ -97,11 +79,15 @@ export function DataTable<TData, TValue>({
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
               >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
+                {row.getVisibleCells().map((cell, index) => {
+                  const isLastColumn = index === row.getVisibleCells().length - 1;
+                  console.log('cell', cell)
+                  return (
+                    <TableCell key={cell.id} className={(!isLastColumn && cell.id.endsWith("funding-rounds")) ? borderClass : ''}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  )
+                })}
               </TableRow>
             ))
           ) : (
@@ -113,6 +99,6 @@ export function DataTable<TData, TValue>({
           )}
         </TableBody>
       </Table>
-    </div>
+    </div >
   )
 }
