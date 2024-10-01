@@ -31,3 +31,32 @@ export const buildOutcomeList = (scenario: Scenario, offers: JobOffer[], selecte
 
   return outcome
 }
+
+export const generateScenarios = (jobOffer: JobOffer): Scenario[] => {
+  const numberOfRounds = 5;
+  const valuationMultiple = map(jobOffer.latest_company_valuation, 10000000, 50000000000, 75, 1.5);
+  const valuations: number[] = generateSteppedArray(jobOffer.latest_company_valuation, jobOffer.latest_company_valuation * valuationMultiple, numberOfRounds)
+
+  return valuations.map((valuation, index) => ({
+    id: `${jobOffer.id}-${index}`,
+    multiple: valuation / jobOffer.latest_company_valuation,
+    valuation: Math.round(valuation / 1000000) * 1000000,
+    number_of_rounds: index
+  }));
+}
+
+function map(
+  value: number,
+  start1: number,
+  stop1: number,
+  start2: number,
+  stop2: number
+): number {
+  const normalizedValue = (Math.log(value) - Math.log(start1)) / (Math.log(stop1) - Math.log(start1));
+  return Math.exp(Math.log(start2) + normalizedValue * (Math.log(stop2) - Math.log(start2)));
+}
+
+export function generateSteppedArray(start: number, end: number, steps: number): number[] {
+  const stepSize = (end - start) / (steps - 1);
+  return Array.from({ length: steps }, (_, i) => start + i * stepSize);
+}

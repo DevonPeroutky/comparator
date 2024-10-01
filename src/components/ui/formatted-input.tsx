@@ -45,13 +45,10 @@ export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, val
   const [displayValue, setDisplayValue] = useState(() => formatValue(value));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("Handling change ", e.target.value);
     const rawValue = e.target.value.replace(/[$,%]/g, '');
     const numericValue = parseFloat(rawValue);
 
-    console.log("Raw value is ", rawValue, " and valid is ", /^[0-9]*\.?[0-9]*$/.test(rawValue));
     if (rawValue === '' || /^[0-9]*\.?[0-9]*$/.test(rawValue)) {
-      // console.log("Setting value to ", rawValue, "-> ", formatValue(rawValue));
       setDisplayValue(formatValue(rawValue));
     }
 

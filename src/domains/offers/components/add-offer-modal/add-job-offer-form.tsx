@@ -18,6 +18,8 @@ import { JobOffer } from "../../types"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
+import { generateScenarios } from "@/domains/scenarios/utils"
+import { useAddScenarios } from "@/domains/scenarios/atoms"
 
 const jobOfferFormSchema = z.object({
   id: z.string().default(() => uuidv4()),
@@ -35,6 +37,7 @@ type FormData = z.infer<typeof jobOfferFormSchema>;
 
 export function JobOfferForm({ onClick }: { onClick: () => void }) {
   const [jobOffers, setJobOffers] = useRecoilState(jobOffersState)
+  const addScenarios = useAddScenarios();
 
   const form = useForm<z.infer<typeof jobOfferFormSchema>>({
     resolver: zodResolver(jobOfferFormSchema),
@@ -77,8 +80,12 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     const newJobOffer: JobOffer = jobOfferFormSchema.parse(data);
     console.log('NEW JOB OFFER: ', newJobOffer);
 
-    // Continue with form submission logic here
+    // Add new Job offer to the list
     setJobOffers([...jobOffers, newJobOffer])
+
+    // Generate scenarios for the new job offer
+    const newScenarios = generateScenarios(newJobOffer);
+    addScenarios(newJobOffer.company_name, newScenarios);
 
     onClick();
   };

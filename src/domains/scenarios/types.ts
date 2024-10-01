@@ -8,6 +8,7 @@ export enum Metric {
 export type Scenario = {
   id: string;
   name?: string;
+  multiple: number;
   valuation: number;
   number_of_rounds: number;
 };

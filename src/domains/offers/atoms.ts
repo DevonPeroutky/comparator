@@ -32,6 +32,17 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     percentage_ownership: .0011,
   },
   {
+    id: "stripe",
+    company_name: "Stripe",
+    salary: 300000,
+    number_of_shares: 31000,
+    latest_company_valuation: 40000000000,
+    vesting_years: 4,
+    strike_price: 75,
+    total_number_of_outstanding_shares: 26829268,
+    percentage_ownership: .0000041,
+  },
+  {
     id: "together.ai",
     company_name: "Together.ai",
     salary: 240000,

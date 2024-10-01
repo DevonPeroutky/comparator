@@ -50,7 +50,6 @@ export const scenarioMapState = atom<Record<string, Scenario[]>>({
   default: {},
 });
 
-
 export const useUpdateScenario = () => {
   const [scenarioMap, setScenarioMap] = useRecoilState(scenarioMapState);
 
@@ -62,13 +61,13 @@ export const useUpdateScenario = () => {
   };
 }
 
-export const useAddScenario = () => {
+export const useAddScenarios = () => {
   const [scenarioMap, setScenarioMap] = useRecoilState(scenarioMapState);
 
-  return (offerId: string, scenario: Scenario) => {
+  return (offerId: string, scenarios: Scenario[]) => {
     setScenarioMap((prevMap) => ({
       ...prevMap,
-      [offerId]: [...(prevMap[offerId] || []), scenario]
+      [offerId]: [...(prevMap[offerId] || []), ...scenarios]
     }));
   };
 }

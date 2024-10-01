@@ -13,8 +13,8 @@ export const mapNumber = (proposedValue: string): number => {
   return parseFloat(proposedValue.replace(/[^0-9.-]+/g, ""));
 };
 
-export const formatNumber = (options: Intl.NumberFormatOptions) => (value: string): string => {
-  return value ? new Intl.NumberFormat("en-US", options).format(parseFloat(value)) : "-";
+export const formatNumber = (options: Intl.NumberFormatOptions) => (value: number): string => {
+  return value ? new Intl.NumberFormat("en-US", options).format(value) : "-";
 }
 
 export const validateString = (proposedValue: string): Boolean => {
@@ -29,39 +29,16 @@ export function identity<T>(value: T): T {
   return value;
 }
 
-export interface EditableCellProps<T> {
+export interface EditableCellProps<T, C> {
   row: Row<T>
   recoilState: RecoilState<T[]>
   fieldName: string
-  mapValue: (proposedValue: string) => Primitive
-  validate: (proposedValue: Primitive) => Boolean
-  formatter: (value: Primitive) => string
+  mapValue: (proposedValue: string) => C
+  validate: (proposedValue: C) => Boolean
+  formatter: (value: C) => string
 }
 
-const useCommitToList = <T extends ComparatorPrimitive>(recoilState: RecoilState<T[]>, fieldName, formatter, mapValue, validate, recoilState) => {
-  const [items, setItems] = useRecoilState<T[]>(recoilState);
-
-  return (id: string, proposedValue: string, setValue: Dispatch<SetStateAction<string>>) => {
-    const updatedValue = mapValue(proposedValue);
-    if (validate(updatedValue)) {
-
-      // Update central state
-      const updatedJobOffers = items.map(item =>
-        item.id === id ? { ...item, [fieldName]: updatedValue } : item
-      );
-      setItems(updatedJobOffers);
-
-      // Update local cell state
-      setValue(formatter(updatedValue));
-    } else {
-      console.log("Invalid value, resetting");
-      const item = items.find(item => item.id === id);
-      setValue(formatter(item?.[fieldName as keyof JobOffer] as string));
-    }
-  }
-}
-
-export const EditableCell = <T extends ComparatorPrimitive>({ row, fieldName, formatter, mapValue, validate, recoilState }: EditableCellProps<T>) => {
+export const EditableCell = <T extends ComparatorPrimitive, C extends Primitive>({ row, fieldName, formatter, mapValue, validate, recoilState }: EditableCellProps<T, C>) => {
   const [items, setItems] = useRecoilState<T[]>(recoilState);
 
   const rawValue: string = row.getValue(fieldName)
@@ -90,6 +67,7 @@ export const EditableCell = <T extends ComparatorPrimitive>({ row, fieldName, fo
     <input
       value={value}
       onChange={(e) => setValue(e.target.value)}
+      // onBlur={() => commitOrRollbackChange(value)}
       onBlur={() => commitOrRollbackChange(value)}
     />
   )
