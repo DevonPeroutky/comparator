@@ -23,25 +23,21 @@ export const columns: ColumnDef<Scenario>[] = [
 
 export const EquityJourneyCard: React.FC<{ company_name: string; scenarios: Scenario[] }> = ({ company_name, scenarios }) => {
   return (
-    <Card>
-      <Card className='h-fit'>
-        <CardHeader>
-          <CardTitle>
-            <div className='flex items-center justify-between'>
-              <span className="capitalize">{company_name}</span>
-            </div>
-          </CardTitle>
-          <CardDescription>This has been aggregate from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' className='text-sky-400 hover:underline hover:cursor-pointer'>Carta</a> and other sources. But feel free to update these</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <DataTable
-            columns={columns}
-            data={scenarios}
-          />
-        </CardContent>
-      </Card>
-      <Card>
-      </Card>
+    <Card className='h-fit'>
+      <CardHeader>
+        <CardTitle>
+          <div className='flex items-center justify-between'>
+            <span className="capitalize">{company_name}</span>
+          </div>
+        </CardTitle>
+        <CardDescription>This has been aggregate from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' className='text-sky-400 hover:underline hover:cursor-pointer'>Carta</a> and other sources. But feel free to update these</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <DataTable
+          columns={columns}
+          data={scenarios}
+        />
+      </CardContent>
     </Card>
   )
 }

@@ -6,7 +6,7 @@
 - [x] (1) Handle percentages better
 
 ## Scenarios
-- [ ] Combine Scenarios table into 1 with groups for each offer
+- [ ] Combine Scenarios table into 1 with groups for each offer (or expandable rows). Remove dilution table?
 - [ ] Tooltip on Rounds of Funding (Explain that it's used for dilution calculation)
 
 ## Offers Graph
