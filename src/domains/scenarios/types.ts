@@ -10,6 +10,7 @@ export type Scenario = {
   name?: string;
   multiple: number;
   valuation: number;
+  dilution: number;
   number_of_rounds: number;
 };
 

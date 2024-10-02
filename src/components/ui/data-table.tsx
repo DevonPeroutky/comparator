@@ -47,16 +47,26 @@ export function DataTable<TData, TValue>({
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header, index) => {
+                const isTopLevelHeader = header.depth == 1;
                 const isLastColumn = index === headerGroup.headers.length - 1;
+                const isEndingColumn = isTopLevelHeader || (header.depth == 2 && header.id.endsWith("dilution"));
+
+                var className = "";
+
+                // Add vertical diver between column groups
+                if (!isLastColumn && isEndingColumn) {
+                  className += borderClass;
+                }
+
+                // Add top-level header background
+                if (isTopLevelHeader) {
+                  className += ` bg-[hsl(var(--bg-secondary))] bg-slate-100`;
+                }
                 return (
                   <TableHead
                     key={header.id}
                     colSpan={header.colSpan}
-                    className={
-                      !isLastColumn && (header.depth == 1 || (header.depth == 2 && header.id.endsWith("funding-rounds")))
-                        ? borderClass
-                        : ""
-                    }
+                    className={className}
                   >
                     {
                       header.isPlaceholder
@@ -81,9 +91,8 @@ export function DataTable<TData, TValue>({
               >
                 {row.getVisibleCells().map((cell, index) => {
                   const isLastColumn = index === row.getVisibleCells().length - 1;
-                  console.log('cell', cell)
                   return (
-                    <TableCell key={cell.id} className={(!isLastColumn && cell.id.endsWith("funding-rounds")) ? borderClass : ''}>
+                    <TableCell key={cell.id} className={(!isLastColumn && cell.id.endsWith("dilution")) ? borderClass : ''}>
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   )

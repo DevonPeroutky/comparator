@@ -72,3 +72,72 @@ export const EditableCell = <T extends ComparatorPrimitive, C extends Primitive>
     />
   )
 }
+
+
+const useUpdateListItemChanges = <T extends ComparatorPrimitive, C extends Primitive>(recoilState: RecoilState<T[]>, mapValue: (proposedValue: string) => C, validate: (propsedValuee: C) => Boolean) => {
+  const [items, setItems] = useRecoilState<T[]>(recoilState);
+
+
+  return (proposedValue: string, row: Row<T>, fieldName: string): C => {
+    const updatedValue = mapValue(proposedValue);
+    if (validate(updatedValue)) {
+
+      // Update central state
+      const updatedJobOffers = items.map(item =>
+        item.id === row.original.id ? { ...item, [fieldName]: updatedValue } : item
+      );
+      setItems(updatedJobOffers);
+
+      // Update local cell state
+      // setValue(formatter(updatedValue));
+      return updatedValue;
+    } else {
+      // console.log("Invalid value, resetting");
+      const item = items.find(item => item.id === row.original.id);
+      // setValue(formatter(item?.[fieldName as keyof JobOffer] as string));
+      return item?.[fieldName as keyof JobOffer] as string;
+    }
+  }
+}
+
+
+const EditableCellV2 = <T extends ComparatorPrimitive, C extends Primitive>({ row, fieldName, validate, recoilState }: EditableCellProps<T, C>) => {
+  const updateListItem = useUpdateListItemChanges(recoilState, mapValue, validate);
+
+  const formatter = (value: C): string => {
+    return value as unknown as string;
+  }
+
+
+  return (
+    <BaseEditableCell row={row} fieldName={fieldName} formatter={formatter} updateListItem={updateListItem} />
+  )
+}
+
+
+export interface BaseEditableCellProps<T extends ComparatorPrimitive, C extends Primitive> {
+  row: Row<T>
+  fieldName: string
+  formatter: (value: C) => string
+  updateListItem: (proposedValue: string, row: Row<T>, fieldName: string) => C
+}
+
+const BaseEditableCell = <T extends ComparatorPrimitive, C extends Primitive>({ row, fieldName, formatter, updateListItem }: BaseEditableCellProps<T, C>) => {
+  const rawValue: C = row.getValue(fieldName)
+  const [value, setValue] = useState<string>(formatter(rawValue))
+
+  const commitOrRollbackChange = (proposedValue: string) => {
+    // const updatedValue: C = mapValue(proposedValue);
+    const newValue: C = updateListItem(proposedValue, row, fieldName);
+    setValue(formatter(newValue));
+  }
+
+  return (
+    <input
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      // onBlur={() => commitOrRollbackChange(value)}
+      onBlur={() => commitOrRollbackChange(value)}
+    />
+  )
+}

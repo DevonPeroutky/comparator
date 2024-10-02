@@ -1,22 +1,20 @@
 import { LineChartContainer } from './domains/scenarios/charts';
 import { JobOfferTable } from './domains/offers/components/job-offers-table';
 import { DilutionTable } from './domains/dilution/components/dilution-schedule';
-import { ComparisonTable } from './domains/offers/compare_offer_table';
-import { AggegrateEquityJourneyCard, EquityJourneyCard } from './domains/scenarios/components/equity-journey-card';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { AggegrateEquityJourneyCard } from './domains/scenarios/components/equity-journey-card';
+import { useRecoilValue } from 'recoil';
 import { jobOffersState } from './domains/offers/atoms';
-import { scenarioMapState, scenarioState, useAddScenarios } from './domains/scenarios/atoms';
+import { scenarioMapState, useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
 import { generateScenarios } from './domains/scenarios/utils';
+import { ComparisonTable } from './domains/offers/compare-offer-table';
 
 export default function App() {
   const offers = useRecoilValue(jobOffersState)
-  const scenarios = useRecoilValue(scenarioState)
   const scenarioMap = useRecoilValue(scenarioMapState)
   const addScenarios = useAddScenarios();
 
   useEffect(() => {
-    console.log('GENERATING SCENARIOS', scenarios)
     offers.forEach(offer => {
       const scenarios = generateScenarios(offer);
 
@@ -24,7 +22,6 @@ export default function App() {
     })
   }, []);
 
-  console.log('scenarios', scenarios)
   console.log('scenarioMap: ', scenarioMap)
 
   return (
@@ -39,7 +36,7 @@ export default function App() {
           <LineChartContainer title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />
           <DilutionTable />
         </div>
-        {offers.length > 0 && scenarios.length > 0 &&
+        {offers.length > 0 && Object.keys(scenarioMap).length > 0 &&
           <div className='max-w-screen w-full overflow-x-auto'>
             <AggegrateEquityJourneyCard />
             {/* <div className='grid grid-cols-1 md:grid-cols-[repeat(4,minmax(250px,1fr))] gap-4'> */}

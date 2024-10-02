@@ -1,3 +1,4 @@
+import { determineRoundDilution } from "../dilution/utils";
 import { JobOffer } from "../offers/types";
 import { Scenario } from "./types";
 import { Metric } from "./types";
@@ -32,6 +33,10 @@ export const buildOutcomeList = (scenario: Scenario, offers: JobOffer[], selecte
   return outcome
 }
 
+const determineDilution = (valuations: number[]): number => {
+  return valuations.map((valuation, index) => determineRoundDilution(valuation)).map(dilution => 1 - dilution).reduce((a, b) => a * b, 1);
+}
+
 export const generateScenarios = (jobOffer: JobOffer): Scenario[] => {
   const numberOfRounds = 5;
   const valuationMultiple = map(jobOffer.latest_company_valuation, 10000000, 50000000000, 75, 1.5);
@@ -41,6 +46,7 @@ export const generateScenarios = (jobOffer: JobOffer): Scenario[] => {
     id: `${jobOffer.id}-${index}`,
     multiple: valuation / jobOffer.latest_company_valuation,
     valuation: Math.round(valuation / 1000000) * 1000000,
+    dilution: determineDilution(valuations.slice(0, index)),
     number_of_rounds: index
   }));
 }

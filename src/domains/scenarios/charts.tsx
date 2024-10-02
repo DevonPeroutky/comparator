@@ -19,7 +19,7 @@ import {
 import { ReactNode, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { jobOffersState } from "../offers/atoms"
-import { scenarioState, DEFAULT_SCENARIOS } from "./atoms"
+import { DEFAULT_SCENARIOS } from "./atoms"
 import { MetricSelect } from "./components/metric-select"
 import { Metric, Scenario } from "./types"
 import { buildOutcomeList } from "./utils"
@@ -109,9 +109,9 @@ export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, d
           </LineChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2">
-        <blockquote className="mt-6 border-l-2 pl-6 italic">
-          Money can't buy happiness, but it can make you awfully comfortable while you're being miserable. - Clare Boothe Luce
+      <CardFooter className="flex-col gap-2 flex items-center justify-center my-4">
+        <blockquote className="italic text-muted-foreground">
+          "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable." - Clare Boothe Luce
         </blockquote>
       </CardFooter>
     </Card >
