@@ -1,7 +1,7 @@
 # To-Do
 
 ## (1) Form
-- [ ] (1) Tooltips 
+- [x] (1) Tooltips 
 
 ## (2) Scenarios
 - [ ] TIMELINE?!??
@@ -10,16 +10,15 @@
 - [ ] Explain how much dilution per step?
 
 ## (2) Offers Graph
-- [ ] (.5) Formalize calculations w/dilution
-- [ ] (.5) Build from generated scenarios
-- [ ] (1) Dynamic Description to be various formulas
+- [ ] (.5) Formalize calculations w/dilution?
+- [x] (1) Dynamic Description to be various formulas
 
 ## Dilution Schedule Table
 - [x] Build out Dilution Table 
 - [x] Add button to reset
 
 ## (1) Side-by-Side Comparison
-- [ ] (1) Tooltip all the things!
+- [x] (1) Tooltip all the things!
 
 ## (4) Overview
 - [ ] (1) Styling

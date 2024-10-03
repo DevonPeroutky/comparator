@@ -17,10 +17,11 @@ import {
 } from "@/components/ui/chart"
 import { ReactNode, useState } from "react"
 import { useRecoilValue } from "recoil"
-import { jobOffersState } from "../offers/atoms"
-import { MetricSelect } from "./components/metric-select"
-import { Metric, Scenario } from "./types"
-import { useBuildScenarioListForGraphing } from "./utils"
+import { jobOffersState } from "../../../offers/atoms"
+import { MetricSelect } from "../metric-select"
+import { Metric, Scenario } from "../../types"
+import { useBuildScenarioListForGraphing } from "../../utils"
+import { OfferGraphDescription } from "./graph-description"
 
 const CustomTooltip = ({ active, payload, label }) => {
   console.log(active, payload, label);
@@ -47,8 +48,6 @@ export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) 
   const [selectedMetric, setSelectedMetric] = useState(Metric.TotalEquityPackage);
 
   const chartData = buildScenarioList(selectedMetric)
-
-  console.log(chartData)
   const chartConfig = offers.reduce((config, offer, idx) => {
     config[offer.company_name] = {
       label: offer.company_name,
@@ -64,7 +63,7 @@ export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) 
           <MetricSelect selectedMetric={selectedMetric} onMetricChange={setSelectedMetric} />
         </CardTitle>
         {/* Change this to show the equation based on the Metric */}
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="pt-2"><OfferGraphDescription selectedMetric={selectedMetric} /></CardDescription>
       </CardHeader>
       <CardContent className="px-8">
         <ChartContainer config={chartConfig}>

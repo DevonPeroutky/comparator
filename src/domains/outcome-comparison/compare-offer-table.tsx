@@ -1,7 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCell,
   TableFooter,
   TableHead,
   TableHeader,
@@ -14,6 +13,7 @@ import { jobOffersState } from "../offers/atoms";
 import { scenarioMapState, selectedScenarioIdState } from "../scenarios/atoms";
 import { JobOfferScenario } from "./types";
 import { footerDefs, rowDefs } from "./rows";
+import { LabelCell } from "./components/label-cell";
 
 
 export const ComparisonTable = () => {
@@ -55,16 +55,16 @@ export const ComparisonTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {rowDefs.map(({ cell, label }, index) => (
+            {rowDefs.map(({ cell, labelProps }, index) => (
               <TableRow key={index}>
-                {[<TableCell className="w-fit capitalize" key={`${label}-label`}>{label}</TableCell>, ...jobOfferScenarios.map(cell)]}
+                {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
-            {footerDefs.map(({ cell, label }, index) => (
+            {footerDefs.map(({ cell, labelProps }, index) => (
               <TableRow key={index}>
-                {[<TableCell className="w-fit capitalize" key={`${label}-label`}> {label}</TableCell>, ...jobOfferScenarios.map(cell)]}
+                {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
               </TableRow>
             ))}
           </TableFooter>

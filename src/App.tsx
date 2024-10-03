@@ -1,4 +1,4 @@
-import { OffersGraph } from './domains/scenarios/charts';
+import { OffersGraph } from './domains/scenarios/components/offer-graph';
 import { JobOfferTable } from './domains/offers/components/job-offers-table';
 import { DilutionTable } from './domains/dilution/components/dilution-schedule';
 import { AggegrateEquityJourneyCard } from './domains/scenarios/components/equity-journey-card';

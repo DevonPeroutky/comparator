@@ -2,13 +2,14 @@ import { ReactNode } from "react";
 import { JobOfferScenario } from "../types";
 import { TableCell } from "@/components/ui/table";
 import { displayNumber } from "@/domains/offers/utils";
+import { LabelCellProps } from "./label-cell";
 
 type ComparisonCellProps = {
   jobOfferScenario: JobOfferScenario;
 }
 
 export type ComparisonRowDef = {
-  "label": ReactNode;
+  "labelProps": LabelCellProps;
   "cell": (offerScenario: JobOfferScenario) => ReactNode;
 }
 
