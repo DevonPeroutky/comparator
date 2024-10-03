@@ -25,6 +25,6 @@ type SimpleNumberComparisonCellProps = {
 }
 export const SimpleCell: React.FC<SimpleNumberComparisonCellProps> = ({ jobOfferScenario, options, rowKey }) => {
   return (
-    <TableCell key={jobOfferScenario.id}>{displayNumber(jobOfferScenario[rowKey as keyof JobOfferScenario], '-', options)}</TableCell>
+    <TableCell key={`${jobOfferScenario.id}-${rowKey}`}> {displayNumber(jobOfferScenario[rowKey as keyof JobOfferScenario], '-', options)}</TableCell >
   )
 }

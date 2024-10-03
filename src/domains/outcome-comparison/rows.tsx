@@ -15,7 +15,7 @@ export const rowDefs: ComparisonRowDef[] = [
   },
   {
     "label": "Projected Valuation",
-    "cell": (offerScenario) => <TableCell><ScenarioSelect jobOffer={offerScenario} /></TableCell>
+    "cell": (offerScenario) => <TableCell key={offerScenario.id}><ScenarioSelect jobOffer={offerScenario} /></TableCell>
   },
   {
     "label": "Exercise Cost (w/out Tax)",

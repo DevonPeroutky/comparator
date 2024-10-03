@@ -1,36 +1,24 @@
+import { useRecoilValue } from "recoil";
 import { determineRoundDilution } from "../dilution/utils";
 import { JobOffer } from "../offers/types";
+import { scenarioMapState } from "./atoms";
 import { Scenario } from "./types";
 import { Metric } from "./types";
-
-
+import { jobOffersState } from "../offers/atoms";
+import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveDilutionPercentageOwned, deriveEquityValue } from "@/lib/calculations";
 
 /* TODO: Factor in dilution */
 export const calculateOutcome = (scenario: Scenario, offer: JobOffer, metric: Metric): number => {
-  const percentage_ownership = offer.percentage_ownership;
-  const total_stock_package_value = percentage_ownership * scenario.valuation;
-  const total_compensation_value = (offer.salary * offer.vesting_years) + total_stock_package_value;
+  const dilutedPercentage = deriveDilutionPercentageOwned(offer.percentage_ownership, scenario.dilution);
 
   switch (metric) {
-    case Metric.TotalCompensation:
-      return Math.round(total_compensation_value);
     case Metric.TotalEquityPackage:
-      return Math.round(total_stock_package_value);
+      return deriveEquityValue(offer.percentage_ownership, 1, scenario.valuation);
     case Metric.AnnualCompensation:
-      return Math.round(total_compensation_value / offer.vesting_years);
+      return deriveAnnualCompensation(offer.percentage_ownership, 1, scenario.valuation, offer.vesting_years, offer.salary);
     case Metric.AnnualEquityPackage:
-      return Math.round(total_stock_package_value / offer.vesting_years);
+      return deriveAnnualEquityValue(offer.percentage_ownership, 1, scenario.valuation, offer.vesting_years);
   }
-}
-
-export const buildOutcomeList = (scenario: Scenario, offers: JobOffer[], selectedMetric: Metric) => {
-  const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
-
-  offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
-    outcome[offer.company_name] = calculateOutcome(scenario, offer, selectedMetric)
-  });
-
-  return outcome
 }
 
 const determineDilution = (valuations: number[]): number => {
@@ -65,4 +53,24 @@ function map(
 export function generateSteppedArray(start: number, end: number, steps: number): number[] {
   const stepSize = (end - start) / (steps - 1);
   return Array.from({ length: steps }, (_, i) => start + i * stepSize);
+}
+
+export const useBuildScenarioListForGraphing = () => {
+  const scenarioMap = useRecoilValue(scenarioMapState);
+  const offers = useRecoilValue(jobOffersState);
+
+  return (selectedMetric: Metric): Record<string, number>[] => {
+    const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => [scenarios[0], scenarios[scenarios.length - 1]]);
+    scenarios.sort((a, b) => a.valuation - b.valuation);
+
+    return scenarios.map(scenario => {
+      const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
+
+      offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
+        outcome[offer.company_name] = calculateOutcome(scenario, offer, selectedMetric)
+      });
+
+      return outcome
+    })
+  }
 }

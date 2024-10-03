@@ -13,7 +13,6 @@ export const JobOfferTable = () => {
   // Use this to force the DataTable to fully re-render when offers change
   const tableKey = React.useMemo(() => JSON.stringify(offers), [offers]);
 
-  console.log('Offers: ', offers);
   return (
     <Card className='h-fit'>
       <CardHeader>

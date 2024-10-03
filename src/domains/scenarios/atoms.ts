@@ -54,11 +54,13 @@ export const DEFAULT_SCENARIOS: Scenario[] = [
   },
 ]
 
+// Which scenario is selected for each column in the CompareOffer table
 export const selectedScenarioIdState = atom<Record<string, string>>({
   key: 'selectedScenarioIdState',
   default: {}
 });
 
+// Possible scenarios for each offer.
 export const scenarioMapState = atom<Record<string, Scenario[]>>({
   key: 'scenarioMapState',
   default: {},

@@ -1,8 +1,8 @@
-import { LineChartContainer } from './domains/scenarios/charts';
+import { OffersGraph } from './domains/scenarios/charts';
 import { JobOfferTable } from './domains/offers/components/job-offers-table';
 import { DilutionTable } from './domains/dilution/components/dilution-schedule';
 import { AggegrateEquityJourneyCard } from './domains/scenarios/components/equity-journey-card';
-import { useRecoilValue } from 'recoil';
+import { useRecoilSnapshot, useRecoilValue } from 'recoil';
 import { jobOffersState } from './domains/offers/atoms';
 import { scenarioMapState, useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
@@ -23,7 +23,6 @@ export default function App() {
     })
   }, []);
 
-  console.log(scenarioMap);
 
 
   return (
@@ -35,7 +34,7 @@ export default function App() {
       <div className="max-w-screen flex flex-col gap-y-4">
         <JobOfferTable />
         <div className='w-full grid grid-cols-1 md:grid-cols-[1fr,minmax(0,500px)] gap-4'>
-          <LineChartContainer title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />
+          <OffersGraph title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />
           <DilutionTable />
         </div>
         {offers.length > 0 && Object.keys(scenarioMap).length > 0 &&

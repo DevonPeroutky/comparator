@@ -20,7 +20,7 @@ export const MetricSelect: React.FC<MetricSelectProps> = ({ selectedMetric, onMe
         <SelectValue placeholder="Select Metric" className="font-bold text-2xl" />
       </SelectTrigger>
       <SelectContent className="cursor-pointer">
-        <SelectItem value="total_compensation" className="cursor-pointer">Total Compensation</SelectItem>
+        {/* <SelectItem value="total_compensation" className="cursor-pointer">Total Compensation</SelectItem> */}
         <SelectItem value="total_equity_package" className="cursor-pointer">Total Equity Package</SelectItem>
         <SelectItem value="annual_compensation" className="cursor-pointer">Annual Compensation</SelectItem>
         <SelectItem value="annual_equity_package" className="cursor-pointer">Annual Equity Package</SelectItem>

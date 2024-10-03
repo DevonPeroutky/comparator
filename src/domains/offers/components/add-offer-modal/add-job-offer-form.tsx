@@ -48,7 +48,6 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
   const { register, setValue, control, handleSubmit } = form;
 
   const onSubmit = (data: FormData) => {
-    console.log('DATA: ', data);
     if (!data.percentage_ownership && (!data.number_of_shares || !data.total_number_of_outstanding_shares)) {
       form.setError("root", {
         type: "manual",

@@ -1,5 +1,4 @@
-import { Quote, TrendingUp } from "lucide-react"
-import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts"
+import { CartesianGrid, LabelList, Line, LineChart, XAxis, YAxis } from "recharts"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
 import {
@@ -19,21 +18,37 @@ import {
 import { ReactNode, useState } from "react"
 import { useRecoilValue } from "recoil"
 import { jobOffersState } from "../offers/atoms"
-import { DEFAULT_SCENARIOS } from "./atoms"
 import { MetricSelect } from "./components/metric-select"
 import { Metric, Scenario } from "./types"
-import { buildOutcomeList } from "./utils"
+import { useBuildScenarioListForGraphing } from "./utils"
 
-type LineChartContainerProps = {
+const CustomTooltip = ({ active, payload, label }) => {
+  console.log(active, payload, label);
+  if (active && payload && payload.length) {
+    return (
+      <div className="custom-tooltip">
+        <p className="label">{`${label} : ${payload[0].value}`}</p>
+        <p className="desc">Anything you want can be displayed here.</p>
+      </div>
+    );
+  }
+
+  return null;
+};
+
+
+type OffersGraphProps = {
   title: string
   description: ReactNode
 }
-export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, description }) => {
+export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) => {
   const offers = useRecoilValue(jobOffersState);
-  const scenarios: Scenario[] = DEFAULT_SCENARIOS;
-  const [selectedMetric, setSelectedMetric] = useState(Metric.TotalCompensation);
+  const buildScenarioList = useBuildScenarioListForGraphing()
+  const [selectedMetric, setSelectedMetric] = useState(Metric.TotalEquityPackage);
 
-  const chartData = scenarios.map(scenario => buildOutcomeList(scenario, offers, selectedMetric))
+  const chartData = buildScenarioList(selectedMetric)
+
+  console.log(chartData)
   const chartConfig = offers.reduce((config, offer, idx) => {
     config[offer.company_name] = {
       label: offer.company_name,
@@ -62,7 +77,7 @@ export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, d
               right: 48,
             }}
           >
-            <CartesianGrid vertical={false} />
+            <CartesianGrid vertical={true} horizontal={true} />
             <XAxis
               dataKey="scenario_valuation"
               tickLine={false}
@@ -76,7 +91,7 @@ export const LineChartContainer: React.FC<LineChartContainerProps> = ({ title, d
             />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
+              content={<ChartTooltipContent indicator="line" x="scenario_valuation" />}
             />
             {
               offers.map((offer, idx) => (

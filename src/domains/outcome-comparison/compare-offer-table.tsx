@@ -26,10 +26,8 @@ export const ComparisonTable = () => {
   if (Object.keys(scenarioMap).length > 0) {
     jobOfferScenarios = jobOffers.map(offer => {
       const scenarios = scenarioMap[offer.company_name]
-      console.log(`SCENARIOS -> `, scenarios)
       const selectedScenarioId = selectedScenarioIds[offer.company_name]
       const selectedScenario = scenarios.find(scenario => scenario.id === selectedScenarioId) || scenarios[0]
-      console.log(`SELECTED SCENARIO: `, selectedScenario)
       return { ...offer, ...selectedScenario }
     })
   }
@@ -38,8 +36,6 @@ export const ComparisonTable = () => {
     <TableHead key="blank" className="w-[250px]"></TableHead>,
     ...jobOffers.map(offer => <TableHead key={offer.id}>{offer.company_name}</TableHead>)
   ];
-
-  console.log(`Job Offer Scenarios: `, jobOfferScenarios)
 
   return (
     <Card>
@@ -61,20 +57,20 @@ export const ComparisonTable = () => {
           <TableBody>
             {rowDefs.map(({ cell, label }, index) => (
               <TableRow key={index}>
-                {[<TableCell className="w-fit capitalize">{label}</TableCell>, ...jobOfferScenarios.map(cell)]}
+                {[<TableCell className="w-fit capitalize" key={`${label}-label`}>{label}</TableCell>, ...jobOfferScenarios.map(cell)]}
               </TableRow>
             ))}
           </TableBody>
           <TableFooter>
             {footerDefs.map(({ cell, label }, index) => (
               <TableRow key={index}>
-                {[<TableCell className="w-fit capitalize">{label}</TableCell>, ...jobOfferScenarios.map(cell)]}
+                {[<TableCell className="w-fit capitalize" key={`${label}-label`}> {label}</TableCell>, ...jobOfferScenarios.map(cell)]}
               </TableRow>
             ))}
           </TableFooter>
         </Table>
       </CardContent>
-    </Card>
+    </Card >
   )
 
 }

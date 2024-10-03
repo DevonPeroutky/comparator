@@ -61,9 +61,6 @@ export const AggegrateEquityJourneyCard = () => {
     })
   }, [scenarioMap]);
 
-  console.log('THE DATA', flattenedScenarios);
-
-
   return (
     <Card className='h-fit'>
       <CardHeader>
