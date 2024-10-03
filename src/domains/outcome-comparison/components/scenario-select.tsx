@@ -27,8 +27,7 @@ export const ScenarioSelect: React.FC<ScenarioSelectProps> = ({ jobOffer }) => {
       setSelectedScenarioIds(selectedScenarioIdMap => ({
         ...selectedScenarioIdMap,
         [jobOffer.company_name]: id
-      })
-      )
+      }))
     }}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Scenario" className="font-bold text-2xl" />

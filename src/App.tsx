@@ -8,6 +8,7 @@ import { scenarioMapState, useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
 import { generateScenarios } from './domains/scenarios/utils';
 import { ComparisonTable } from './domains/outcome-comparison/compare-offer-table';
+import { TextHoverEffect } from './components/ui/text-hover-effect';
 
 export default function App() {
   const offers = useRecoilValue(jobOffersState)
@@ -26,8 +27,11 @@ export default function App() {
 
 
   return (
-    <div className='w-screen px-[10%]'>
+    <div className='w-screen px-[10%] text-4xl'>
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Comparator</h1>
+      <div className='h-[40rem] w-[300px]'>
+        <TextHoverEffect text="Comparator" />
+      </div>
       <p className="leading-7 [&:not(:first-child)]:mt-6">
         Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank'>open-source</a>) way of comparing job offers and equity packages. All the data is stored 100% on client (nothing is sent to a server).
       </p>
