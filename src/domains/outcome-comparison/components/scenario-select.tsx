@@ -17,12 +17,18 @@ export interface ScenarioSelectProps {
 
 export const ScenarioSelect: React.FC<ScenarioSelectProps> = ({ jobOffer }) => {
   const scenarios: Scenario[] = useRecoilValue(scenarioMapState)[jobOffer.company_name]
-  const [selectedScenarioId, setSelectedScenarioId] = useRecoilState(selectedScenarioIdState);
+  const [selectedScenarioIds, setSelectedScenarioIds] = useRecoilState(selectedScenarioIdState);
+
+  const selectedScenarioId = selectedScenarioIds[jobOffer.company_name];
   const selectedScenario = scenarios.find(scenario => scenario.id === selectedScenarioId) || scenarios[0];
 
   return (
     <Select value={selectedScenario.id} onValueChange={(id: string) => {
-      setSelectedScenarioId(id);
+      setSelectedScenarioIds(selectedScenarioIdMap => ({
+        ...selectedScenarioIdMap,
+        [jobOffer.company_name]: id
+      })
+      )
     }}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select Scenario" className="font-bold text-2xl" />

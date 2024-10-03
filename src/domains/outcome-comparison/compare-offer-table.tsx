@@ -19,7 +19,7 @@ import { footerDefs, rowDefs } from "./rows";
 export const ComparisonTable = () => {
   const jobOffers = useRecoilValue(jobOffersState);
   const scenarioMap = useRecoilValue(scenarioMapState);
-  const selectedScenarioId = useRecoilValue(selectedScenarioIdState);
+  const selectedScenarioIds = useRecoilValue(selectedScenarioIdState);
 
   var jobOfferScenarios: JobOfferScenario[] = []
 
@@ -27,6 +27,7 @@ export const ComparisonTable = () => {
     jobOfferScenarios = jobOffers.map(offer => {
       const scenarios = scenarioMap[offer.company_name]
       console.log(`SCENARIOS -> `, scenarios)
+      const selectedScenarioId = selectedScenarioIds[offer.company_name]
       const selectedScenario = scenarios.find(scenario => scenario.id === selectedScenarioId) || scenarios[0]
       console.log(`SELECTED SCENARIO: `, selectedScenario)
       return { ...offer, ...selectedScenario }

@@ -54,9 +54,9 @@ export const DEFAULT_SCENARIOS: Scenario[] = [
   },
 ]
 
-export const selectedScenarioIdState = atom<string | undefined>({
+export const selectedScenarioIdState = atom<Record<string, string>>({
   key: 'selectedScenarioIdState',
-  default: undefined
+  default: {}
 });
 
 export const scenarioMapState = atom<Record<string, Scenario[]>>({

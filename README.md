@@ -9,7 +9,8 @@
 - [x] Combine Scenarios table into 1 with groups for each offer (or expandable rows).
 - [ ] Remove dilution table?
 - [ ] Tooltip on Rounds of Funding (Explain that it's used for dilution calculation)
-- [ ] Update ScenarioMapState from table. 
+- [ ] Tooltip on Dilution
+- [ ] Explain how much dilution per step?
 
 ## Offers Graph
 - [ ] Formalize calculations w/dilution
