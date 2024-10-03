@@ -1,6 +1,7 @@
 import {
   Table,
   TableBody,
+  TableCell,
   TableFooter,
   TableHead,
   TableHeader,
@@ -11,8 +12,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { useRecoilValue } from "recoil";
 import { jobOffersState } from "../offers/atoms";
 import { scenarioMapState } from "../scenarios/atoms";
-import { deriveAnnualCompensation, useBuildRows, deriveDilutionPercentageOwned, deriveEquityValue, deriveExerciseCost, deriveAnnualEquityValue } from "./utils";
 import { JobOfferScenario } from "./types";
+import { footerDefs, rowDefs } from "./rows";
 
 
 export const ComparisonTable = () => {
@@ -28,28 +29,12 @@ export const ComparisonTable = () => {
     })
   }
 
-  const rowDefs = [
-    { row_key: "salary", label: "Salary", options: { style: "currency", currency: "USD" } },
-    { row_key: "latest_company_valuation", label: "Current Valuation", options: { style: "currency", currency: "USD", maximumFractionDigits: 0 } },
-    // TODO: Replace basic cell with SelectMenu to 
-    { row_key: "valuation", label: "Projected Valuation", options: { style: "currency", currency: "USD", maximumFractionDigits: 0 } },
-    { derive_value: deriveExerciseCost, label: "Exercise Cost (w/out Tax)" },
-    { derive_value: deriveDilutionPercentageOwned, label: "Fully Diluted Percentage" },
-    { derive_value: deriveEquityValue, label: "Equity Value" },
-    { derive_value: deriveAnnualEquityValue, label: "Annual Equity Value" },
-  ];
-  const footerDefs = [
-    { derive_value: deriveAnnualCompensation, label: "Total Annual Compensation" },
+  const tableHeaders = [
+    <TableHead key="blank" className="w-[250px]"></TableHead>,
+    ...jobOffers.map(offer => <TableHead key={offer.id}>{offer.company_name}</TableHead>)
   ];
 
-  // TODO: Pass the appropriate scenario to each column w/JobOffer 
-
-  const buildRows = useBuildRows(rowDefs);
-  const buildFooter = useBuildRows(footerDefs);
-  const tableHeaders = jobOffers.map(offer => <TableHead key={offer.id}>{offer.company_name}</TableHead>)
-
-  // Prepend the tableHeaders with a blank Cell
-  tableHeaders.unshift(<TableHead key="blank" className="w-[250px]"></TableHead>)
+  console.log("JOB SCENARIOS", jobOfferScenarios);
 
   return (
     <Card>
@@ -69,10 +54,18 @@ export const ComparisonTable = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {buildRows(jobOfferScenarios)}
+            {rowDefs.map(({ cell, label }, index) => (
+              <TableRow key={index}>
+                {[<TableCell className="w-fit capitalize">{label}</TableCell>, ...jobOfferScenarios.map(cell)]}
+              </TableRow>
+            ))}
           </TableBody>
           <TableFooter>
-            {buildFooter(jobOfferScenarios)}
+            {footerDefs.map(({ cell, label }, index) => (
+              <TableRow key={index}>
+                {[<TableCell className="w-fit capitalize">{label}</TableCell>, ...jobOfferScenarios.map(cell)]}
+              </TableRow>
+            ))}
           </TableFooter>
         </Table>
       </CardContent>
