@@ -1,23 +1,20 @@
 import { Card, CardDescription, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
 import { DataTable } from "@/components/ui/data-table";
 import { ColumnDef } from "@tanstack/react-table";
-import { EditableCell } from "@/lib/columns/base_columns";
 import { mapNumber, validateNumber, formatNumber } from "@/lib/columns/column_utils";
 import { scenarioMapState } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import { useMemo } from "react";
+import { EquityJourneyPlanCell, FlattenedScenarios } from "@/domains/scenarios/components/equity-journey-card/columns";
+import { Scenario } from "../../types";
 
 
 export const AggegrateEquityJourneyCard = () => {
   const scenarioMap = useRecoilValue(scenarioMapState);
   const tableKey = useMemo(() => JSON.stringify(scenarioMap), [scenarioMap]);
-
-  const valuationColumnKey = (company_name: string) => `${company_name.replace(".", "-")}-valuation`;
-  const fundingRoundsColumnKey = (company_name: string) => `${company_name.replace(".", "-")}-funding-rounds`;
-  const dilutionColumnKey = (company_name: string) => `${company_name.replace(".", "-")}-dilution`;
   const columnKey = (column_name: string, company_name: string) => `${company_name.replace(".", "-")}-${column_name}`;
 
-  const aggegateColumns: ColumnDef<{ [x: string]: number }>[] = useMemo(() => {
+  const aggegateColumns: ColumnDef<FlattenedScenarios>[] = useMemo(() => {
     if (Object.keys(scenarioMap).length === 0) {
       return [];
     }
@@ -27,43 +24,45 @@ export const AggegrateEquityJourneyCard = () => {
       header: () => <h2 className="text-xl font-medium">{company_name}</h2>,
       columns: [
         {
-          accessorKey: valuationColumnKey(company_name),
+          accessorKey: columnKey("valuation", company_name),
           header: "Valuation",
           size: 200,
-          cell: ({ row }) => <EditableCell row={row} fieldName={valuationColumnKey(company_name)} mapValue={mapNumber} formatter={formatNumber({ "style": "currency", "currency": "USD", maximumFractionDigits: 0 })} validate={validateNumber} recoilState={scenarioMapState} />
+          cell: ({ row }) => <EquityJourneyPlanCell row={row} companyName={company_name} fieldName="valuation" formatter={formatNumber({ "style": "currency", "currency": "USD", maximumFractionDigits: 0 })} validate={validateNumber} mapValue={mapNumber} />
         },
         {
-          accessorKey: fundingRoundsColumnKey(company_name),
+          accessorKey: columnKey("number_of_rounds", company_name),
           header: "Funding Rounds",
           size: 100,
-          cell: ({ row }) => <EditableCell row={row} fieldName={fundingRoundsColumnKey(company_name)} mapValue={mapNumber} formatter={formatNumber({ useGrouping: true, maximumFractionDigits: 0 })} validate={validateNumber} recoilState={scenarioMapState} />
+          cell: ({ row }) => <EquityJourneyPlanCell row={row} companyName={company_name} fieldName="number_of_rounds" mapValue={mapNumber} formatter={formatNumber({ useGrouping: true, maximumFractionDigits: 0 })} validate={validateNumber} />
         },
         {
           accessorKey: columnKey("dilution", company_name),
           header: "Dilution",
           size: 100,
-          cell: ({ row }) => <EditableCell row={row} fieldName={columnKey("dilution", company_name)} mapValue={mapNumber} formatter={formatNumber({ style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 })} validate={validateNumber} recoilState={scenarioMapState} />
+          cell: ({ row }) => <EquityJourneyPlanCell row={row} companyName={company_name} fieldName="dilution" mapValue={mapNumber} formatter={formatNumber({ style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 })} validate={validateNumber} />
         }
       ],
     }))
   }, [scenarioMap]);
 
-  const tData = useMemo(() => {
-    const companies = Object.keys(scenarioMap);
-    const maxLength = Math.max(...Object.values(scenarioMap).map(scenarios => scenarios.length));
+  const flattenedScenarios = useMemo(() => {
+    const companies = Object.keys(scenarioMap)
+    const maxLength = Math.max(...Object.values(scenarioMap).map(scenarios => scenarios.length))
 
+    if (maxLength === 0) {
+      return [];
+    }
     return Array.from({ length: maxLength }, (_, index) => {
       return companies.reduce((acc, company_name) => {
         const scenario = scenarioMap[company_name][index];
-        if (scenario) {
-          acc[valuationColumnKey(company_name)] = scenario.valuation;
-          acc[fundingRoundsColumnKey(company_name)] = scenario.number_of_rounds;
-          acc[dilutionColumnKey(company_name)] = scenario.dilution;
-        }
+        acc[company_name] = scenario;
         return acc;
-      }, {} as { [x: string]: number });
-    });
+      }, {} as Record<string, Scenario>)
+    })
   }, [scenarioMap]);
+
+  console.log('THE DATA', flattenedScenarios);
+
 
   return (
     <Card className='h-fit'>
@@ -78,7 +77,7 @@ export const AggegrateEquityJourneyCard = () => {
       <CardContent>
         <DataTable
           columns={aggegateColumns}
-          data={tData}
+          data={flattenedScenarios}
           key={tableKey}
         />
       </CardContent>

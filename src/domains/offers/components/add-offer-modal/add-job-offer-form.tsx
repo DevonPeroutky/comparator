@@ -78,7 +78,6 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     data.percentage_ownership = data.percentage_ownership! / 100;
 
     const newJobOffer: JobOffer = jobOfferFormSchema.parse(data);
-    console.log('NEW JOB OFFER: ', newJobOffer);
 
     // Add new Job offer to the list
     setJobOffers([...jobOffers, newJobOffer])

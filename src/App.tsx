@@ -11,6 +11,7 @@ import { ComparisonTable } from './domains/offers/compare-offer-table';
 import { dilutionRoundsState } from './domains/dilution/atoms';
 
 export default function App() {
+  const dilution = useRecoilValue(dilutionRoundsState)
   const offers = useRecoilValue(jobOffersState)
   const scenarioMap = useRecoilValue(scenarioMapState)
   const addScenarios = useAddScenarios();
@@ -23,6 +24,8 @@ export default function App() {
       addScenarios(offer.company_name, scenarios);
     })
   }, []);
+
+  console.log(scenarioMap);
 
 
   return (
@@ -39,7 +42,7 @@ export default function App() {
         </div>
         {offers.length > 0 && Object.keys(scenarioMap).length > 0 &&
           <div className='max-w-screen w-full overflow-x-auto'>
-            {/* <AggegrateEquityJourneyCard /> */}
+            <AggegrateEquityJourneyCard />
             {/* <div className='grid grid-cols-1 md:grid-cols-[repeat(4,minmax(250px,1fr))] gap-4'> */}
             {/*   {Object.entries(scenarioMap).map(([company_name, scenarios]) => ( */}
             {/*     <EquityJourneyCard key={company_name} company_name={company_name} scenarios={scenarios} /> */}
