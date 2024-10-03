@@ -7,11 +7,9 @@ import { jobOffersState } from './domains/offers/atoms';
 import { scenarioMapState, useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
 import { generateScenarios } from './domains/scenarios/utils';
-import { ComparisonTable } from './domains/offers/compare-offer-table';
-import { dilutionRoundsState } from './domains/dilution/atoms';
+import { ComparisonTable } from './domains/outcome-comparison/compare-offer-table';
 
 export default function App() {
-  const dilution = useRecoilValue(dilutionRoundsState)
   const offers = useRecoilValue(jobOffersState)
   const scenarioMap = useRecoilValue(scenarioMapState)
   const addScenarios = useAddScenarios();
