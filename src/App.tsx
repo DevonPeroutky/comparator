@@ -1,5 +1,5 @@
 import { OffersGraph } from './domains/scenarios/components/offer-graph';
-import { JobOfferTable } from './domains/offers/components/job-offers-table';
+import { JobOfferTable, JobOfferTableCard } from './domains/offers/components/job-offers-table';
 import { DilutionTable } from './domains/dilution/components/dilution-schedule';
 import { AggegrateEquityJourneyCard } from './domains/scenarios/components/equity-journey-card';
 import { useRecoilSnapshot, useRecoilValue } from 'recoil';
@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 import { generateScenarios } from './domains/scenarios/utils';
 import { ComparisonTable } from './domains/outcome-comparison/compare-offer-table';
 import { TextHoverEffect } from './components/ui/text-hover-effect';
+import { FeaturesSectionDemo } from './components/ui/bento-grid';
+import { AppGrid } from './app-grid';
 
 export default function App() {
   const offers = useRecoilValue(jobOffersState)
@@ -28,6 +30,7 @@ export default function App() {
 
   return (
     <div className='w-screen px-[10%] text-4xl'>
+      <AppGrid />
       <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">Comparator</h1>
       <div className='h-[40rem] w-[300px]'>
         <TextHoverEffect text="Comparator" />
@@ -36,7 +39,7 @@ export default function App() {
         Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank'>open-source</a>) way of comparing job offers and equity packages. All the data is stored 100% on client (nothing is sent to a server).
       </p>
       <div className="max-w-screen flex flex-col gap-y-4">
-        <JobOfferTable />
+        <JobOfferTableCard />
         <div className='w-full grid grid-cols-1 md:grid-cols-[1fr,minmax(0,500px)] gap-4'>
           <OffersGraph title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />
           <DilutionTable />

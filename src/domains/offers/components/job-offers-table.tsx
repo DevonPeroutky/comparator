@@ -7,12 +7,7 @@ import { AddOfferModal } from './add-offer-modal/add-offer-modal';
 import React from 'react';
 
 
-export const JobOfferTable = () => {
-  const [offers, setOffers] = useRecoilState(jobOffersState);
-
-  // Use this to force the DataTable to fully re-render when offers change
-  const tableKey = React.useMemo(() => JSON.stringify(offers), [offers]);
-
+export const JobOfferTableCard = () => {
   return (
     <Card className='h-fit'>
       <CardHeader>
@@ -25,8 +20,20 @@ export const JobOfferTable = () => {
         <CardDescription>Add your job offers here</CardDescription>
       </CardHeader>
       <CardContent>
-        <DataTable columns={columns} data={offers} key={tableKey} />
+        <JobOfferTable />
       </CardContent>
     </Card>
   )
 }
+
+export const JobOfferTable = () => {
+  const [offers, setOffers] = useRecoilState(jobOffersState);
+
+  // Use this to force the DataTable to fully re-render when offers change
+  const tableKey = React.useMemo(() => JSON.stringify(offers), [offers]);
+
+  return (
+    <DataTable columns={columns} data={offers} key={tableKey} />
+  )
+}
+
