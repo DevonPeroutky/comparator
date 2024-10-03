@@ -1,14 +1,14 @@
 import { Card, CardDescription, CardHeader, CardTitle, CardContent } from "@/components/ui/card"
-import { Scenario } from "../types";
 import { DataTable } from "@/components/ui/data-table";
 import { ColumnDef } from "@tanstack/react-table";
-import { EditableCell, validateNumber, mapNumber, formatNumber } from "@/lib/base_columns";
-import { scenarioMapState } from "../atoms";
+import { EditableCell } from "@/lib/columns/base_columns";
+import { mapNumber, validateNumber, formatNumber } from "@/lib/columns/column_utils";
+import { scenarioMapState } from "../../atoms";
 import { useRecoilValue } from "recoil";
 import { useMemo } from "react";
 
 
-export const AggegrateEquityJourneyCard = ({ }) => {
+export const AggegrateEquityJourneyCard = () => {
   const scenarioMap = useRecoilValue(scenarioMapState);
   const tableKey = useMemo(() => JSON.stringify(scenarioMap), [scenarioMap]);
 

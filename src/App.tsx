@@ -8,12 +8,14 @@ import { scenarioMapState, useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
 import { generateScenarios } from './domains/scenarios/utils';
 import { ComparisonTable } from './domains/offers/compare-offer-table';
+import { dilutionRoundsState } from './domains/dilution/atoms';
 
 export default function App() {
   const offers = useRecoilValue(jobOffersState)
   const scenarioMap = useRecoilValue(scenarioMapState)
   const addScenarios = useAddScenarios();
 
+  // TODO: Remove this
   useEffect(() => {
     offers.forEach(offer => {
       const scenarios = generateScenarios(offer);
@@ -22,7 +24,6 @@ export default function App() {
     })
   }, []);
 
-  console.log('scenarioMap: ', scenarioMap)
 
   return (
     <div className='w-screen px-[10%]'>
@@ -38,7 +39,7 @@ export default function App() {
         </div>
         {offers.length > 0 && Object.keys(scenarioMap).length > 0 &&
           <div className='max-w-screen w-full overflow-x-auto'>
-            <AggegrateEquityJourneyCard />
+            {/* <AggegrateEquityJourneyCard /> */}
             {/* <div className='grid grid-cols-1 md:grid-cols-[repeat(4,minmax(250px,1fr))] gap-4'> */}
             {/*   {Object.entries(scenarioMap).map(([company_name, scenarios]) => ( */}
             {/*     <EquityJourneyCard key={company_name} company_name={company_name} scenarios={scenarios} /> */}
