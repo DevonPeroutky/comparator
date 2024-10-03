@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 
 import { useRecoilValue } from "recoil";
 import { jobOffersState } from "../offers/atoms";
-import { scenarioMapState } from "../scenarios/atoms";
+import { scenarioMapState, selectedScenarioIdState } from "../scenarios/atoms";
 import { JobOfferScenario } from "./types";
 import { footerDefs, rowDefs } from "./rows";
 
@@ -19,13 +19,17 @@ import { footerDefs, rowDefs } from "./rows";
 export const ComparisonTable = () => {
   const jobOffers = useRecoilValue(jobOffersState);
   const scenarioMap = useRecoilValue(scenarioMapState);
+  const selectedScenarioId = useRecoilValue(selectedScenarioIdState);
+
   var jobOfferScenarios: JobOfferScenario[] = []
 
   if (Object.keys(scenarioMap).length > 0) {
     jobOfferScenarios = jobOffers.map(offer => {
       const scenarios = scenarioMap[offer.company_name]
-      // TODO: Replace with Selected Scenario
-      return { ...offer, ...scenarios[4] }
+      console.log(`SCENARIOS -> `, scenarios)
+      const selectedScenario = scenarios.find(scenario => scenario.id === selectedScenarioId) || scenarios[0]
+      console.log(`SELECTED SCENARIO: `, selectedScenario)
+      return { ...offer, ...selectedScenario }
     })
   }
 
@@ -34,7 +38,7 @@ export const ComparisonTable = () => {
     ...jobOffers.map(offer => <TableHead key={offer.id}>{offer.company_name}</TableHead>)
   ];
 
-  console.log("JOB SCENARIOS", jobOfferScenarios);
+  console.log(`Job Offer Scenarios: `, jobOfferScenarios)
 
   return (
     <Card>
@@ -47,7 +51,7 @@ export const ComparisonTable = () => {
         <CardDescription>See how the equity compares round by round</CardDescription>
       </CardHeader>
       <CardContent>
-        <Table>
+        <Table >
           <TableHeader>
             <TableRow>
               {tableHeaders}

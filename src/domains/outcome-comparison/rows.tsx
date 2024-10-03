@@ -1,7 +1,8 @@
 import { TableCell } from "@/components/ui/table";
 import { buildSimpleCell, ComparisonRowDef } from "./components/simple-cell";
-import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveDilutionPercentageOwned, deriveEquityValue, deriveExerciseCost } from "./utils";
 import { JobOfferScenario } from "./types";
+import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveDilutionPercentageOwned, deriveEquityValue, deriveExerciseCost } from "@/lib/calculations";
+import { ScenarioSelect } from "./components/scenario-select";
 
 export const rowDefs: ComparisonRowDef[] = [
   {
@@ -14,29 +15,29 @@ export const rowDefs: ComparisonRowDef[] = [
   },
   {
     "label": "Projected Valuation",
-    "cell": buildSimpleCell("valuation", { style: "currency", currency: "USD", maximumFractionDigits: 0 })
+    "cell": (offerScenario) => <TableCell><ScenarioSelect jobOffer={offerScenario} /></TableCell>
   },
   {
     "label": "Exercise Cost (w/out Tax)",
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{deriveExerciseCost(offerScenario)}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{(offerScenario.strike_price && offerScenario.number_of_shares) ? new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD" }).format(deriveExerciseCost(offerScenario.strike_price, offerScenario.number_of_shares)) : "-"}</TableCell>
   },
   {
     "label": "Fully Diluted Percentage",
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{deriveDilutionPercentageOwned(offerScenario)}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 }).format(deriveDilutionPercentageOwned(offerScenario.percentage_ownership, offerScenario.dilution))}</TableCell>
   },
   {
     "label": "Equity Value",
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{deriveEquityValue(offerScenario)}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveEquityValue(offerScenario.percentage_ownership, offerScenario.dilution, offerScenario.valuation))}</TableCell>
   },
   {
     "label": "Annual Equity Value",
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{deriveAnnualEquityValue(offerScenario)}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualEquityValue(offerScenario.percentage_ownership, offerScenario.dilution, offerScenario.valuation, offerScenario.vesting_years))}</TableCell>
   }
 ];
 
 export const footerDefs = [
   {
     label: "Total Annual Compensation",
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{deriveAnnualCompensation(offerScenario)}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={offerScenario.id}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualCompensation(offerScenario.percentage_ownership, offerScenario.dilution, offerScenario.valuation, offerScenario.vesting_years, offerScenario.salary))}</TableCell>
   },
 ];
