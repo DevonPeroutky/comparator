@@ -7,17 +7,16 @@ import {
 } from "@/components/ui/tooltip"
 import { TableCell } from "@/components/ui/table";
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
-import AnimatedShinyText from "@/components/ui/animated-shiny-text";
 
 
 export type LabelCellProps = {
   label: ReactNode;
   tooltip?: ReactNode;
 }
-export const LabelCell: React.FC<LabelCellProps> = ({ label, tooltip, highlighted }) => {
+export const LabelCell: React.FC<LabelCellProps> = ({ label, tooltip }) => {
 
   return (
-    <TableCell className="w-fit capitalize" key={`${label}-label`}>
+    <TableCell className="w-fit capitalize">
       <div className="flex items-center gap-x-2">
         <span>
           {label}

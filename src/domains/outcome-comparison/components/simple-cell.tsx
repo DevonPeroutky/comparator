@@ -14,7 +14,7 @@ export type ComparisonRowDef = {
 }
 
 export const buildSimpleCell = (rowKey: string, options?: Intl.NumberFormatOptions): (offerScenario: JobOfferScenario) => ReactNode => {
-  return (offerScenario: JobOfferScenario) => <SimpleCell jobOfferScenario={offerScenario} options={options} rowKey={rowKey} />
+  return (offerScenario: JobOfferScenario) => <SimpleCell jobOfferScenario={offerScenario} options={options} rowKey={rowKey} key={`${offerScenario.id}-${rowKey}`} />
 }
 
 

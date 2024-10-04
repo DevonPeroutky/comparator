@@ -47,18 +47,18 @@ export const ComparisonTable = () => {
       <TableBody>
         {rowDefs.map(({ cell, labelProps }, index) => (
           <TableRow key={index}>
-            {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
+            {[<LabelCell {...labelProps} key={labelProps.label} />, ...jobOfferScenarios.map(cell)]}
           </TableRow>
         ))}
       </TableBody>
       <TableFooter>
         {footerDefs.map(({ cell, labelProps }, index) => (
-          <TableRow key={index}>
-            {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
+          <TableRow key={`footer-${index}`} >
+            {[<LabelCell {...labelProps} key={labelProps.label} />, ...jobOfferScenarios.map(cell)]}
           </TableRow>
         ))}
       </TableFooter>
-    </Table>
+    </Table >
   )
 }
 

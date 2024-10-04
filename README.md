@@ -1,31 +1,30 @@
 # To-Do
 
 ## (1) Form
-- [x] (1) Tooltips 
+- [ ] Add agreement checkbox.
 
 ## (2) Scenarios
-- [ ] TIMELINE?!??
-  - [ ] (1) EditableText components
-  - [ ] (1) Timeline
-- [ ] Explain how much dilution per step?
+- [ ] Refactor to be dilution per step
 
 ## (2) Offers Graph
 - [ ] (.5) Formalize calculations w/dilution?
-- [x] (1) Dynamic Description to be various formulas
+
+## General
+- [ ] Fix percentage inputs to be 100x of what they are currently
 
 ## Dilution Schedule Table
 - [x] Build out Dilution Table 
 - [x] Add button to reset
 
 ## (1) Side-by-Side Comparison
-- [x] (1) Tooltip all the things!
+- [] (1) Better Tooltip all the things!
 
 ## (4) Overview
 - [ ] (1) Styling
-  - [ ] Table Responsiveness
-  - [ ] Column sizing
+  - [x] Table Responsiveness
+  - [x] Column sizing
   - [ ] Font
-  - [ ] Spacing
+  - [x] Spacing
 - [ ] (2) magic & aceternity
  - [x] Bento Grid
  - [ ] Card Focus?

@@ -1,15 +1,9 @@
-import { OffersGraph } from './domains/scenarios/components/offer-graph';
-import { JobOfferTable, JobOfferTableCard } from './domains/offers/components/job-offers-table';
-import { AggegrateEquityJourneyCard } from './domains/scenarios/components/equity-journey-card';
-import { useRecoilSnapshot, useRecoilValue } from 'recoil';
 import { jobOffersState } from './domains/offers/atoms';
-import { scenarioMapState, useAddScenarios } from './domains/scenarios/atoms';
+import { useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
 import { generateScenarios } from './domains/scenarios/utils';
-import { TextHoverEffect } from './components/ui/text-hover-effect';
 import { AppGrid } from './app-grid';
-import { DilutionTable } from './domains/dilution/components';
-import { ComparisonTableCard } from './domains/outcome-comparison/compare-offer-table';
+import { useRecoilValue } from 'recoil';
 
 export default function App() {
   const offers = useRecoilValue(jobOffersState)

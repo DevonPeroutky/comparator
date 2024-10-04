@@ -3,7 +3,6 @@ import { FeatureCard, FeatureDescription, FeatureDescriptionContainer, FeatureTi
 import { AddOfferModal } from "./domains/offers/components/add-offer-modal/add-offer-modal";
 import { JobOfferTable } from "./domains/offers/components/job-offers-table";
 import { OfferGraphTitle, OffersGraph } from "./domains/scenarios/components/offer-graph";
-import { DilutionTable, DilutionTitle } from "./domains/dilution/components/index";
 import { ComparisonTable } from "./domains/outcome-comparison/index";
 import { ScenarioBuilder, ScenarioBuilderDescription } from "./domains/scenarios/components/equity-journey-card";
 import { EquityJourney } from "./domains/scenarios/components/dilution-timeline";
@@ -64,9 +63,9 @@ export function AppGrid() {
   ];
   return (
     <div className="relative ">
-      <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md dark:border-neutral-800">
-        {features.map((feature) => (
-          <FeatureCard key={feature.title} className={feature.className}>
+      <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 border-t rounded-md dark:border-neutral-800">
+        {features.map((feature, idx) => (
+          <FeatureCard key={idx} className={feature.className}>
             <FeatureTitle>{feature.title}</FeatureTitle>
             {feature.description && <FeatureDescriptionContainer>{feature.description}</FeatureDescriptionContainer>}
             <div className=" h-full w-full">{feature.content}</div>
