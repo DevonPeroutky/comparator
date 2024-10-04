@@ -6,10 +6,6 @@ export const mapNumber = (proposedValue: string): number => {
   return parseFloat(proposedValue.replace(/[^0-9.-]+/g, ""));
 };
 
-export const formatNumber = (options: Intl.NumberFormatOptions) => (value: number): string => {
-  return value ? new Intl.NumberFormat("en-US", options).format(value) : "-";
-}
-
 export const validateString = (proposedValue: string): boolean => {
   return proposedValue !== undefined && proposedValue.trim().length > 0;
 }

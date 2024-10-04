@@ -14,14 +14,6 @@ export type Scenario = {
   number_of_rounds: number;
 };
 
-export type Outcome = {
-  scenario_valuation: number;
-  total_stock_package_value: number;
-  annual_stack_package_value: number;
-  total_compensation_value: number
-  annual_compensation_value: number
-};
-
 export type EquityJourney = {
   [key: string]: Scenario[];
 };

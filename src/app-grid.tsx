@@ -6,6 +6,7 @@ import { OfferGraphTitle, OffersGraph } from "./domains/scenarios/components/off
 import { DilutionTable, DilutionTitle } from "./domains/dilution/components/index";
 import { ComparisonTable } from "./domains/outcome-comparison/index";
 import { ScenarioBuilder, ScenarioBuilderDescription } from "./domains/scenarios/components/equity-journey-card";
+import { EquityJourney } from "./domains/scenarios/components/dilution-timeline";
 
 type BentoCardProps = {
   title?: ReactNode;
@@ -41,17 +42,17 @@ export function AppGrid() {
       className:
         "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
     },
-    {
-      title: <DilutionTitle />,
-      description: null,
-      content: <DilutionTable />,
-      className: "col-span-1 lg:col-span-3 border-b lg:border-none",
-    },
+    // {
+    //   title: <DilutionTitle />,
+    //   description: null,
+    //   content: <DilutionTable />,
+    //   className: "col-span-1 lg:col-span-3 border-b lg:border-none",
+    // },
     {
       title: "Scenario Builder",
       description: <ScenarioBuilderDescription />,
-      content: <ScenarioBuilder />,
-      className: "col-span-1 lg:col-span-6 border-t dark:border-neutral-800",
+      content: <EquityJourney />,
+      className: "col-span-1 lg:col-span-3 border-b lg:border-none",
     },
     {
       title: "Compare Outcomes",

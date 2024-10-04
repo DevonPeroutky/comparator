@@ -8,8 +8,8 @@ import {
 import { JobOffer } from "@/domains/offers/types";
 import { scenarioMapState, selectedScenarioIdState } from "@/domains/scenarios/atoms";
 import { Scenario } from "@/domains/scenarios/types";
-import { formatNumber } from "@/lib/columns/column_utils";
 import { useRecoilState, useRecoilValue } from "recoil";
+import { formatLargeCurrency } from "@/lib/format_utils";
 
 export interface ScenarioSelectProps {
   jobOffer: JobOffer;
@@ -34,11 +34,7 @@ export const ScenarioSelect: React.FC<ScenarioSelectProps> = ({ jobOffer }) => {
       </SelectTrigger>
       <SelectContent className="cursor-pointer">
         {scenarios.map(scenario => (
-          <SelectItem key={scenario.id} value={scenario.id} className="cursor-pointer">{formatNumber({
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 0
-          })(scenario.valuation)}</SelectItem>
+          <SelectItem key={scenario.id} value={scenario.id} className="cursor-pointer">{formatLargeCurrency(scenario.valuation)}</SelectItem>
         ))}
       </SelectContent>
     </Select>
