@@ -156,7 +156,6 @@ const ChartTooltipContent = React.forwardRef<
         return null
       }
 
-      console.log(`VALUE: ${typeof label}`, label)
       const valuationLabel = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(label)
       return <div className={cn("font-medium", labelClassName)}>{valuationLabel}</div>
     }, [

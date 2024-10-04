@@ -18,7 +18,7 @@ import { JobOffer } from "../../types"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
-import { generateScenarios } from "@/domains/scenarios/utils"
+import { generateScenarioForJobOffer, generateScenarios } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
 
 const jobOfferFormSchema = z.object({
@@ -82,7 +82,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     setJobOffers([...jobOffers, newJobOffer])
 
     // Generate scenarios for the new job offer
-    const newScenarios = generateScenarios(newJobOffer);
+    const newScenarios = generateScenarioForJobOffer(newJobOffer);
     addScenarios(newJobOffer.company_name, newScenarios);
 
     onClick();

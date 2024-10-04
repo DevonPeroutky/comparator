@@ -1,19 +1,17 @@
 import { Row } from "@tanstack/react-table";
 import { useState } from 'react';
-import { ComparatorPrimitive } from "@/domains/types";
 import { Primitive } from "zod";
-import { RecoilState } from "recoil";
 
 export interface BaseEditableCellProps<T, C> {
   row: Row<T>
-  fieldName: string
+  fieldName: keyof T
   formatter: (value: C) => string
   mapValue: (value: string) => C
   validate: (value: C) => boolean
 }
 
 export type EditableCellProps<T, C extends Primitive> = BaseEditableCellProps<T, C> & {
-  updateListItem: (proposedValue: string, row: Row<T>, fieldName: string, mapValue: (proposedValue: string) => C, validate: (proposedValue: C) => boolean) => C
+  updateListItem: (proposedValue: string, row: Row<T>, fieldName: keyof T, mapValue: (proposedValue: string) => C, validate: (proposedValue: C) => boolean) => C
 }
 
 export const BaseEditableCell = <T, C extends Primitive>({ row, fieldName, formatter, mapValue, validate, updateListItem }: EditableCellProps<T, C>) => {

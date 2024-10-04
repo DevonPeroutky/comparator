@@ -35,21 +35,21 @@ export const rowDefs: ComparisonRowDef[] = [
       label: "Fully Diluted Percentage",
       tooltip: "The estimated percentage of the company given your starting percentage and dilution from the funding rounds from the scenario"
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`fully_diluted_percentage_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 }).format(deriveDilutionPercentageOwned(offerScenario.percentage_ownership, offerScenario.dilution))}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`fully_diluted_percentage_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 }).format(deriveDilutionPercentageOwned(offerScenario.percentage_ownership, offerScenario.total_dilution))}</TableCell>
   },
   {
     "labelProps": {
       label: "Equity Value",
       tooltip: "The estimated total value of your equity package"
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`equity_value_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveEquityValue(offerScenario.percentage_ownership, offerScenario.dilution, offerScenario.valuation))}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`equity_value_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveEquityValue(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation))}</TableCell>
   },
   {
     "labelProps": {
       label: "Annual Equity Value",
       tooltip: "The estimated annual value of your equity package"
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`annual_equity_value_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualEquityValue(offerScenario.percentage_ownership, offerScenario.dilution, offerScenario.valuation, offerScenario.vesting_years))}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`annual_equity_value_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualEquityValue(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation, offerScenario.vesting_years))}</TableCell>
   }
 ];
 
@@ -59,6 +59,6 @@ export const footerDefs = [
       label: "Total Annual Compensation",
       tooltip: "Your estimated total annual compensation including salary and equity for this scenario"
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`total_annual_compensation_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualCompensation(offerScenario.percentage_ownership, offerScenario.dilution, offerScenario.valuation, offerScenario.vesting_years, offerScenario.salary))}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`total_annual_compensation_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualCompensation(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation, offerScenario.vesting_years, offerScenario.salary))}</TableCell>
   },
 ];

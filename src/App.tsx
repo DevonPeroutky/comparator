@@ -1,7 +1,7 @@
 import { jobOffersState } from './domains/offers/atoms';
 import { useAddScenarios } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
-import { generateScenarios } from './domains/scenarios/utils';
+import { generateScenarioForJobOffer } from './domains/scenarios/utils';
 import { AppGrid } from './app-grid';
 import { useRecoilValue } from 'recoil';
 
@@ -12,7 +12,7 @@ export default function App() {
   // TODO: Remove this
   useEffect(() => {
     offers.forEach(offer => {
-      const scenarios = generateScenarios(offer);
+      const scenarios = generateScenarioForJobOffer(offer);
 
       addScenarios(offer.company_name, scenarios);
     })

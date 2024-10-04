@@ -1,3 +1,5 @@
+import { determineRoundDilution } from "@/domains/dilution/utils";
+
 export const deriveExerciseCost = (strikePrice: number, numberOfShares: number): number => {
   return numberOfShares * strikePrice;
 }
@@ -17,3 +19,8 @@ export const deriveAnnualEquityValue = (percentageOwnership: number, dilution: n
 export const deriveAnnualCompensation = (percentageOwnership: number, dilution: number, valuation: number, vestingYears: number, salary: number): number => {
   return Math.round(deriveAnnualEquityValue(percentageOwnership, dilution, valuation, vestingYears) + salary);
 }
+
+export const determineTotalDilution = (funding_round_valuations: number[]): number => {
+  return funding_round_valuations.map((valuation, index) => determineRoundDilution(valuation)).map(dilution => 1 - dilution).reduce((a, b) => a * b, 1);
+}
+

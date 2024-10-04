@@ -5,12 +5,15 @@
 
 ## (2) Scenarios
 - [ ] Refactor to be dilution per step
+  - [ ] Make sure we're appropriate recalculating
 
 ## (2) Offers Graph
 - [ ] (.5) Formalize calculations w/dilution?
 
 ## General
 - [ ] Fix percentage inputs to be 100x of what they are currently
+  - [ ] Make sure we're appropriate recalculating
+- [ ] Build scenarioMap from jobOffers map via  selector that only creates if not already there
 
 ## Dilution Schedule Table
 - [x] Build out Dilution Table 

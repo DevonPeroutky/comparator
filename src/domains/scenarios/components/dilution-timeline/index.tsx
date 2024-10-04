@@ -78,11 +78,11 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
             <div className="text-base font-normal ">
               <span>Dilution: </span>
               <EditableText
-                value={scenario.dilution}
+                value={scenario.round_dilution}
                 formatter={formatPercentage}
                 scenario={scenario}
                 companyName={companyName}
-                fieldName="dilution"
+                fieldName="round_dilution"
                 onChange={(c) => console.log(c)}
                 className='underline underline-offset-3 decoration-blue-600 dark:decoration-blue-600'
               />

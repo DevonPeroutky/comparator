@@ -34,6 +34,7 @@ export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) 
     return config;
   }, {} as ChartConfig);
 
+  console.log("DATA: ", chartData);
   return (
     <div>
       <ChartContainer config={chartConfig}>
