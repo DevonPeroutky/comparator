@@ -1,5 +1,5 @@
 
-import { atom, useRecoilState } from 'recoil';
+import { atom } from 'jotai';
 import { Scenario } from './types';
 
 export const DEFAULT_SCENARIOS: Scenario[] = [
@@ -55,19 +55,13 @@ export const DEFAULT_SCENARIOS: Scenario[] = [
 ]
 
 // Which scenario is selected for each column in the CompareOffer table
-export const selectedScenarioIdState = atom<Record<string, string>>({
-  key: 'selectedScenarioIdState',
-  default: {}
-});
+export const selectedScenarioIdAtom = atom<Record<string, string>>({});
 
 // Possible scenarios for each offer.
-export const scenarioMapState = atom<Record<string, Scenario[]>>({
-  key: 'scenarioMapState',
-  default: {},
-});
+export const scenarioMapAtom = atom<Record<string, Scenario[]>>({});
 
 export const useUpdateScenario = () => {
-  const [scenarioMap, setScenarioMap] = useRecoilState(scenarioMapState);
+  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapAtom);
 
   return (offerId: string, scenario: Scenario) => {
     setScenarioMap((prevMap) => ({
@@ -78,12 +72,11 @@ export const useUpdateScenario = () => {
 }
 
 export const useAddScenarios = () => {
-  const [scenarioMap, setScenarioMap] = useRecoilState(scenarioMapState);
+  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapAtom);
 
   return (offerId: string, scenarios: Scenario[]) => {
     setScenarioMap((prevMap) => ({
       ...prevMap,
-      // [offerId]: [...(prevMap[offerId] || []), ...scenarios]
       [offerId]: scenarios
     }));
   };

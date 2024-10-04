@@ -1,6 +1,5 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 import { FundingRound } from './types'; // Assuming FundingRound is defined in a types file
-
 
 export const DEFAULT_DILUTION_ROUNDS: FundingRound[] = [
   { id: '-1', label: 'Pre Seed', dilution_amount: .30 },
@@ -13,7 +12,4 @@ export const DEFAULT_DILUTION_ROUNDS: FundingRound[] = [
   { id: '6', label: 'Series F', dilution_amount: .05 },
 ];
 
-export const dilutionRoundsState = atom<FundingRound[]>({
-  key: 'dilutionRoundsState',
-  default: DEFAULT_DILUTION_ROUNDS,
-});
+export const dilutionRoundsAtom = atom<FundingRound[]>(DEFAULT_DILUTION_ROUNDS);

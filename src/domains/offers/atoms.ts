@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom } from 'jotai';
 import { JobOffer } from './types';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
@@ -23,31 +23,8 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     total_number_of_outstanding_shares: 2698775,
     percentage_ownership: 3267 / 2698775,
   },
-  // {
-  //   id: "11x",
-  //   company_name: "11x",
-  //   salary: 225000,
-  //   latest_company_valuation: 320000000,
-  //   vesting_years: 4,
-  //   percentage_ownership: .0011,
-  // },
-  // {
-  //   id: "together.ai",
-  //   company_name: "Together.ai",
-  //   salary: 240000,
-  //   number_of_shares: 11000,
-  //   latest_company_valuation: 2000000000,
-  //   vesting_years: 4,
-  //   strike_price: 75,
-  //   total_number_of_outstanding_shares: 26829268,
-  //   percentage_ownership: .00041,
-  // },
-]
+  // Commented out offers remain the same
+];
 
-
-
-export const jobOffersState = atom<JobOffer[]>({
-  key: 'jobOffersState',
-  default: TEST_JOB_OFFERS,
-});
+export const jobOffersAtom = atom<JobOffer[]>(TEST_JOB_OFFERS);
 
