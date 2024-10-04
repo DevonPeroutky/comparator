@@ -1,5 +1,5 @@
 import { InputProps } from '@/components/ui/input';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import { Scenario } from '../../types';
 import { scenarioMapState, useUpdateScenario } from '../../atoms';
 import { Primitive } from 'zod';
@@ -35,6 +35,7 @@ const EditableText: React.FC<EditableTextProps> = ({ companyName, fieldName, sce
   }
 
   const [formattedValue, setFormattedValue] = useState<string>(formatter(value as string))
+
   return (
     <input
       id={fieldName}
@@ -95,8 +96,9 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
 }
 
 export const EquityJourney = () => {
-  const [scenarioMap, setScenarioMap] = useRecoilState(scenarioMapState);
+  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapState);
 
+  console.log("Scenario Map: ", scenarioMap)
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-start justify-center bg-white md:mr-auto">
       {Object.entries(scenarioMap).map(([companyName, scenarios]) => (

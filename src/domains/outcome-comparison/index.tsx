@@ -7,7 +7,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import { jobOffersState } from "../offers/atoms";
 import { scenarioMapState, selectedScenarioIdState } from "../scenarios/atoms";
 import { JobOfferScenario } from "./types";
@@ -16,10 +16,9 @@ import { LabelCell } from "./components/label-cell";
 
 
 export const ComparisonTable = () => {
-  const jobOffers = useRecoilValue(jobOffersState);
-  const scenarioMap = useRecoilValue(scenarioMapState);
-  const selectedScenarioIds = useRecoilValue(selectedScenarioIdState);
-
+  const jobOffers = useAtomValue(jobOffersState);
+  const scenarioMap = useAtomValue(scenarioMapState);
+  const selectedScenarioIds = useAtomValue(selectedScenarioIdState);
   var jobOfferScenarios: JobOfferScenario[] = []
 
   if (Object.keys(scenarioMap).length > 0) {

@@ -17,19 +17,19 @@ export const columns: ColumnDef<JobOffer>[] = [
   {
     accessorKey: "company_name",
     header: "Company Name",
-    // cell: ({ row }) => <EditableCell row={row} fieldName="company_name" mapValue={mapString} formatter={identity} validate={validateString} recoilState={jobOffersState} />
+    // cell: ({ row }) => <EditableCell row={row} fieldName="company_name" mapValue={mapString} formatter={identity} validate={validateString} jotaiState={jobOffersState} />
     cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="company_name" mapValue={mapString} formatter={mapString} validate={validateString} />
   },
   {
     accessorKey: "salary",
     header: "Salary",
-    // cell: ({ row }) => <EditableCell row={row} fieldName="salary" mapValue={mapNumber} formatter={formatNumber({ style: "currency", currency: "USD" })} validate={validateNumber} recoilState={jobOffersState} />
+    // cell: ({ row }) => <EditableCell row={row} fieldName="salary" mapValue={mapNumber} formatter={formatNumber({ style: "currency", currency: "USD" })} validate={validateNumber} jotaiState={jobOffersState} />
     cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="salary" mapValue={mapNumber} formatter={formatLargeCurrency} validate={validateNumber} />
   },
   {
     accessorKey: "number_of_shares",
     header: "Number of Shares",
-    // cell: ({ row }) => <EditableCell row={row} fieldName="number_of_shares" mapValue={mapNumber} formatter={formatNumber({ useGrouping: true, maximumFractionDigits: 0 })} validate={validateNumber} recoilState={jobOffersState} />
+    // cell: ({ row }) => <EditableCell row={row} fieldName="number_of_shares" mapValue={mapNumber} formatter={formatNumber({ useGrouping: true, maximumFractionDigits: 0 })} validate={validateNumber} jotaiState={jobOffersState} />
     cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="number_of_shares" mapValue={mapNumber} formatter={formatNumber} validate={validateNumber} />
   },
   {

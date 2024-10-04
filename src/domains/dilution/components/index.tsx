@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
-import { useRecoilState } from 'recoil';
+import { useAtom } from 'jotai';
 import { columns } from '../columns';
 import { DEFAULT_DILUTION_ROUNDS, dilutionRoundsState } from '../atoms';
 import React, { useEffect } from 'react';
@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { RefreshCw } from 'lucide-react';
 
 export const DilutionTable = () => {
-  const [dilutionRounds, setDilutionRounds] = useRecoilState(dilutionRoundsState);
+  const [dilutionRounds, setDilutionRounds] = useAtom(dilutionRoundsState);
 
   // Use this to force the DataTable to fully re-render when dilutionRounds change
   const tableKey = React.useMemo(() => JSON.stringify(dilutionRounds), [dilutionRounds]);
@@ -19,7 +19,7 @@ export const DilutionTable = () => {
 }
 
 export const DilutionDescription = () => {
-  const [dilutionRounds, setDilutionRounds] = useRecoilState(dilutionRoundsState);
+  const [dilutionRounds, setDilutionRounds] = useAtom(dilutionRoundsState);
   return (
     <div className='flex items-center justify-between'>
       <Button onClick={() => setDilutionRounds(DEFAULT_DILUTION_ROUNDS)} variant='outline'><RefreshCw className="mr-2 h-4 w-4" /> Reset</Button>
@@ -28,7 +28,7 @@ export const DilutionDescription = () => {
 }
 
 export const DilutionTitle = () => {
-  const [dilutionRounds, setDilutionRounds] = useRecoilState(dilutionRoundsState);
+  const [dilutionRounds, setDilutionRounds] = useAtom(dilutionRoundsState);
   return (
     <div className='flex items-center justify-between'>
       <span>Dilution Schedule</span>

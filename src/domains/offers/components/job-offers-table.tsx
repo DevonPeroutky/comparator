@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 import { jobOffersState } from '../atoms';
 import { columns } from '../columns';
 import { AddOfferModal } from './add-offer-modal/add-offer-modal';
@@ -27,7 +27,7 @@ export const JobOfferTableCard = () => {
 }
 
 export const JobOfferTable = () => {
-  const [offers, setOffers] = useRecoilState(jobOffersState);
+  const [offers, setOffers] = useAtom(jobOffersState);
 
   // Use this to force the DataTable to fully re-render when offers change
   const tableKey = React.useMemo(() => JSON.stringify(offers), [offers]);

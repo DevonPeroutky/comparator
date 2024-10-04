@@ -1,23 +1,29 @@
-import { jobOffersState } from './domains/offers/atoms';
-import { useAddScenarios } from './domains/scenarios/atoms';
+import { defaultJobOfferState, jobOffersState, userJobOfferState } from './domains/offers/atoms';
+import { defaultScenarioMapState, scenarioMapState, useAddScenarios, userScenarioMapState } from './domains/scenarios/atoms';
 import { useEffect } from 'react';
 import { generateScenarioForJobOffer } from './domains/scenarios/utils';
 import { AppGrid } from './app-grid';
-import { useRecoilValue } from 'recoil';
+import { useAtom, useAtomValue } from 'jotai';
 
 export default function App() {
-  const offers = useRecoilValue(jobOffersState)
-  const addScenarios = useAddScenarios();
-
-  // TODO: Remove this
-  useEffect(() => {
-    offers.forEach(offer => {
-      const scenarios = generateScenarioForJobOffer(offer);
-
-      addScenarios(offer.company_name, scenarios);
-    })
-  }, []);
-
+  const d = useAtomValue(defaultJobOfferState);
+  const u = useAtomValue(userJobOfferState);
+  const s = useAtomValue(jobOffersState);
+  console.log("============")
+  console.log(d)
+  console.log(u)
+  console.log(s)
+  // const offers = useAtomValue(jobOffersState)
+  // const addScenarios = useAddScenarios();
+  //
+  // // TODO: Remove this
+  // useEffect(() => {
+  //   offers.forEach(offer => {
+  //     const scenarios = generateScenarioForJobOffer(offer);
+  //     addScenarios(offer.company_name, scenarios);
+  //   })
+  // }, []);
+  //
 
 
   return (

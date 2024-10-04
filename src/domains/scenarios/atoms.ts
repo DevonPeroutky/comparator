@@ -1,67 +1,38 @@
-
-import { atom } from 'jotai';
+import { atomWithDefault, atomWithStorage, createJSONStorage } from 'jotai/utils'
+import { atom, useAtom } from 'jotai';
 import { Scenario } from './types';
-
-export const DEFAULT_SCENARIOS: Scenario[] = [
-  {
-    id: "728ed52fa",
-    valuation: 320000000,
-    multiple: 1,
-    dilution: 0.1,
-    number_of_rounds: 1
-  },
-  {
-    id: "728ed52fb",
-    valuation: 500000000,
-    number_of_rounds: 2,
-    dilution: 0.1,
-    multiple: 500000000 / 320000000,
-  },
-  {
-    id: "728ed52fc",
-    valuation: 1000000000,
-    multiple: 1000000000 / 320000000,
-    dilution: 0.1,
-    number_of_rounds: 3
-  },
-  {
-    id: "728ed52fd",
-    valuation: 2000000000,
-    multiple: 2000000000 / 320000000,
-    dilution: 0.1,
-    number_of_rounds: 4
-  },
-  {
-    id: "728ed52fe",
-    valuation: 3000000000,
-    multiple: 3000000000 / 320000000,
-    dilution: 0.1,
-    number_of_rounds: 5
-  },
-  {
-    id: "728ed52ff",
-    valuation: 5000000000,
-    multiple: 5000000000 / 320000000,
-    dilution: 0.1,
-    number_of_rounds: 6
-  },
-  {
-    id: "728ed52fg",
-    valuation: 10000000000,
-    multiple: 10000000000 / 320000000,
-    dilution: 0.1,
-    number_of_rounds: 7
-  },
-]
+import { jobOffersState } from '../offers/atoms';
+import { generateScenarioForJobOffer } from './utils';
 
 // Which scenario is selected for each column in the CompareOffer table
-export const selectedScenarioIdAtom = atom<Record<string, string>>({});
+export const selectedScenarioIdState = atomWithStorage<Record<string, string>>("selectedScenarioIdState", {});
 
 // Possible scenarios for each offer.
-export const scenarioMapAtom = atom<Record<string, Scenario[]>>({});
+export const defaultScenarioMapState = atom<Record<string, Scenario[]>>(
+  (get) => {
+    const scenarioMap = get(jobOffersState).reduce((acc, offer) => {
+      const scenarios = generateScenarioForJobOffer(offer);
+      acc[offer.company_name] = scenarios;
+      return acc;
+    }, {} as Record<string, Scenario[]>);
+    return scenarioMap;
+  },
+)
+
+const storage = createJSONStorage(
+  () => localStorage, // or sessionStorage, asyncStorage or alike
+)
+export const userScenarioMapState = atomWithStorage<Record<string, Scenario[]> | null>("userScenarioMapState", null, storage, { getOnInit: true });
+export const scenarioMapState = atom<Record<string, Scenario[]>>(
+  (get) => get(userScenarioMapState) ?? get(defaultScenarioMapState),
+  (get, set, newValue) => {
+    const nextValue = typeof newValue === 'function' ? newValue(get(scenarioMapState)) : newValue;
+    set(userScenarioMapState, nextValue)
+  },
+)
 
 export const useUpdateScenario = () => {
-  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapAtom);
+  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapState);
 
   return (offerId: string, scenario: Scenario) => {
     setScenarioMap((prevMap) => ({
@@ -72,7 +43,7 @@ export const useUpdateScenario = () => {
 }
 
 export const useAddScenarios = () => {
-  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapAtom);
+  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapState);
 
   return (offerId: string, scenarios: Scenario[]) => {
     setScenarioMap((prevMap) => ({

@@ -16,7 +16,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { ReactNode, useState } from "react"
-import { useRecoilValue } from "recoil"
+import { useAtomValue } from "jotai"
 import { jobOffersState } from "../../../offers/atoms"
 import { MetricSelect } from "../metric-select"
 import { Metric, Scenario } from "../../types"
@@ -28,7 +28,7 @@ type OffersGraphProps = {
   description: ReactNode
 }
 export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) => {
-  const offers = useRecoilValue(jobOffersState);
+  const offers = useAtomValue(jobOffersState);
   const buildScenarioList = useBuildScenarioListForGraphing()
   const [selectedMetric, setSelectedMetric] = useState(Metric.TotalEquityPackage);
 

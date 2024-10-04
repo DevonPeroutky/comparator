@@ -1,14 +1,14 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { DataTable } from '@/components/ui/data-table';
-import { useRecoilState } from 'recoil';
 import { columns } from '../columns';
 import { DEFAULT_DILUTION_ROUNDS, dilutionRoundsState } from '../atoms';
 import { Button } from '@/components/ui/button';
 import { RefreshCw } from "lucide-react"
 import React, { useEffect } from 'react';
+import { useAtom } from 'jotai';
 
 export const DilutionTableCard = () => {
-  const [dilutionRounds, setDilutionRounds] = useRecoilState(dilutionRoundsState);
+  const [dilutionRounds, setDilutionRounds] = useAtom(dilutionRoundsState);
 
   // Use this to force the DataTable to fully re-render when dilutionRounds change
   const tableKey = React.useMemo(() => JSON.stringify(dilutionRounds), [dilutionRounds]);

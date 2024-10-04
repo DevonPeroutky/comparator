@@ -1,4 +1,3 @@
-import { useRecoilValue } from "recoil";
 import { determineRoundDilution } from "../dilution/utils";
 import { JobOffer } from "../offers/types";
 import { scenarioMapState } from "./atoms";
@@ -7,6 +6,7 @@ import { Metric } from "./types";
 import { jobOffersState } from "../offers/atoms";
 import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveDilutionPercentageOwned, deriveEquityValue, determineTotalDilution } from "@/lib/calculations";
 import { generateSteppedArray, mapRange } from "@/lib/utils";
+import { useAtomValue } from "jotai";
 
 /* TODO: Factor in dilution */
 export const calculateOutcome = (scenario: Scenario, offer: JobOffer, metric: Metric): number => {
@@ -39,13 +39,12 @@ export const generateScenarioForJobOffer = (jobOffer: JobOffer): Scenario[] => {
 }
 
 export const useBuildScenarioListForGraphing = () => {
-  const scenarioMap = useRecoilValue(scenarioMapState);
-  const offers = useRecoilValue(jobOffersState);
+  const scenarioMap = useAtomValue(scenarioMapState);
+  const offers = useAtomValue(jobOffersState);
 
   return (selectedMetric: Metric): Record<string, number>[] => {
     const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => [scenarios[0], scenarios[scenarios.length - 1]]);
     scenarios.sort((a, b) => a.valuation - b.valuation);
-    console.log(`SCENARIOS `, scenarios)
 
     // TODO: We need to calculate the dilution for this scenario for each offer, otherwise we end up using the base amount
 
@@ -53,7 +52,6 @@ export const useBuildScenarioListForGraphing = () => {
       const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
 
       offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
-        console.log("Building outcomes for ", outcome.scenario_valuation, scenario, "----", offer)
         outcome[offer.company_name] = calculateOutcome(scenario, offer, selectedMetric)
       });
 

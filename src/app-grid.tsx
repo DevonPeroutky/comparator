@@ -1,10 +1,10 @@
 import { ReactNode } from "react";
-import { FeatureCard, FeatureDescription, FeatureDescriptionContainer, FeatureTitle, SkeletonFour, SkeletonOne, SkeletonThree, SkeletonTwo } from "./components/ui/bento-grid";
+import { FeatureCard, FeatureDescriptionContainer, FeatureTitle, SkeletonFour, SkeletonOne, SkeletonThree, SkeletonTwo } from "./components/ui/bento-grid";
 import { AddOfferModal } from "./domains/offers/components/add-offer-modal/add-offer-modal";
 import { JobOfferTable } from "./domains/offers/components/job-offers-table";
 import { OfferGraphTitle, OffersGraph } from "./domains/scenarios/components/offer-graph";
 import { ComparisonTable } from "./domains/outcome-comparison/index";
-import { ScenarioBuilder, ScenarioBuilderDescription } from "./domains/scenarios/components/equity-journey-card";
+import { ScenarioBuilderDescription } from "./domains/scenarios/components/equity-journey-card";
 import { EquityJourney } from "./domains/scenarios/components/dilution-timeline";
 
 type BentoCardProps = {
@@ -28,7 +28,7 @@ export function AppGrid() {
         "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
     },
     {
-      title: "Capture pictures with AI",
+      title: "Did you know?",
       description:
         "Capture stunning photos effortlessly using our advanced AI technology.",
       content: <SkeletonFour />,

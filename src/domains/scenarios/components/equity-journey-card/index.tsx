@@ -3,7 +3,7 @@ import { DataTable } from "@/components/ui/data-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { mapNumber, validateNumber } from "@/lib/columns/column_utils";
 import { scenarioMapState } from "../../atoms";
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import { useMemo } from "react";
 import { EquityJourneyPlanCell } from "@/domains/scenarios/components/equity-journey-card/columns";
 import { Scenario } from "../../types";
@@ -12,7 +12,7 @@ import { FlattenedScenarios } from "./types";
 
 
 export const AggegrateEquityJourneyCard = () => {
-  const scenarioMap = useRecoilValue(scenarioMapState);
+  const scenarioMap = useAtomValue(scenarioMapState);
   const tableKey = useMemo(() => JSON.stringify(scenarioMap), [scenarioMap]);
   const columnKey = (column_name: string, company_name: string) => `${company_name.replace(".", "-")}-${column_name}`;
 
@@ -85,7 +85,7 @@ export const AggegrateEquityJourneyCard = () => {
 }
 
 export const ScenarioBuilder = () => {
-  const scenarioMap = useRecoilValue(scenarioMapState);
+  const scenarioMap = useAtomValue(scenarioMapState);
   const tableKey = useMemo(() => JSON.stringify(scenarioMap), [scenarioMap]);
   const columnKey = (column_name: string, company_name: string) => `${company_name.replace(".", "-")}-${column_name}`;
 

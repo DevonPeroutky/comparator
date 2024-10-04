@@ -1,10 +1,12 @@
-import { atom } from 'jotai';
+import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import { JobOffer } from './types';
+import { z } from 'zod';
+import { atom } from 'jotai';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
   {
-    id: "kindo",
-    company_name: "Kindo",
+    id: "acme",
+    company_name: "Acme",
     salary: 225000,
     number_of_shares: 91000,
     latest_company_valuation: 55000000,
@@ -26,5 +28,15 @@ const TEST_JOB_OFFERS: JobOffer[] = [
   // Commented out offers remain the same
 ];
 
-export const jobOffersAtom = atom<JobOffer[]>(TEST_JOB_OFFERS);
-
+const storage = createJSONStorage(
+  () => localStorage, // or sessionStorage, asyncStorage or alike
+)
+export const defaultJobOfferState = atom<JobOffer[]>(TEST_JOB_OFFERS,);
+export const userJobOfferState = atomWithStorage<JobOffer[] | null>("userJobOfferState", null, storage, { getOnInit: true });
+export const jobOffersState = atom<JobOffer[]>(
+  (get) => get(userJobOfferState) ?? get(defaultJobOfferState),
+  (get, set, newValue) => {
+    const nextValue = typeof newValue === 'function' ? newValue(get(jobOffersState)) : newValue;
+    set(userJobOfferState, nextValue)
+  },
+);

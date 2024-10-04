@@ -12,7 +12,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useRecoilState } from "recoil"
+import { useAtom } from "jotai"
 import { jobOffersState } from "../../atoms"
 import { JobOffer } from "../../types"
 import { v4 as uuidv4 } from 'uuid'
@@ -36,7 +36,7 @@ const jobOfferFormSchema = z.object({
 type FormData = z.infer<typeof jobOfferFormSchema>;
 
 export function JobOfferForm({ onClick }: { onClick: () => void }) {
-  const [jobOffers, setJobOffers] = useRecoilState(jobOffersState)
+  const [jobOffers, setJobOffers] = useAtom(jobOffersState)
   const addScenarios = useAddScenarios();
 
   const form = useForm<z.infer<typeof jobOfferFormSchema>>({

@@ -8,16 +8,16 @@ import {
 import { JobOffer } from "@/domains/offers/types";
 import { scenarioMapState, selectedScenarioIdState } from "@/domains/scenarios/atoms";
 import { Scenario } from "@/domains/scenarios/types";
-import { useRecoilState, useRecoilValue } from "recoil";
 import { formatLargeCurrency } from "@/lib/format_utils";
+import { useAtom, useAtomValue } from "jotai";
 
 export interface ScenarioSelectProps {
   jobOffer: JobOffer;
 }
 
 export const ScenarioSelect: React.FC<ScenarioSelectProps> = ({ jobOffer }) => {
-  const scenarios: Scenario[] = useRecoilValue(scenarioMapState)[jobOffer.company_name]
-  const [selectedScenarioIds, setSelectedScenarioIds] = useRecoilState(selectedScenarioIdState);
+  const scenarios: Scenario[] = useAtomValue(scenarioMapState)[jobOffer.company_name]
+  const [selectedScenarioIds, setSelectedScenarioIds] = useAtom(selectedScenarioIdState);
 
   const selectedScenarioId = selectedScenarioIds[jobOffer.company_name];
   const selectedScenario = scenarios.find(scenario => scenario.id === selectedScenarioId) || scenarios[0];

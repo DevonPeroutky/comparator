@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 
-import { useRecoilValue } from "recoil";
+import { useAtomValue } from "jotai";
 import { jobOffersState } from "../offers/atoms";
 import { scenarioMapState, selectedScenarioIdState } from "../scenarios/atoms";
 import { JobOfferScenario } from "./types";
@@ -17,9 +17,9 @@ import { LabelCell } from "./components/label-cell";
 
 
 export const ComparisonTableCard = () => {
-  const jobOffers = useRecoilValue(jobOffersState);
-  const scenarioMap = useRecoilValue(scenarioMapState);
-  const selectedScenarioIds = useRecoilValue(selectedScenarioIdState);
+  const jobOffers = useAtomValue(jobOffersState);
+  const scenarioMap = useAtomValue(scenarioMapState);
+  const selectedScenarioIds = useAtomValue(selectedScenarioIdState);
 
   var jobOfferScenarios: JobOfferScenario[] = []
 

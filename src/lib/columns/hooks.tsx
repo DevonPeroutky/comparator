@@ -1,11 +1,12 @@
 import { JobOffer } from "@/domains/offers/types";
 import { ComparatorPrimitive } from "@/domains/types";
 import { Row } from "@tanstack/react-table";
-import { RecoilState, useRecoilState } from "recoil";
+import { Atom, useAtom } from "jotai";
 import { Primitive } from "zod";
 
-export const useUpdateListItemChanges = <T extends ComparatorPrimitive, C extends Primitive>(recoilState: RecoilState<T[]>) => {
-  const [items, setItems] = useRecoilState<T[]>(recoilState);
+export const useUpdateListItemChanges = <T extends ComparatorPrimitive, C extends Primitive>(atomState: Atom<T[]>) => {
+  const [items, setItems] = useAtom<T[]>(atomState);
+  const ite = useAtom<T[]>(atomState);
 
 
   return (proposedValue: string, row: Row<T>, fieldName: string, mapValue: (proposedValue: string) => C, validate: (proposedValue: C) => boolean): C => {

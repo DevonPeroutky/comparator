@@ -3,9 +3,13 @@
 ## (1) Form
 - [ ] Add agreement checkbox.
 
+# Offers
+- [ ] Delete
+
 ## (2) Scenarios
 - [ ] Refactor to be dilution per step
   - [ ] Make sure we're appropriate recalculating
+- [ ] Make scenarioMap atom derived but overwriteable?
 
 ## (2) Offers Graph
 - [ ] (.5) Formalize calculations w/dilution?
