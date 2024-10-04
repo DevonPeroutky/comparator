@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { RefreshCw } from "lucide-react"
 import React, { useEffect } from 'react';
 
-export const DilutionTable = () => {
+export const DilutionTableCard = () => {
   const [dilutionRounds, setDilutionRounds] = useRecoilState(dilutionRoundsState);
 
   // Use this to force the DataTable to fully re-render when dilutionRounds change
@@ -30,3 +30,5 @@ export const DilutionTable = () => {
     </Card>
   )
 }
+
+

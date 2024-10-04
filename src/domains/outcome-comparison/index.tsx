@@ -16,7 +16,7 @@ import { footerDefs, rowDefs } from "./rows";
 import { LabelCell } from "./components/label-cell";
 
 
-export const ComparisonTableCard = () => {
+export const ComparisonTable = () => {
   const jobOffers = useRecoilValue(jobOffersState);
   const scenarioMap = useRecoilValue(scenarioMapState);
   const selectedScenarioIds = useRecoilValue(selectedScenarioIdState);
@@ -38,40 +38,27 @@ export const ComparisonTableCard = () => {
   ];
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className='flex items-center justify-between'>
-            <span>Compare Outcomes</span>
-          </div>
-        </CardTitle>
-        <CardDescription>See how the equity compares round by round</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <Table >
-          <TableHeader>
-            <TableRow>
-              {tableHeaders}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {rowDefs.map(({ cell, labelProps }, index) => (
-              <TableRow key={index}>
-                {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
-              </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            {footerDefs.map(({ cell, labelProps }, index) => (
-              <TableRow key={index}>
-                {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
-              </TableRow>
-            ))}
-          </TableFooter>
-        </Table>
-      </CardContent>
-    </Card >
+    <Table >
+      <TableHeader>
+        <TableRow>
+          {tableHeaders}
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {rowDefs.map(({ cell, labelProps }, index) => (
+          <TableRow key={index}>
+            {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
+          </TableRow>
+        ))}
+      </TableBody>
+      <TableFooter>
+        {footerDefs.map(({ cell, labelProps }, index) => (
+          <TableRow key={index}>
+            {[<LabelCell {...labelProps} />, ...jobOfferScenarios.map(cell)]}
+          </TableRow>
+        ))}
+      </TableFooter>
+    </Table>
   )
-
 }
 

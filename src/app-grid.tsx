@@ -1,8 +1,11 @@
 import { ReactNode } from "react";
-import { FeatureCard, FeatureDescription, FeatureTitle, SkeletonFour, SkeletonOne, SkeletonThree, SkeletonTwo } from "./components/ui/bento-grid";
+import { FeatureCard, FeatureDescription, FeatureDescriptionContainer, FeatureTitle, SkeletonFour, SkeletonOne, SkeletonThree, SkeletonTwo } from "./components/ui/bento-grid";
 import { AddOfferModal } from "./domains/offers/components/add-offer-modal/add-offer-modal";
 import { JobOfferTable } from "./domains/offers/components/job-offers-table";
-import { DataTable } from "./components/ui/data-table";
+import { OfferGraphTitle, OffersGraph } from "./domains/scenarios/components/offer-graph";
+import { DilutionTable, DilutionTitle } from "./domains/dilution/components/index";
+import { ComparisonTable } from "./domains/outcome-comparison/index";
+import { ScenarioBuilder, ScenarioBuilderDescription } from "./domains/scenarios/components/equity-journey-card";
 
 type BentoCardProps = {
   title?: ReactNode;
@@ -28,47 +31,46 @@ export function AppGrid() {
       title: "Capture pictures with AI",
       description:
         "Capture stunning photos effortlessly using our advanced AI technology.",
-      content: <SkeletonTwo />,
+      content: <SkeletonFour />,
       className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
     },
     {
-      title: "Watch our AI on YouTube",
-      description:
-        "Whether its you or Tyler Durden, you can get to know about our product on YouTube",
-      content: <SkeletonThree />,
+      title: <OfferGraphTitle />,
+      description: null,
+      content: <OffersGraph title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />,
       className:
         "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
     },
     {
-      title: "Deploy in seconds",
-      description:
-        "With our blazing fast, state of the art, cutting edge, we are so back cloud servies (read AWS) - you can deploy your model in seconds.",
-      content: <SkeletonFour />,
+      title: <DilutionTitle />,
+      description: null,
+      content: <DilutionTable />,
       className: "col-span-1 lg:col-span-3 border-b lg:border-none",
     },
+    {
+      title: "Scenario Builder",
+      description: <ScenarioBuilderDescription />,
+      content: <ScenarioBuilder />,
+      className: "col-span-1 lg:col-span-6 border-t dark:border-neutral-800",
+    },
+    {
+      title: "Compare Outcomes",
+      description: "See how the equity compares round by round",
+      content: <ComparisonTable />,
+      className: "col-span-1 lg:col-span-6 border-t dark:border-neutral-800",
+    },
+
   ];
   return (
-    <div className="relative z-20 py-10 lg:py-40 mx-auto">
-      <div className="px-8">
-        <h1 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
-          Comparator
-        </h1>
-
-        <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
-          Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank'>open-source</a>) way of comparing job offers and equity packages. All the data is stored 100% on client (nothing is sent to a server).
-        </p>
-      </div>
-
-      <div className="relative ">
-        <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md dark:border-neutral-800">
-          {features.map((feature) => (
-            <FeatureCard key={feature.title} className={feature.className}>
-              <FeatureTitle>{feature.title}</FeatureTitle>
-              <FeatureDescription>{feature.description}</FeatureDescription>
-              <div className=" h-full w-full">{feature.content}</div>
-            </FeatureCard>
-          ))}
-        </div>
+    <div className="relative ">
+      <div className="grid grid-cols-1 lg:grid-cols-6 mt-12 xl:border rounded-md dark:border-neutral-800">
+        {features.map((feature) => (
+          <FeatureCard key={feature.title} className={feature.className}>
+            <FeatureTitle>{feature.title}</FeatureTitle>
+            {feature.description && <FeatureDescriptionContainer>{feature.description}</FeatureDescriptionContainer>}
+            <div className=" h-full w-full">{feature.content}</div>
+          </FeatureCard>
+        ))}
       </div>
     </div>
   );

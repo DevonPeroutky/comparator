@@ -59,9 +59,9 @@ export function DataTable<TData, TValue>({
                 }
 
                 // Add top-level header background
-                if (isTopLevelHeader) {
-                  className += ` bg-[hsl(var(--bg-secondary))] bg-slate-100`;
-                }
+                // if (isTopLevelHeader) {
+                //   className += ` bg-[hsl(var(--bg-secondary))] bg-slate-100`;
+                // }
                 return (
                   <TableHead
                     key={header.id}

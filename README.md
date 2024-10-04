@@ -27,7 +27,7 @@
   - [ ] Font
   - [ ] Spacing
 - [ ] (2) magic & aceternity
- - [ ] Bento Grid
+ - [x] Bento Grid
  - [ ] Card Focus?
  - [ ] Animated border around certain buttons/menus?
  - [ ] Globe?
