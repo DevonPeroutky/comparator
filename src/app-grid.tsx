@@ -6,6 +6,7 @@ import { OfferGraphTitle, OffersGraph } from "./domains/scenarios/components/off
 import { ComparisonTable } from "./domains/outcome-comparison/index";
 import { ScenarioBuilderDescription } from "./domains/scenarios/components/equity-journey-card";
 import { EquityJourney } from "./domains/scenarios/components/dilution-timeline";
+import { ClearOffersTableButton } from "./domains/offers/components/clear-table-button";
 
 type BentoCardProps = {
   title?: ReactNode;
@@ -17,12 +18,14 @@ type BentoCardProps = {
 export function AppGrid() {
   const features: BentoCardProps[] = [
     {
-      title: <div className='flex items-center justify-between'>
+      title: <div className='flex items-center justify-between mb-4'>
         <span>Offers</span>
-        <AddOfferModal />
+        <div className="flex items-center gap-x-4">
+          <ClearOffersTableButton />
+          <AddOfferModal />
+        </div>
       </div>,
-      description:
-        "Add Job Offers here",
+      description: null,
       content: <JobOfferTable />,
       className:
         "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
@@ -38,7 +41,7 @@ export function AppGrid() {
     {
       title: <OfferGraphTitle />,
       description: null,
-      content: <OffersGraph title="Offers / Time" description="Look at how your compensation packages increase in value as the companies' valuation increases" />,
+      content: <OffersGraph />,
       className:
         "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
     },

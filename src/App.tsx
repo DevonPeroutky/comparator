@@ -1,6 +1,6 @@
 import { defaultJobOfferState, jobOffersState, persistedJobOffersState, userJobOfferState } from './domains/offers/atoms';
 import { AppGrid } from './app-grid';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import { ShareButton } from './components/app/share-button';
 import { TextHoverEffect } from './components/ui/text-hover-effect';
 
