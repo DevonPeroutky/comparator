@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "./input";
 
-interface FormattedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface FormattedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   formatter: 'currency' | 'percentage' | 'number' | 'valuation'
 }
 
@@ -23,7 +23,6 @@ const format_currency = (val: string | undefined): string => {
   }
 
   return val
-
 }
 
 export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatter, onBlur: propOnBlur }) => {
@@ -77,7 +76,7 @@ export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, val
   );
 };
 
-export const FormattedInputUnstyled: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatter, onBlur: propOnBlur }) => {
+export const UnstyledFormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatter, onBlur: propOnBlur }) => {
   const formatValue = (val: string | undefined): string => {
     if (val === undefined) return '';
 
@@ -119,7 +118,7 @@ export const FormattedInputUnstyled: React.FC<FormattedInputProps> = ({ placehol
   };
 
   return (
-    <input
+    <Input
       placeholder={placeholder}
       value={displayValue}
       onChange={handleChange}

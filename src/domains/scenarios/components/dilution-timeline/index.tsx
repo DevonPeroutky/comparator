@@ -6,28 +6,29 @@ import { Primitive } from 'zod';
 import { useState } from 'react';
 import { formatLargeCurrency, formatPercentage } from '@/lib/format_utils';
 import { cn } from '@/lib/utils';
-import { mapNumber, validateNumber } from '@/lib/columns/column_utils';
+import { mapNumber, mapPercentage, validateNumber } from '@/lib/columns/column_utils';
 
-type EditableTextProps = {
+type EditableTextProps<C extends Primitive> = {
   scenario: Scenario;
   companyName: string
   fieldName: keyof Scenario;
-  formatter: (c: Primitive) => string;
+  formatter: (val: C) => string;
+  mapValue: (val: string) => C;
 } & InputProps;
 
-const EditableText: React.FC<EditableTextProps> = ({ companyName, fieldName, scenario, onChange, placeholder, value, formatter, className }) => {
+const EditableText: React.FC<EditableTextProps<Primitive>> = ({ companyName, fieldName, scenario, onChange, placeholder, value, formatter, mapValue, className }) => {
   const updateScenario = useUpdateScenario();
   const pHolder = placeholder || fieldName.toString();
 
   const commitOrRollbackChange = (proposedValue: string) => {
-    const updateValue = mapNumber(proposedValue)
-    console.log(`Updating ${fieldName} to ${updateValue}`)
-    if (validateNumber(updateValue)) {
-      const newScenario = { ...scenario, [fieldName]: updateValue }
+    const updateValued = mapValue(proposedValue)
+    console.log(`Updating ${fieldName} to ${updateValued}`)
+    if (validateNumber(updateValued)) {
+      const newScenario = { ...scenario, [fieldName]: updateValued }
       console.log("Updating Scenario: ", newScenario)
       updateScenario(companyName, newScenario)
 
-      setFormattedValue(formatter(updateValue))
+      setFormattedValue(formatter(updateValued))
     } else {
       console.log("Invalid Value: ", proposedValue, " resetting to ", scenario[fieldName as keyof Scenario])
       setFormattedValue(formatter(scenario[fieldName as keyof Scenario]))
@@ -69,6 +70,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
               <EditableText
                 value={scenario.valuation}
                 formatter={formatLargeCurrency}
+                mapValue={mapNumber}
                 scenario={scenario}
                 companyName={companyName}
                 fieldName="valuation"
@@ -81,6 +83,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
               <EditableText
                 value={scenario.round_dilution}
                 formatter={formatPercentage}
+                mapValue={mapPercentage}
                 scenario={scenario}
                 companyName={companyName}
                 fieldName="round_dilution"

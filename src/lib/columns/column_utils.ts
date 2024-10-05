@@ -6,6 +6,10 @@ export const mapNumber = (proposedValue: string): number => {
   return parseFloat(proposedValue.replace(/[^0-9.-]+/g, ""));
 };
 
+export const mapPercentage = (proposedValue: string): number => {
+  return parseFloat(proposedValue.replace(/[^0-9.-]+/g, "")) / 100;
+};
+
 export const validateString = (proposedValue: string): boolean => {
   return proposedValue !== undefined && proposedValue.trim().length > 0;
 }
@@ -17,4 +21,3 @@ export const mapString = (proposedValue: string): string => {
 export function identity<T>(value: T): T {
   return value;
 }
-
