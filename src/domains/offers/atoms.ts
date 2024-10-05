@@ -35,7 +35,7 @@ export const defaultJobOfferState = atom<JobOffer[]>(TEST_JOB_OFFERS,);
 export const userJobOfferState = atomWithStorage<JobOffer[] | null>("userJobOfferState", null, storage, { getOnInit: true });
 export const persistedJobOffersState = atomWithHash<JobOffer[] | null>("userJobOfferURLState", null);
 export const jobOffersState = atom<JobOffer[]>(
-  (get) => get(userJobOfferState) ?? get(persistedJobOffersState) ?? get(defaultJobOfferState),
+  (get) => get(persistedJobOffersState) ?? get(userJobOfferState) ?? get(defaultJobOfferState),
   (get, set, newValue) => {
     const nextValue = typeof newValue === 'function' ? newValue(get(jobOffersState)) : newValue;
     set(userJobOfferState, nextValue)

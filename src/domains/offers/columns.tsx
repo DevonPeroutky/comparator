@@ -5,7 +5,7 @@ import { BaseEditableCell, BaseEditableCellProps } from "@/lib/columns/base_colu
 import { useUpdateListItemChanges } from "@/lib/columns/hooks";
 import { Primitive } from "react-hook-form";
 import { jobOffersState } from "./atoms";
-import { formatInteger, formatLargeCurrency, formatNumber, formatPercentage, formatPreciseCurrency } from "@/lib/format_utils";
+import { formatInteger, formatLargeCurrency, formatPercentage, formatPreciseCurrency } from "@/lib/format_utils";
 
 
 const JobOfferEditableCell: React.FC<BaseEditableCellProps<JobOffer, Primitive>> = ({ row, fieldName, formatter, mapValue, validate }) => {
@@ -27,7 +27,7 @@ export const columns: ColumnDef<JobOffer>[] = [
   {
     accessorKey: "number_of_shares",
     header: "Number of Shares",
-    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="number_of_shares" mapValue={mapNumber} formatter={formatNumber} validate={validateNumber} />
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="number_of_shares" mapValue={mapNumber} formatter={formatInteger} validate={validateNumber} />
   },
   {
     accessorKey: "latest_company_valuation",

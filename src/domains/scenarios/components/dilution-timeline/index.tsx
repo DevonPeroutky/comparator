@@ -99,7 +99,7 @@ export const EquityJourney = () => {
   const [scenarioMap, _] = useAtom(scenarioMapState);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-start justify-center bg-white md:mr-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-14 items-start justify-center bg-white md:mr-auto">
       {Object.entries(scenarioMap).map(([companyName, scenarios]) => (
         <div key={companyName} className="w-full max-w-sm flex items-center justify-start">
           <DilutionTimeline companyName={companyName} scenarios={scenarios} />
