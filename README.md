@@ -1,7 +1,7 @@
 # To-Do
 
 # Offers
-- [ ] Delete Offer
+- [x] Delete Offer
 
 
 ## (2) Offers Graph
