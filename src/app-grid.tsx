@@ -30,7 +30,8 @@ export function AppGrid() {
     {
       title: "Did you know?",
       description:
-        "Capture stunning photos effortlessly using our advanced AI technology.",
+        // "The world, median per-capita household income is only $2,920 per year. Making over $100,000 puts you in the top 10% of global earners.",
+        <span>The world, median per-capita household income is only <b className="font-bold text-slate-500">$2,920 per year</b>. Making over <b className="font-bold text-slate-500">$100,000 puts you in the top 10% of global earners.</b></span >,
       content: <SkeletonFour />,
       className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
     },

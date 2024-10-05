@@ -98,7 +98,6 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
 export const EquityJourney = () => {
   const [scenarioMap, setScenarioMap] = useAtom(scenarioMapState);
 
-  console.log("Scenario Map: ", scenarioMap)
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-start justify-center bg-white md:mr-auto">
       {Object.entries(scenarioMap).map(([companyName, scenarios]) => (

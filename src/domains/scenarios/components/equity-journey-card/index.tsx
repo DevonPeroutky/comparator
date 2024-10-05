@@ -149,7 +149,7 @@ export const ScenarioBuilder = () => {
 export const ScenarioBuilderDescription = () => {
   return (
     <p className="w-full pb-4">
-      The dilution has been estimated from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' className='text-sky-400 hover:underline hover:cursor-pointer'>Carta</a> and other sources. But you update the potential valuations and dilutions as you would like.
+      The dilution has been estimated from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' className='text-sky-400 hover:underline hover:cursor-pointer'>Carta</a> and other sources. But these are here for you to update!
     </p>
   )
 }

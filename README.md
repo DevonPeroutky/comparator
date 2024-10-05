@@ -1,50 +1,37 @@
 # To-Do
 
-## (1) Form
-- [ ] Add agreement checkbox.
-
 # Offers
-- [ ] Delete
+- [ ] Delete Offer
 
-## (2) Scenarios
-- [ ] Refactor to be dilution per step
-  - [ ] Make sure we're appropriate recalculating
-- [ ] Make scenarioMap atom derived but overwriteable?
 
 ## (2) Offers Graph
-- [ ] (.5) Formalize calculations w/dilution?
+- [ ] Note that it's raw (non-dilution?)
 
 ## General
 - [ ] Fix percentage inputs to be 100x of what they are currently
   - [ ] Make sure we're appropriate recalculating
-- [ ] Build scenarioMap from jobOffers map via  selector that only creates if not already there
-
-## Dilution Schedule Table
-- [x] Build out Dilution Table 
-- [x] Add button to reset
+  - [ ] Consolidation with modal-form
+- [ ] Recalculate where appropriate?
 
 ## (1) Side-by-Side Comparison
 - [] (1) Better Tooltip all the things!
 
 ## (4) Overview
-- [ ] (1) Styling
-  - [x] Table Responsiveness
-  - [x] Column sizing
-  - [ ] Font
-  - [x] Spacing
-- [ ] (2) magic & aceternity
- - [x] Bento Grid
- - [ ] Card Focus?
- - [ ] Animated border around certain buttons/menus?
- - [ ] Globe?
-- [ ] Logo
+- [ ] Title Font
 - [ ] (1) Production-ize
-- [ ] (1) Dark Mode
-
-## (2) Sharing Feature
-- [ ] (1) Store data in local storage
-- [ ] (.5) Read state from #1. Url, #2 local storage, #3 default
-- [ ] (1) Serialize data into URL
 
 ## (1) Deploy
 - [ ] (1) Vercel/Render
+
+
+# Future
+
+## Form
+- [ ] Add agreement checkbox.
+
+## Styling
+- [ ] Logo
+- [ ] Dark Mode
+- [ ] (2) magic & aceternity
+ - [ ] Card Focus?
+ - [ ] Animated border around certain buttons/menus?

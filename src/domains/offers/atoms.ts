@@ -1,6 +1,6 @@
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import { JobOffer } from './types';
-import { z } from 'zod';
+import { atomWithLocation, atomWithHash } from 'jotai-location'
 import { atom } from 'jotai';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
@@ -33,10 +33,13 @@ const storage = createJSONStorage(
 )
 export const defaultJobOfferState = atom<JobOffer[]>(TEST_JOB_OFFERS,);
 export const userJobOfferState = atomWithStorage<JobOffer[] | null>("userJobOfferState", null, storage, { getOnInit: true });
+export const persistedJobOffersState = atomWithHash<JobOffer[] | null>("userJobOfferURLState", null);
 export const jobOffersState = atom<JobOffer[]>(
-  (get) => get(userJobOfferState) ?? get(defaultJobOfferState),
+  (get) => get(userJobOfferState) ?? get(persistedJobOffersState) ?? get(defaultJobOfferState),
   (get, set, newValue) => {
     const nextValue = typeof newValue === 'function' ? newValue(get(jobOffersState)) : newValue;
     set(userJobOfferState, nextValue)
+    set(persistedJobOffersState, nextValue)
   },
 );
+

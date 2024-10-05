@@ -149,9 +149,14 @@ export const SkeletonTwo = () => {
 
 export const SkeletonFour = () => {
   return (
-    <div className="h-60 md:h-60  flex flex-col items-center relative bg-transparent dark:bg-transparent mt-10">
+    <div className="h-60 md:h-60  flex flex-col items-start relative bg-transparent dark:bg-transparent mt-12">
+      <div className="max-w-[200px]">
+        <blockquote className="italic text-muted-foreground">
+          "Wealth consists not in having great possessions, but in having few wants." - Epictetus
+        </blockquote>
+      </div>
       <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
-    </div>
+    </div >
   );
 };
 
@@ -185,7 +190,7 @@ export const Globe = ({ className }: { className?: string }) => {
         // Called on every animation frame.
         // `state` will be an empty object, return updated params.
         state.phi = phi;
-        phi += 0.01;
+        phi += 0.001;
       },
     });
 

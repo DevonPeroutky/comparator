@@ -5,6 +5,7 @@ import './index.css'
 import { TooltipProvider } from '@radix-ui/react-tooltip'
 import { Provider } from 'jotai'
 import { DevTools } from 'jotai-devtools';
+import { Toaster } from './components/ui/toaster.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <Provider>
@@ -12,6 +13,7 @@ createRoot(document.getElementById('root')!).render(
     <StrictMode>
       <TooltipProvider>
         <App />
+        <Toaster />
       </TooltipProvider>
     </StrictMode>,
   </Provider>

@@ -92,7 +92,7 @@ export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) 
           <ChartLegend content={<ChartLegendContent />} />
         </LineChart>
       </ChartContainer>
-      <div>
+      <div className="flex items-center justify-center mt-10">
         <blockquote className="italic text-muted-foreground">
           "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable." - Clare Boothe Luce
         </blockquote>
