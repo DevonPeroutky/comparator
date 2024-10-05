@@ -20,14 +20,9 @@
   - [ ] Colors
   - [ ] Fun Share button
   - [ ] Confetti when add job offer
-- [ ] (1) Production-ize
-
-## (1) Deploy
-- [ ] (1) Vercel/Render
-
+  - [ ] Box Reveal
 
 # Future
-
 - [ ] Cleanup code
 
 ## Form
