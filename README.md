@@ -13,11 +13,13 @@
   - [ ] Consolidation with modal-form
 - [ ] Recalculate where appropriate?
 
-## (1) Side-by-Side Comparison
-- [] (1) Better Tooltip all the things!
-
 ## (4) Overview
 - [ ] Title Font
+- [ ] Styling
+  - [ ] Font
+  - [ ] Colors
+  - [ ] Fun Share button
+  - [ ] Confetti when add job offer
 - [ ] (1) Production-ize
 
 ## (1) Deploy
@@ -25,6 +27,8 @@
 
 
 # Future
+
+- [ ] Cleanup code
 
 ## Form
 - [ ] Add agreement checkbox.

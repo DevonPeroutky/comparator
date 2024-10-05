@@ -33,7 +33,7 @@ export const rowDefs: ComparisonRowDef[] = [
   {
     "labelProps": {
       label: "Fully Diluted Percentage",
-      tooltip: "The estimated percentage of the company given your starting percentage and dilution from the funding rounds from the scenario"
+      tooltip: "Your estimated ownership percentage of the company after factoring in the dilution from each round of funding in the scenario"
     },
     cell: (offerScenario: JobOfferScenario) => <TableCell key={`fully_diluted_percentage_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 }).format(deriveDilutionPercentageOwned(offerScenario.percentage_ownership, offerScenario.total_dilution))}</TableCell>
   },

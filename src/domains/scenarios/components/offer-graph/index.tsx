@@ -1,4 +1,4 @@
-import { CartesianGrid, LabelList, Line, LineChart, XAxis, YAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
 import {
@@ -7,23 +7,19 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { ReactNode, useState } from "react"
+import { useState } from "react"
 import { useAtomValue } from "jotai"
 import { jobOffersState } from "../../../offers/atoms"
 import { MetricSelect } from "../metric-select"
 import { Metric } from "../../types"
 import { useBuildScenarioListForGraphing } from "../../utils"
 import { OfferGraphDescription } from "./graph-description"
-import { FeatureDescription, FeatureDescriptionContainer } from "@/components/ui/bento-grid"
+import { FeatureDescriptionContainer } from "@/components/ui/bento-grid"
 
-type OffersGraphProps = {
-  title: string
-  description: ReactNode
-}
-export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) => {
+export const OffersGraph = () => {
   const offers = useAtomValue(jobOffersState);
   const buildScenarioList = useBuildScenarioListForGraphing()
-  const [selectedMetric, setSelectedMetric] = useState(Metric.TotalEquityPackage);
+  const [selectedMetric, _] = useState(Metric.TotalEquityPackage);
 
   const chartData = buildScenarioList(selectedMetric)
   const chartConfig = offers.reduce((config, offer, idx) => {
@@ -77,15 +73,6 @@ export const OffersGraph: React.FC<OffersGraphProps> = ({ title, description }) 
                   r: 6,
                 }}
               >
-                {/* <LabelList */}
-                {/*   position="top" */}
-                {/*   offset={12} */}
-                {/*   formatter={(value) => new Intl.NumberFormat("en-US", { */}
-                {/*     style: "currency", */}
-                {/*     currency: "USD", */}
-                {/*   }).format(value)} */}
-                {/*   className="fill-foreground" */}
-                {/* /> */}
               </Line>
             ))
           }

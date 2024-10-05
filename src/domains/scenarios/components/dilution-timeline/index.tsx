@@ -96,7 +96,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
 }
 
 export const EquityJourney = () => {
-  const [scenarioMap, setScenarioMap] = useAtom(scenarioMapState);
+  const [scenarioMap, _] = useAtom(scenarioMapState);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 items-start justify-center bg-white md:mr-auto">

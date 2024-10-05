@@ -4,7 +4,7 @@ import { scenarioMapState } from "./atoms";
 import { Scenario } from "./types";
 import { Metric } from "./types";
 import { jobOffersState } from "../offers/atoms";
-import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveDilutionPercentageOwned, deriveEquityValue, determineTotalDilution } from "@/lib/calculations";
+import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveEquityValue, determineTotalDilution } from "@/lib/calculations";
 import { generateSteppedArray, mapRange } from "@/lib/utils";
 import { useAtomValue } from "jotai";
 

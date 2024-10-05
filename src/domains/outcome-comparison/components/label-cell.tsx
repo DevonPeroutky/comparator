@@ -16,16 +16,16 @@ export type LabelCellProps = {
 export const LabelCell: React.FC<LabelCellProps> = ({ label, tooltip }) => {
 
   return (
-    <TableCell className="w-fit capitalize">
+    <TableCell className="w-fit">
       <div className="flex items-center gap-x-2">
-        <span>
+        <span className="capitalize">
           {label}
         </span>
         {tooltip &&
           (
             <Tooltip>
               <TooltipTrigger asChild>
-                <QuestionMarkCircleIcon className="w-6 h-6" />
+                <QuestionMarkCircleIcon className="w-6 h-6 cursor-pointer" />
               </TooltipTrigger>
               <TooltipContent>
                 <p>{tooltip}</p>
