@@ -1,15 +1,7 @@
 # To-Do
 
-# Offers
-- [x] Delete Offer
-
-
-## (2) Offers Graph
-- [ ] Note that it's raw (non-dilution?)
-
 ## General
-- [ ] Fix percentage inputs to be 100x of what they are currently
-  - [ ] Make sure we're appropriate recalculating
+- [x] Fix percentage inputs to be 100x of what they are currently
   - [ ] Consolidation with modal-form
 - [ ] Recalculate where appropriate?
 
@@ -24,6 +16,9 @@
 
 # Future
 - [ ] Cleanup code
+
+## Offers Graph
+- [ ] Note that it's raw (non-dilution?)
 
 ## Form
 - [ ] Add agreement checkbox.

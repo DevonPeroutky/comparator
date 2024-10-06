@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { FeatureCard, FeatureDescriptionContainer, FeatureTitle, SkeletonFour, SkeletonOne, SkeletonThree, SkeletonTwo } from "./components/ui/bento-grid";
+import { FeatureCard, FeatureDescriptionContainer, FeatureTitle, GlobeCard, } from "./components/ui/bento-grid";
 import { AddOfferModal } from "./domains/offers/components/add-offer-modal/add-offer-modal";
 import { JobOfferTable } from "./domains/offers/components/job-offers-table";
 import { OfferGraphTitle, OffersGraph } from "./domains/scenarios/components/offer-graph";
@@ -7,6 +7,8 @@ import { ComparisonTable } from "./domains/outcome-comparison/index";
 import { ScenarioBuilderDescription } from "./domains/scenarios/components/equity-journey-card";
 import { EquityJourney } from "./domains/scenarios/components/dilution-timeline";
 import { ClearOffersTableButton } from "./domains/offers/components/clear-table-button";
+import BoxReveal from "./components/ui/box-reveal";
+import { Highlight } from "./components/ui/hero-highlight";
 
 type BentoCardProps = {
   title?: ReactNode;
@@ -19,31 +21,24 @@ export function AppGrid() {
   const features: BentoCardProps[] = [
     {
       title: <div className='flex items-center justify-between mb-4'>
-        <span>Offers</span>
+        <h2 className="text-4xl font-bold dark:text-white">Offers</h2>
         <div className="flex items-center gap-x-4">
           <ClearOffersTableButton />
           <AddOfferModal />
         </div>
       </div>,
-      description: null,
+      description: <div className="my-4" />,
       content: <JobOfferTable />,
       className:
         "col-span-1 lg:col-span-4 border-b lg:border-r dark:border-neutral-800",
     },
     {
-      title: "Did you know?",
+      title: <h2 className="text-4xl font-bold dark:text-white text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Did you know?</h2>,
       description:
         // "The world, median per-capita household income is only $2,920 per year. Making over $100,000 puts you in the top 10% of global earners.",
-        <span>The world, median per-capita household income is only <b className="font-bold text-slate-500">$2,920 per year</b>. Making over <b className="font-bold text-slate-500">$100,000 puts you in the top 10% of global earners.</b></span >,
-      content: <SkeletonFour />,
+        <span className="text-lg font-normal text-gray-500 dark:text-gray-400 leading-relaxed">The world, median per-capita household income is only <Highlight className="font-bold text-black">$2,920 per year</Highlight>. Making over <Highlight className="font-bold text-black">$100,000 puts you in the top 10% of global earners.</Highlight></span>,
+      content: <GlobeCard />,
       className: "border-b col-span-1 lg:col-span-2 dark:border-neutral-800",
-    },
-    {
-      title: <OfferGraphTitle />,
-      description: null,
-      content: <OffersGraph />,
-      className:
-        "col-span-1 lg:col-span-3 lg:border-r  dark:border-neutral-800",
     },
     // {
     //   title: <DilutionTitle />,
@@ -52,14 +47,21 @@ export function AppGrid() {
     //   className: "col-span-1 lg:col-span-3 border-b lg:border-none",
     // },
     {
-      title: "Scenario Builder",
+      title: <h2 className="text-4xl font-bold dark:text-white">Scenario Builder</h2>,
       description: <ScenarioBuilderDescription />,
       content: <EquityJourney />,
       className: "col-span-1 lg:col-span-3 border-b lg:border-none",
     },
     {
-      title: "Compare Outcomes",
-      description: "See how the equity compares round by round",
+      title: <OfferGraphTitle />,
+      description: null,
+      content: <OffersGraph />,
+      className:
+        "col-span-1 lg:col-span-3 lg:border-l dark:border-neutral-800",
+    },
+    {
+      title: <h2 className="text-4xl font-bold dark:text-white">Compare Outcomes</h2>,
+      description: <div className="my-4" />,
       content: <ComparisonTable />,
       className: "col-span-1 lg:col-span-6 border-t dark:border-neutral-800",
     },
@@ -76,7 +78,7 @@ export function AppGrid() {
           </FeatureCard>
         ))}
       </div>
-    </div>
+    </div >
   );
 }
 

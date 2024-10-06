@@ -1,8 +1,10 @@
+import { motion } from "framer-motion";
 import { defaultJobOfferState, jobOffersState, persistedJobOffersState, userJobOfferState } from './domains/offers/atoms';
 import { AppGrid } from './app-grid';
 import { useAtomValue } from 'jotai';
 import { ShareButton } from './components/app/share-button';
 import { TextHoverEffect } from './components/ui/text-hover-effect';
+import { HeroHighlight, Highlight } from './components/ui/hero-highlight';
 
 export default function App() {
   const d = useAtomValue(defaultJobOfferState);
@@ -18,18 +20,13 @@ export default function App() {
   return (
     <div className='relative z-20 py-10 lg:py-40 mx-auto w-screen'>
       <div className="flex flex-col items-center px-8">
-        <h1 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
-          Comparator
-        </h1>
-        <div className='h-[72px]'>
-          <TextHoverEffect text="ACET" />
-        </div>
-        <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
-          Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank'>open-source</a>) way of comparing job offers and equity packages. Your data is only stored in your browser and is 100% private.
+        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comparator</h1>
+        <p className="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">
+          Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank' className='font-medium text-sky-600 dark:text-blue-500 hover:underline'>open-source</a>) way of comparing job offers and equity packages. Your data is only stored in your browser and is 100% private.
         </p>
         <ShareButton />
       </div>
       <AppGrid />
-    </div>
+    </div >
   );
 }
