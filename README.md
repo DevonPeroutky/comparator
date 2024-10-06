@@ -1,28 +1,26 @@
 # To-Do
 
 ## General
-- [x] Fix percentage inputs to be 100x of what they are currently
-  - [ ] Consolidation with modal-form
-- [ ] Recalculate where appropriate?
+- [ ] Recalculate comparison when updating Dilution
 
 ## (4) Overview
-- [ ] Title Font
-- [ ] Styling
-  - [ ] Font
-  - [ ] Fun Card Headers
-  - [ ] Fun Timeline Headers
-  - [ ] Better globe margin 
-  - [ ] Better Quote styling
-  - [ ] Colors
-  - [ ] Fun Share button
-  - [ ] Confetti when add job offer
-  - [x] Box Reveal
+- [ ] Fun Title Font / Logo
+- [ ] Font?
+- [ ] Better Card Headers
+- [ ] Fun Timeline Headers
+- [ ] Comparison Table Headers?
+- [ ] 3D Pin for quote author?
+- [ ] Color palette
+- [ ] Fun Share button
+- [ ] Confetti when add job offer
+- [ ] Border Beam/Card focus
+- [ ] Box Reveal for title and subtitle?
 
 # Future
 - [ ] Cleanup code
 
 ## Offers Graph
-- [ ] Note that it's raw (non-dilution?)
+- [ ] Tooltip for that it's raw (non-dilution?)
 
 ## Form
 - [ ] Add agreement checkbox.

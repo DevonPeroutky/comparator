@@ -3,6 +3,7 @@ import { buildSimpleCell, ComparisonRowDef } from "./components/simple-cell";
 import { JobOfferScenario } from "./types";
 import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveDilutionPercentageOwned, deriveEquityValue, deriveExerciseCost } from "@/lib/calculations";
 import { ScenarioSelect } from "./components/scenario-select";
+import NumberTicker from "@/components/ui/number-ticker";
 
 export const rowDefs: ComparisonRowDef[] = [
   {
@@ -60,5 +61,14 @@ export const footerDefs = [
       tooltip: "Your estimated total annual compensation including salary and equity for this scenario"
     },
     cell: (offerScenario: JobOfferScenario) => <TableCell key={`total_annual_compensation_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualCompensation(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation, offerScenario.vesting_years, offerScenario.salary))}</TableCell>
+  },
+  {
+    "labelProps": {
+      label: "Total Annual Compensation",
+      tooltip: "Your estimated total annual compensation including salary and equity for this scenario"
+    },
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`total_annual_compensation_${offerScenario.id}`}>
+      <NumberTicker formatOptions={{ useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }} value={deriveAnnualCompensation(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation, offerScenario.vesting_years, offerScenario.salary)} />
+    </TableCell >
   },
 ];
