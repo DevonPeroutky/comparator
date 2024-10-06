@@ -82,6 +82,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
               <span>Dilution: </span>
               <EditableText
                 value={scenario.round_dilution}
+                placeholder='0.00%'
                 formatter={formatPercentage}
                 mapValue={mapPercentage}
                 scenario={scenario}
@@ -102,9 +103,9 @@ export const EquityJourney = () => {
   const [scenarioMap, _] = useAtom(scenarioMapState);
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-14 items-start justify-center bg-white md:mr-auto">
+    <div className="flex flex-wrap gap-8 justify-center md:justify-start">
       {Object.entries(scenarioMap).map(([companyName, scenarios]) => (
-        <div key={companyName} className="w-full max-w-sm flex items-center justify-start">
+        <div key={companyName} className="flex-grow-0 flex-shrink-0 items-center justify-center md:justify-start bg-yellow-200">
           <DilutionTimeline companyName={companyName} scenarios={scenarios} />
         </div>
       ))}

@@ -9,10 +9,14 @@
 - [ ] Title Font
 - [ ] Styling
   - [ ] Font
+  - [ ] Fun Card Headers
+  - [ ] Fun Timeline Headers
+  - [ ] Better globe margin 
+  - [ ] Better Quote styling
   - [ ] Colors
   - [ ] Fun Share button
   - [ ] Confetti when add job offer
-  - [ ] Box Reveal
+  - [x] Box Reveal
 
 # Future
 - [ ] Cleanup code

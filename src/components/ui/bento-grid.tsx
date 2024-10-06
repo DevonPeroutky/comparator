@@ -11,7 +11,7 @@ export const FeatureCard = ({
   className?: string;
 }) => {
   return (
-    <div className={cn(`p-4 sm:p-8 relative overflow-hidden`, className)}>
+    <div className={cn(`py-16 px-8 relative overflow-hidden`, className)}>
       {children}
     </div>
   );
@@ -41,11 +41,12 @@ export const FeatureDescription = ({ children, className }: { children?: React.R
 
 export const GlobeCard = () => {
   return (
-    <div className="h-60 md:h-60  flex flex-col items-start relative bg-transparent dark:bg-transparent mt-12">
-      <div className="max-w-[200px]">
-        <blockquote className="italic text-muted-foreground">
-          "Wealth consists not in having great possessions, but in having few wants." - Epictetus
+    <div className="h-60 md:h-60  flex flex-col items-start bg-transparent dark:bg-transparent mt-12">
+      <div className="flex flex-col max-w-[200px] gap-y-4 italic text-muted-foreground">
+        <blockquote className="">
+          "Wealth consists not in having great possessions, but in having few wants."
         </blockquote>
+        <div>- Epictetus</div>
       </div>
       <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
     </div >
@@ -104,14 +105,13 @@ export const FeatureDescriptionContainer = ({ children, className }: { children?
   return (
     <div
       className={cn(
-        "text-sm md:text-base  max-w-4xl text-left mx-auto w-full",
+        "md:text-base text-left mx-auto w-full",
         "text-neutral-500 text-center font-normal dark:text-neutral-300",
-        "text-left mx-0 md:text-sm mt-2 mb-10", className
+        "text-left mx-0  mt-2 mb-10", className
       )}
     >
       {children}
     </div>
   );
 };
-
 
