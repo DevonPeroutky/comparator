@@ -5,6 +5,7 @@ import { useAtomValue } from 'jotai';
 import { ShareButton } from './components/app/share-button';
 import { TextHoverEffect } from './components/ui/text-hover-effect';
 import { HeroHighlight, Highlight } from './components/ui/hero-highlight';
+import BoxReveal from "./components/ui/box-reveal";
 
 export default function App() {
   const d = useAtomValue(defaultJobOfferState);
@@ -20,13 +21,20 @@ export default function App() {
   return (
     <div className='relative z-20 py-10 lg:py-40 mx-auto w-screen'>
       <div className="flex flex-col items-center px-8">
-        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comparator</h1>
-        <p className="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">
-          Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank' className='font-medium text-sky-600 dark:text-blue-500 hover:underline'>open-source</a>) way of comparing job offers and equity packages. Your data is only stored in your browser and is 100% private.
-        </p>
-        <ShareButton />
-      </div>
-      <AppGrid />
-    </div >
+        <BoxReveal boxColor={"#5046e6"} duration={0.5}>
+          <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comparator</h1>
+        </BoxReveal>
+
+        <BoxReveal boxColor={"#5046e6"} duration={0.5}>
+          <p className="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">
+            Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank' className='font-medium text-sky-600 dark:text-blue-500 hover:underline'>open-source</a>) way of comparing job offers and equity packages. Your data is only stored in your browser and is 100% private.
+          </p>
+        </BoxReveal>
+        <BoxReveal boxColor={"#5046e6"} duration={0.5}>
+          <ShareButton />
+        </BoxReveal>
+        <AppGrid />
+      </div >
+    </div>
   );
 }

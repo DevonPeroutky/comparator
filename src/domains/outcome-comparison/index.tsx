@@ -21,6 +21,7 @@ export const ComparisonTable = () => {
   const selectedScenarioIds = useAtomValue(selectedScenarioIdState);
   var jobOfferScenarios: JobOfferScenario[] = []
 
+
   if (Object.keys(scenarioMap).length > 0) {
     jobOfferScenarios = jobOffers.map(offer => {
       const scenarios = scenarioMap[offer.company_name]
@@ -29,6 +30,9 @@ export const ComparisonTable = () => {
       return { ...offer, ...selectedScenario }
     })
   }
+
+  console.log("scenarioMap", scenarioMap)
+  console.log("jobOffers", jobOffers)
 
   const tableHeaders = [
     <TableHead key="blank" className="w-[250px]"></TableHead>,

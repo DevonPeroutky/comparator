@@ -24,3 +24,10 @@ export const determineTotalDilution = (funding_round_valuations: number[]): numb
   return funding_round_valuations.map((valuation, index) => determineRoundDilution(valuation)).map(dilution => 1 - dilution).reduce((a, b) => a * b, 1);
 }
 
+export const projectRoundsOfDilution = (fundingRoundValuations: number[]): number[] => {
+  return fundingRoundValuations.map((valuation, index) => determineRoundDilution(valuation))
+}
+
+export const calcTotalDilution = (roundsOfDilution: number[]): number => {
+  return roundsOfDilution.map(dilution => 1 - dilution).reduce((a, b) => a * b, 1);
+}

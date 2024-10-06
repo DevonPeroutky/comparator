@@ -4,7 +4,7 @@ import { scenarioMapState } from "./atoms";
 import { Scenario } from "./types";
 import { Metric } from "./types";
 import { jobOffersState } from "../offers/atoms";
-import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveEquityValue, determineTotalDilution } from "@/lib/calculations";
+import { calcTotalDilution, deriveAnnualCompensation, deriveAnnualEquityValue, deriveEquityValue, determineTotalDilution, projectRoundsOfDilution } from "@/lib/calculations";
 import { generateSteppedArray, mapRange } from "@/lib/utils";
 import { useAtomValue } from "jotai";
 
@@ -21,11 +21,12 @@ export const calculateOutcome = (scenario: Scenario, offer: JobOffer, metric: Me
 }
 
 export const generateScenarios = (jobOffer: JobOffer, projected_valuation_journey: number[]): Scenario[] => {
+  const projectTotalDilution = (index: number) => calcTotalDilution(projectRoundsOfDilution(projected_valuation_journey.slice(1, index + 1)));
   return projected_valuation_journey.map((valuation, index) => ({
     id: `${jobOffer.id}-${index}`,
     multiple: valuation / jobOffer.latest_company_valuation,
     valuation: valuation,
-    total_dilution: determineTotalDilution(projected_valuation_journey.slice(1, index + 1)),
+    total_dilution: projectTotalDilution(index),
     round_dilution: (index == 0) ? 0 : determineRoundDilution(valuation),
     number_of_rounds: index
   }));

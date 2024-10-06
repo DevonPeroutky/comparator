@@ -6,14 +6,14 @@ import { motion, useAnimation, useInView } from "framer-motion";
 interface BoxRevealProps {
   children: JSX.Element;
   width?: "fit-content" | "100%";
-  boxColor?: string;
+  boxColorClass?: string;
   duration?: number;
 }
 
 export const BoxReveal = ({
   children,
   width = "fit-content",
-  boxColor,
+  boxColorClass,
   duration,
 }: BoxRevealProps) => {
   const mainControls = useAnimation();
@@ -54,6 +54,7 @@ export const BoxReveal = ({
         initial="hidden"
         animate={slideControls}
         transition={{ duration: duration ? duration : 0.5, ease: "easeIn" }}
+        className={boxColorClass}
         style={{
           position: "absolute",
           top: 4,
@@ -61,7 +62,6 @@ export const BoxReveal = ({
           left: 0,
           right: 0,
           zIndex: 20,
-          background: boxColor ? boxColor : "#5046e6",
         }}
       />
     </div>
