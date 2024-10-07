@@ -36,9 +36,10 @@ export const BaseEditableCell = <T, C extends Primitive>({ row, fieldName, forma
     console.log("NUMERIC VALUE: ", rawValue);
     console.log("SOft formatted VALUE: ", softFormat(rawValue));
 
-    if (rawValue === '' || /^[0-9]*\.?[0-9]*$/.test(rawValue)) {
-      setLocalValue(rawValue);
-    }
+    // if (rawValue === '' || /^[0-9]*\.?[0-9]*$/.test(rawValue)) {
+    //   setLocalValue(rawValue);
+    // }
+    setLocalValue(rawValue);
   };
 
   // console.log(`LOCAL ${fieldName} VALUE : `, localValue);

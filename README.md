@@ -1,12 +1,11 @@
 # To-Do
 
+- [ ] Update everything reference company_name as key to company_id
+
 ## (4) Styling
 - [ ] Update README and code 
 - [ ] Fun Title Font / Logo
 - [ ] Better Card Headers
-- [ ] Mark for ScenarioBuilders updates
-- [ ] Fun Timeline Headers
-- [ ] Comparison Table Headers?
 - [ ] 3D Pin for quote author?
 - [ ] Color palette
 - [ ] Fun Share button

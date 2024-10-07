@@ -2,6 +2,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
+import { PinContainer } from "./3d-pin";
 
 export const FeatureCard = ({
   children,
