@@ -43,9 +43,9 @@ const EditableText: React.FC<EditableTextProps<Primitive>> = ({ companyName, fie
       id={fieldName}
       type="text"
       value={formattedValue}
-      style={{
-        width: `${(formattedValue || "").toString().length > 0 ? formattedValue.toString().length : pHolder.length - 1 || 8}ch`, // Adaptive width based on content
-      }}
+      // style={{
+      //   width: `${(formattedValue || "").toString().length > 0 ? formattedValue.toString().length : pHolder.length - 1 || 8}ch`, // Adaptive width based on content
+      // }}
       onBlur={(e) => commitOrRollbackChange(e.target.value)}
       onChange={(e) => setFormattedValue(e.target.value)}
       placeholder={placeholder}
@@ -60,16 +60,15 @@ type DilutionTimelineProps = {
 }
 export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName, scenarios }) => {
   const chartConfig = useAtomValue(chartConfigAtom);
-  console.log("Chart Config: ", chartConfig)
-  console.log("SPecific: ", chartConfig[companyName].color)
+  const color = chartConfig[companyName].color
 
   return (
-    <div className="flex items-start justify-start bg-white flex-col gap-y-4">
-      <h4 className='capitalized text-xl text-muted-foreground'>{companyName}</h4>
-      <ol className="relative border-s border-blue-200 dark:border-gray-700">
+    <div className="flex items-start justify-start bg-white flex-col gap-y-4 max-w-[225px]">
+      <h4 className='capitalized text-xl text-muted-foreground' style={{ color: color }}>{companyName}</h4>
+      <ol className={`relative border-l border-solid  border-[${color}] dark:border-gray-700`} style={{ borderLeftColor: color }}>
         {scenarios.map((scenario, index) => (
           <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-gray-500 dark:text-gray-400">
-            <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700" />
+            <div className={`absolute w-3 h-3 bg-[${color}] rounded-full mt-1.5 -start-1.5 dark:border-gray-900 dark:bg-gray-700`} style={{ backgroundColor: color }} />
             <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{(index == 0) ? "Current Valuation" : "Funding Round"}</time>
             <div className="flex text-lg font-semibold dark:text-white text-muted-foreground">
               <EditableText
@@ -80,10 +79,9 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
                 companyName={companyName}
                 fieldName="valuation"
                 onChange={(c) => console.log(c)}
-                className='underline underline-offset-3 decoration-green-600 dark:decoration-green-600'
               />
             </div>
-            <div className="text-base font-normal ">
+            <div className="text-base font-normal flex gap-x-1">
               <span>Dilution: </span>
               <EditableText
                 value={scenario.round_dilution}
@@ -94,7 +92,6 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
                 companyName={companyName}
                 fieldName="round_dilution"
                 onChange={(c) => console.log(c)}
-                className='underline underline-offset-3 decoration-blue-600 dark:decoration-blue-600'
               />
             </div>
           </li>

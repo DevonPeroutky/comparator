@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table"
 
 import { useAtomValue } from "jotai";
-import { jobOffersState } from "../offers/atoms";
+import { chartConfigAtom, jobOffersState } from "../offers/atoms";
 import { scenarioMapState, selectedScenarioIdState } from "../scenarios/atoms";
 import { JobOfferScenario } from "./types";
 import { footerDefs, rowDefs } from "./rows";
@@ -16,6 +16,7 @@ import { LabelCell } from "./components/label-cell";
 
 
 export const ComparisonTable = () => {
+  const chartConfig = useAtomValue(chartConfigAtom);
   const jobOffers = useAtomValue(jobOffersState);
   const scenarioMap = useAtomValue(scenarioMapState);
   const selectedScenarioIds = useAtomValue(selectedScenarioIdState);
@@ -31,16 +32,18 @@ export const ComparisonTable = () => {
     })
   }
 
+  const getCompanyColor = (companyName: string) => chartConfig[companyName]?.color || "gray"
+
   console.log("scenarioMap", scenarioMap)
   console.log("jobOffers", jobOffers)
 
   const tableHeaders = [
     <TableHead key="blank" className="w-[250px]"></TableHead>,
-    ...jobOffers.map(offer => <TableHead key={offer.id}>{offer.company_name}</TableHead>)
+    ...jobOffers.map(offer => <TableHead key={offer.id} className="font-semibold text-xl" style={{ color: getCompanyColor(offer.company_name) }}>{offer.company_name}</TableHead>)
   ];
 
   return (
-    <Table >
+    <Table className="border border-solid border-gray-400 rounded-lg overflow-hidden">
       <TableHeader>
         <TableRow>
           {tableHeaders}

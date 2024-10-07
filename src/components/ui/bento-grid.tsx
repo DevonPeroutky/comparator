@@ -6,12 +6,15 @@ import createGlobe from "cobe";
 export const FeatureCard = ({
   children,
   className,
+  position
 }: {
   children?: React.ReactNode;
   className?: string;
+  position: "left" | "right" | "full";
 }) => {
+  const positionClass = position === "left" ? "px-4 md:px-8 xl:pl-12 2xl:pl-18" : position === "right" ? "px-4 md:px-8 xl:pr-12 2xl:pr-18" : "px-4 md:px-8 xl:px-12 2xl:px-18";
   return (
-    <div className={cn(`py-16 px-8 relative overflow-hidden`, className)}>
+    <div className={cn(`py-16 relative overflow-hidden`, positionClass, className)}>
       {children}
     </div>
   );

@@ -17,7 +17,7 @@ export const LabelCell: React.FC<LabelCellProps> = ({ label, tooltip }) => {
 
   return (
     <TableCell className="w-fit">
-      <div className="flex items-center gap-x-2">
+      <div className="flex items-center gap-x-2 text-muted-foreground font-semibold">
         <span className="capitalize">
           {label}
         </span>
