@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/chart"
 import { useState } from "react"
 import { useAtomValue } from "jotai"
-import { jobOffersState } from "../../../offers/atoms"
+import { chartConfigAtom, jobOffersState } from "../../../offers/atoms"
 import { MetricSelect } from "../metric-select"
 import { Metric } from "../../types"
 import { useBuildScenarioListForGraphing } from "../../utils"
@@ -23,13 +23,14 @@ export const OffersGraph = () => {
   const [selectedMetric, _] = useState(Metric.TotalEquityPackage);
 
   const chartData = buildScenarioList(selectedMetric)
-  const chartConfig = offers.reduce((config, offer, idx) => {
-    config[offer.company_name] = {
-      label: offer.company_name,
-      color: `hsl(var(--chart-${idx + 1}))`,
-    };
-    return config;
-  }, {} as ChartConfig);
+  const chartConfig = useAtomValue(chartConfigAtom);
+  // const chartConfig = offers.reduce((config, offer, idx) => {
+  //   config[offer.company_name] = {
+  //     label: offer.company_name,
+  //     color: `hsl(var(--chart-${idx + 1}))`,
+  //   };
+  //   return config;
+  // }, {} as ChartConfig);
 
   return (
     <BoxReveal duration={0.5} boxColorClass="bg-gradient-to-r from-gray-300 via-gray-400 to-gray-500">

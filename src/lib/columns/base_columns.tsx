@@ -50,25 +50,12 @@ export const BaseEditableCell = <T, C extends Primitive>({ row, fieldName, forma
       value={displayValue}
       onChange={(e) => handleChange(e)}
       onBlur={() => commitOrRollbackChange(displayValue)}
+      className="bg-white"
     />
   )
 }
 
 export const UnstyledFormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatter, onBlur: propOnBlur }) => {
-  // const formatValue = (val: string | undefined): string => {
-  //   if (val === undefined) return '';
-  //
-  //   switch (formatter) {
-  //     case 'currency':
-  //       return format_currency(val);
-  //     case 'percentage':
-  //       return val.toLocaleString();
-  //     case 'number':
-  //       return val ? `${Math.round(Number(val)).toLocaleString()}` : '';
-  //     case 'valuation':
-  //       return `$${Math.round(Number(val)).toLocaleString()}`;
-  //   }
-  // };
 
   const [displayValue, setDisplayValue] = useState(() => formatter(value));
 
@@ -99,6 +86,7 @@ export const UnstyledFormattedInput: React.FC<FormattedInputProps> = ({ placehol
       value={displayValue}
       onChange={handleChange}
       onBlur={handleBlur}
+      className="bg-white"
     />
   );
 };

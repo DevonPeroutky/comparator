@@ -1,5 +1,5 @@
 import { InputProps } from '@/components/ui/input';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { Scenario } from '../../types';
 import { scenarioMapState, useUpdateScenario } from '../../atoms';
 import { Primitive } from 'zod';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { formatLargeCurrency, formatPercentage } from '@/lib/format_utils';
 import { cn } from '@/lib/utils';
 import { mapNumber, mapPercentage, validateNumber } from '@/lib/columns/column_utils';
+import { chartConfigAtom } from '@/domains/offers/atoms';
 
 type EditableTextProps<C extends Primitive> = {
   scenario: Scenario;
@@ -58,10 +59,14 @@ type DilutionTimelineProps = {
   scenarios: Scenario[]
 }
 export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName, scenarios }) => {
+  const chartConfig = useAtomValue(chartConfigAtom);
+  console.log("Chart Config: ", chartConfig)
+  console.log("SPecific: ", chartConfig[companyName].color)
+
   return (
     <div className="flex items-start justify-start bg-white flex-col gap-y-4">
       <h4 className='capitalized text-xl text-muted-foreground'>{companyName}</h4>
-      <ol className="relative border-s border-gray-200 dark:border-gray-700">
+      <ol className="relative border-s border-blue-200 dark:border-gray-700">
         {scenarios.map((scenario, index) => (
           <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-gray-500 dark:text-gray-400">
             <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700" />

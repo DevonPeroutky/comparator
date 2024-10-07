@@ -25,7 +25,7 @@ export const columns: ColumnDef<JobOffer>[] = [
   },
   {
     accessorKey: "number_of_shares",
-    header: "Number of Shares",
+    header: "Shares",
     cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="number_of_shares" formatOptions={IntegerColumnFormatOptions} />
   },
   {
@@ -50,7 +50,7 @@ export const columns: ColumnDef<JobOffer>[] = [
   },
   {
     accessorKey: "total_number_of_outstanding_shares",
-    header: "Total Outstanding Shares",
+    header: "Outstanding Shares",
     cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="total_number_of_outstanding_shares" formatOptions={IntegerColumnFormatOptions} />
   },
 ];

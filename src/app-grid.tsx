@@ -27,13 +27,13 @@ export function AppGrid() {
           <ClearOffersTableButton />
         </div>
       </div>,
-      description: <div className="my-4" />,
+      description: null,
       content: <JobOfferTable />,
       className:
         "col-span-1 md:col-span-2 xl:col-span-4 border-b lg:border-r dark:border-neutral-800 xl:pl-32 2xl:pl-44",
     },
     {
-      title: <h2 className="text-4xl font-bold dark:text-white text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">Perspective</h2>,
+      title: <h2 className="text-4xl font-bold dark:text-white mb-4">Perspective</h2>,
       description:
         <span className="text-lg font-semibold text-gray-500 dark:text-gray-400 leading-8">The world, median per-capita <span className="underline underline-offset-2 decoration-2 decoration-blue-400 dark:decoration-blue-600">household income</span> is only <mark className="px-2 text-white bg-blue-400 rounded dark:bg-blue-600 py-1">$2,920 per year</mark><br /> Making over <mark className="px-2 bg-green-600 rounded py-1 text-white">$124,720 / year</mark> puts you in the <span className="underline underline-offset-2 decoration-2 decoration-green-600 dark:decoration-green-600">top 1% of global earners.</span></span>,
       content: <GlobeCard />,
