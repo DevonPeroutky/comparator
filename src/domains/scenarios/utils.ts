@@ -53,7 +53,7 @@ export const useBuildScenarioListForGraphing = () => {
       const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
 
       offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
-        outcome[offer.company_name] = calculateOutcome(scenario, offer, selectedMetric)
+        outcome[offer.id] = calculateOutcome(scenario, offer, selectedMetric)
       });
 
       return outcome

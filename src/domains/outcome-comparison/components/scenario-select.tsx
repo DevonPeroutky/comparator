@@ -12,21 +12,23 @@ import { formatLargeCurrency } from "@/lib/format_utils";
 import { useAtom, useAtomValue } from "jotai";
 
 export interface ScenarioSelectProps {
-  jobOffer: JobOffer;
+  jobOfferId: JobOffer['id'];
 }
 
-export const ScenarioSelect: React.FC<ScenarioSelectProps> = ({ jobOffer }) => {
-  const scenarios: Scenario[] = useAtomValue(scenarioMapState)[jobOffer.company_name]
+export const ScenarioSelect: React.FC<ScenarioSelectProps> = ({ jobOfferId }) => {
+  const scenarioMap = useAtomValue(scenarioMapState)
+  const scenarios: Scenario[] = scenarioMap[jobOfferId]
+  console.log("ScenarioSelect!! ", jobOfferId, scenarioMap)
   const [selectedScenarioIds, setSelectedScenarioIds] = useAtom(selectedScenarioIdState);
 
-  const selectedScenarioId = selectedScenarioIds[jobOffer.company_name];
+  const selectedScenarioId = selectedScenarioIds[jobOfferId];
   const selectedScenario = scenarios.find(scenario => scenario.id === selectedScenarioId) || scenarios[0];
 
   return (
     <Select value={selectedScenario.id} onValueChange={(id: string) => {
       setSelectedScenarioIds(selectedScenarioIdMap => ({
         ...selectedScenarioIdMap,
-        [jobOffer.company_name]: id
+        [jobOfferId]: id
       }))
     }}>
       <SelectTrigger className="w-[180px]">

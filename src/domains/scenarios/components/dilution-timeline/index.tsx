@@ -12,13 +12,13 @@ import { ComputedAttribute } from '@react-three/drei';
 
 type EditableTextProps<C extends Primitive> = {
   scenario: Scenario;
-  companyName: string
+  companyId: string
   fieldName: keyof Scenario;
   formatter: (val: C) => string;
   mapValue: (val: string) => C;
 } & InputProps;
 
-const EditableText: React.FC<EditableTextProps<Primitive>> = ({ companyName, fieldName, scenario, onChange, placeholder, value, formatter, mapValue, className }) => {
+const EditableText: React.FC<EditableTextProps<Primitive>> = ({ companyId, fieldName, scenario, onChange, placeholder, value, formatter, mapValue, className }) => {
   const updateScenario = useUpdateScenario();
   const pHolder = placeholder || fieldName.toString();
 
@@ -28,7 +28,7 @@ const EditableText: React.FC<EditableTextProps<Primitive>> = ({ companyName, fie
     if (validateNumber(updateValued)) {
       const newScenario = { ...scenario, [fieldName]: updateValued }
       console.log("Updating Scenario: ", newScenario)
-      updateScenario(companyName, newScenario)
+      updateScenario(companyId, newScenario)
 
       setFormattedValue(formatter(updateValued))
     } else {
@@ -81,7 +81,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
                 formatter={formatLargeCurrency}
                 mapValue={mapNumber}
                 scenario={scenario}
-                companyName={companyName}
+                companyId={companyId}
                 fieldName="valuation"
                 onChange={(c) => console.log(c)}
               />
@@ -94,7 +94,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
                 formatter={formatPercentage}
                 mapValue={mapPercentage}
                 scenario={scenario}
-                companyName={companyName}
+                companyId={companyId}
                 fieldName="round_dilution"
                 onChange={(c) => console.log(c)}
               />
@@ -119,4 +119,12 @@ export const EquityJourney = () => {
       ))}
     </div>
   );
+}
+
+export const ScenarioBuilderDescription = () => {
+  return (
+    <span className="text-lg font-normal text-gray-500 dark:text-gray-400 leading-relaxed">
+      The dilution has been estimated from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' className='text-sky-600 hover:underline hover:cursor-pointer'>Carta</a> and other sources. But these are here for you to update!
+    </span>
+  )
 }

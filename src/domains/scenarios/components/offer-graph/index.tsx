@@ -24,6 +24,7 @@ export const OffersGraph = () => {
 
   const chartData = buildScenarioList(selectedMetric)
   const chartConfig = useAtomValue(chartConfigAtom);
+  console.log(chartData);
   // const chartConfig = offers.reduce((config, offer, idx) => {
   //   config[offer.company_name] = {
   //     label: offer.company_name,
@@ -64,8 +65,8 @@ export const OffersGraph = () => {
             {
               offers.map((offer, idx) => (
                 <Line
-                  key={offer.company_name}
-                  dataKey={offer.company_name}
+                  key={offer.id}
+                  dataKey={offer.id}
                   type="natural"
                   stroke={`hsl(var(--chart-${idx + 1}))`}
                   strokeWidth={2}

@@ -81,9 +81,9 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     // Add new Job offer to the list
     setJobOffers([...jobOffers, newJobOffer])
 
-    // Generate scenarios for the new job offer
+    // TODO: Reactively generate scenarios for job offers if they don't already exist in scenarioMap
     const newScenarios = generateScenarioForJobOffer(newJobOffer);
-    addScenarios(newJobOffer.company_name, newScenarios);
+    addScenarios(newJobOffer.id, newScenarios);
 
     onClick();
   };
