@@ -39,7 +39,7 @@ export const ComparisonTable = () => {
 
   const tableHeaders = [
     <TableHead key="blank" className="w-[250px]"></TableHead>,
-    ...jobOffers.map(offer => <TableHead key={offer.id} className="font-semibold text-xl" style={{ color: getCompanyColor(offer.company_name) }}>{offer.company_name}</TableHead>)
+    ...jobOffers.map(offer => <TableHead key={offer.id} className="font-normal text-xl" style={{ color: getCompanyColor(offer.company_name) }}>{offer.company_name}</TableHead>)
   ];
 
   return (
