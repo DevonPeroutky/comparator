@@ -1,5 +1,5 @@
-import { atomWithDefault, atomWithStorage, createJSONStorage } from 'jotai/utils'
-import { atom, useAtom, useAtomValue } from 'jotai';
+import { atomWithStorage, createJSONStorage } from 'jotai/utils'
+import { atom, useAtom } from 'jotai';
 import { Scenario } from './types';
 import { jobOffersState } from '../offers/atoms';
 import { generateScenarioForJobOffer } from './utils';
@@ -13,7 +13,7 @@ export const defaultScenarioMapState = atom<Record<string, Scenario[]>>(
   (get) => {
     const scenarioMap = get(jobOffersState).reduce((acc, offer) => {
       const scenarios = generateScenarioForJobOffer(offer);
-      acc[offer.company_name] = scenarios;
+      acc[offer.id] = scenarios;
       return acc;
     }, {} as Record<string, Scenario[]>);
     return scenarioMap;

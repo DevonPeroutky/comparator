@@ -7,7 +7,8 @@ import { useState } from 'react';
 import { formatLargeCurrency, formatPercentage } from '@/lib/format_utils';
 import { cn } from '@/lib/utils';
 import { mapNumber, mapPercentage, validateNumber } from '@/lib/columns/column_utils';
-import { chartConfigAtom } from '@/domains/offers/atoms';
+import { chartConfigAtom, useCompanyName } from '@/domains/offers/atoms';
+import { ComputedAttribute } from '@react-three/drei';
 
 type EditableTextProps<C extends Primitive> = {
   scenario: Scenario;
@@ -55,12 +56,16 @@ const EditableText: React.FC<EditableTextProps<Primitive>> = ({ companyName, fie
 };
 
 type DilutionTimelineProps = {
-  companyName: string;
+  companyId: string;
   scenarios: Scenario[]
 }
-export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName, scenarios }) => {
+export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, scenarios }) => {
+  console.log("Timeline Props: ", companyId, scenarios);
   const chartConfig = useAtomValue(chartConfigAtom);
-  const color = chartConfig[companyName].color
+  console.log("Chart Config: ", chartConfig);
+  const color = chartConfig[companyId].color
+  const companyName = useCompanyName()(companyId);
+
 
   return (
     <div className="flex items-start justify-start bg-white flex-col gap-y-4 max-w-[225px]">
@@ -103,12 +108,13 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyName,
 
 export const EquityJourney = () => {
   const [scenarioMap, _] = useAtom(scenarioMapState);
+  console.log("Scenario Map: ", scenarioMap)
 
   return (
     <div className="flex flex-wrap gap-8 justify-center md:justify-start">
-      {Object.entries(scenarioMap).map(([companyName, scenarios]) => (
-        <div key={companyName} className="flex-grow-0 flex-shrink-0 items-center justify-center md:justify-start bg-yellow-200">
-          <DilutionTimeline companyName={companyName} scenarios={scenarios} />
+      {Object.entries(scenarioMap).map(([companyId, scenarios]) => (
+        <div key={companyId} className="flex-grow-0 flex-shrink-0 items-center justify-center md:justify-start bg-yellow-200">
+          <DilutionTimeline companyId={companyId} scenarios={scenarios} />
         </div>
       ))}
     </div>

@@ -1,7 +1,7 @@
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
 import { JobOffer } from './types';
 import { atomWithLocation, atomWithHash } from 'jotai-location'
-import { atom } from 'jotai';
+import { atom, useAtomValue } from 'jotai';
 import { ChartConfig } from '@/components/ui/chart';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
@@ -47,10 +47,19 @@ export const jobOffersState = atom<JobOffer[]>(
 export const chartConfigAtom = atom((get) => {
   const offers = get(jobOffersState);
   return offers.reduce((config, offer, idx) => {
-    config[offer.company_name] = {
-      label: offer.company_name,
+    config[offer.id] = {
+      label: offer.id,
       color: `hsl(var(--chart-${idx + 1}))`,
     };
     return config;
   }, {} as ChartConfig);
 });
+
+export const useCompanyName = () => {
+  const jobOffers = useAtomValue(jobOffersState);
+  return (id: string) => {
+    const offer = jobOffers.find(offer => offer.id === id);
+    return offer?.company_name
+  }
+
+} 
