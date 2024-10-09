@@ -225,14 +225,6 @@ export const AnimatedBlockquote2 = ({
           </motion.div>
         </motion.div>
       </div>
-
-      {/* Decorative Elements */}
-      {/* <div className="absolute right-1/2 bottom-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500"> */}
-      {/*   <motion.div className="bg-gradient-to-b from-transparent to-blue-500 translate-y-[14px] w-px h-20 group-hover:h-40 blur-[2px]" /> */}
-      {/*   <motion.div className="bg-gradient-to-b from-transparent to-blue-500 translate-y-[14px] w-px h-20 group-hover:h-40" /> */}
-      {/*   <motion.div className="absolute -right-[1.5px] top-0 bg-blue-600 translate-y-[14px] w-[4px] h-[4px] rounded-full z-40 blur-[3px]" /> */}
-      {/*   <motion.div className="absolute -right-[0.5px] top-0 bg-blue-300 translate-y-[14px] w-[2px] h-[2px] rounded-full z-40" /> */}
-      {/* </div> */}
     </div>
   );
 };
