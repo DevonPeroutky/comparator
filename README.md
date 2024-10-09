@@ -1,13 +1,11 @@
 # To-Do
 
-- [ ] (1) Update everything reference company_name as key to company_id
-
 ## (4) Styling
 - [ ] (1) Update README and code 
 - [ ] (1) Fun Title Font / Logo
 - [ ] (1) 3D Pin for quote author?
-- [ ] (1) Color palette
 - [ ] (1) Fun Share button
+- [ ] (1) Color palette
 - [x] Confetti when add job offer
 - [x] Box Reveal for title and subtitle?
 
