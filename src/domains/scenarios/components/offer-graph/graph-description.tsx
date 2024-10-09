@@ -1,11 +1,12 @@
-
-import React from 'react';
 import { Metric } from '../../types';
+import { useAtom } from 'jotai';
+import { selectedMetricState } from '../../atoms';
 
 type OfferGraphProps = {
   selectedMetric: Metric;
 };
-export const OfferGraphDescription: React.FC<OfferGraphProps> = ({ selectedMetric }) => {
+export const OfferGraphDescription = () => {
+  const [selectedMetric, setSelectedMetric] = useAtom(selectedMetricState);
 
   switch (selectedMetric) {
     case Metric.TotalEquityPackage:

@@ -6,16 +6,14 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Metric } from "../types"
+import { useAtom } from "jotai";
+import { selectedMetricState } from "../atoms";
 
+export const MetricSelect: React.FC = () => {
+  const [selectedMetric, setSelectedMetric] = useAtom(selectedMetricState);
 
-export interface MetricSelectProps {
-  selectedMetric: Metric;
-  onMetricChange: (metric: Metric) => void;
-}
-
-export const MetricSelect: React.FC<MetricSelectProps> = ({ selectedMetric, onMetricChange }) => {
   return (
-    <Select value={selectedMetric} onValueChange={(value) => onMetricChange(value as Metric)}>
+    <Select value={selectedMetric} onValueChange={(value) => setSelectedMetric(value as Metric)}>
       <SelectTrigger className="w-fit text-2xl gap-x-2 dark:text-white">
         <SelectValue placeholder="Select Metric" className="text-4xl font-bold dark:text-white" />
       </SelectTrigger>

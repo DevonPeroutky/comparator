@@ -2,12 +2,15 @@ import { useAtom } from "jotai";
 import { jobOffersState } from "../atoms";
 import { Button } from "@/components/ui/button";
 import { TrashIcon } from "@heroicons/react/24/outline";
+import { scenarioMapState } from "@/domains/scenarios/atoms";
 
 export const ClearOffersTableButton = () => {
   const [offers, setOffers] = useAtom(jobOffersState);
+  const [scenario, setScenarioMap] = useAtom(scenarioMapState);
 
   const clearOffers = () => {
     setOffers([]);
+    setScenarioMap({});
   }
 
   return (

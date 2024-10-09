@@ -36,7 +36,7 @@ export function AppGrid() {
     {
       title: <h2 className="text-4xl font-bold dark:text-white mb-4">Perspective</h2>,
       description:
-        <span className="text-lg font-semibold text-gray-500 dark:text-gray-400 leading-8">The world, median per-capita <span className="underline underline-offset-2 decoration-2 decoration-blue-400 dark:decoration-blue-600">household income</span> is only <mark className="px-2 text-white bg-blue-400 rounded dark:bg-blue-600 py-1">$2,920 per year</mark><br /> Making over <mark className="px-2 bg-green-600 rounded py-1 text-white">$124,720 / year</mark> puts you in the <span className="underline underline-offset-2 decoration-2 decoration-green-600 dark:decoration-green-600">top 1% of global earners.</span></span>,
+        <span className="text-lg font-semibold text-gray-500 dark:text-gray-400 leading-8">The world, median per-capita <span className="underline underline-offset-2 decoration-2 decoration-blue-400 dark:decoration-blue-600">household income</span> is <mark className="px-2 text-white bg-blue-400 rounded dark:bg-blue-600 py-1">$2,920 per year</mark><br /> Making over <mark className="px-2 bg-green-600 rounded py-1 text-white">$124,720 / year</mark> puts you in the <span className="underline underline-offset-2 decoration-2 decoration-green-600 dark:decoration-green-600">top 1% of global earners.</span></span>,
       content: <GlobeCard />,
       position: "right",
       className: "border-b col-span-1 md:col-span-2 dark:border-neutral-800",

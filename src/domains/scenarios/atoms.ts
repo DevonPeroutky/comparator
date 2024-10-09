@@ -1,6 +1,6 @@
-import { atomWithStorage, createJSONStorage } from 'jotai/utils'
+import { atomWithDefault, atomWithStorage, createJSONStorage } from 'jotai/utils'
 import { atom, useAtom } from 'jotai';
-import { Scenario } from './types';
+import { Metric, Scenario } from './types';
 import { jobOffersState } from '../offers/atoms';
 import { generateScenarioForJobOffer } from './utils';
 import { calcTotalDilution } from '@/lib/calculations';
@@ -19,6 +19,9 @@ export const defaultScenarioMapState = atom<Record<string, Scenario[]>>(
     return scenarioMap;
   },
 )
+
+export const selectedMetricState = atomWithDefault<Metric>((get) => Metric.TotalEquityPackage);
+
 
 const storage = createJSONStorage(
   () => localStorage, // or sessionStorage, asyncStorage or alike
@@ -64,3 +67,4 @@ export const useAddScenarios = () => {
     }));
   };
 }
+

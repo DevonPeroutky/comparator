@@ -8,7 +8,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { useState } from "react"
-import { useAtomValue } from "jotai"
+import { useAtom, useAtomValue } from "jotai"
 import { chartConfigAtom, jobOffersState } from "../../../offers/atoms"
 import { MetricSelect } from "../metric-select"
 import { Metric } from "../../types"
@@ -16,12 +16,14 @@ import { useBuildScenarioListForGraphing } from "../../utils"
 import { OfferGraphDescription } from "./graph-description"
 import { FeatureDescriptionContainer } from "@/components/ui/bento-grid"
 import BoxReveal from "@/components/ui/box-reveal"
+import { selectedMetricState } from "../../atoms"
 
 export const OffersGraph = () => {
   const offers = useAtomValue(jobOffersState);
+  const [selectedMetric, setSelectedMetric] = useAtom(selectedMetricState);
   const buildScenarioList = useBuildScenarioListForGraphing()
-  const [selectedMetric, _] = useState(Metric.TotalEquityPackage);
 
+  console.log("Selected Metric: ", selectedMetric);
   const chartData = buildScenarioList(selectedMetric)
   const chartConfig = useAtomValue(chartConfigAtom);
   console.log(chartData);
@@ -95,13 +97,11 @@ export const OffersGraph = () => {
 
 
 export const OfferGraphTitle = () => {
-  const [selectedMetric, setSelectedMetric] = useState(Metric.TotalEquityPackage);
-
   return (
     <div>
-      <MetricSelect selectedMetric={selectedMetric} onMetricChange={setSelectedMetric} />
+      <MetricSelect />
       <FeatureDescriptionContainer className="mt-4">
-        <OfferGraphDescription selectedMetric={selectedMetric} />
+        <OfferGraphDescription />
       </FeatureDescriptionContainer>
     </div>
   );

@@ -21,11 +21,13 @@ export default function App() {
   console.log(u)
   console.log(s)
   console.log(p)
+  // const title = "Compa<ator";
+  const title = "Comparato<";
 
   return (
     <div className='relative z-20 py-10 lg:py-40 w-screen'>
       <div className="flex flex-col items-center">
-        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Comparator</h1>
+        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white uppercase">{title}</h1>
         <p className="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">
           Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank' className='font-medium text-sky-600 dark:text-blue-500 hover:underline'>open-source</a>) way of comparing job offers and equity packages. Your data is only stored in your browser and is 100% private.
         </p>
