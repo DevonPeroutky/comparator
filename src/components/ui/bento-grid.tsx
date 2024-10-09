@@ -80,14 +80,22 @@ export const GlobeCard = () => {
       {/*     </footer> */}
       {/*   </AnimatedBlockquote> */}
       {/* </div> */}
-      <FancyBlockquote author="Steve Jobs" className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 min-w-[250px]">
-        {/* <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 min-w-[250px]"> */}
-        <p className="text-lg italic">
-          "The only way to do great work is to love what you do.
-          If you haven't found it yet, keep looking. Don't settle."
-        </p>
-        {/* </div> */}
-      </FancyBlockquote>
+      <PinContainer title="Steve Jobs" >
+        <div className="w-[200px] h-[200px]">
+          <p className="text-lg italic">
+            "The only way to do great work is to love what you do.
+            If you haven't found it yet, keep looking. Don't settle."
+          </p>
+        </div>
+      </PinContainer>
+      {/* <FancyBlockquote author="Steve Jobs" className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 min-w-[250px]"> */}
+      {/*   <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 min-w-[250px]"> */}
+      {/*     <p className="text-lg italic"> */}
+      {/*       "The only way to do great work is to love what you do. */}
+      {/*       If you haven't found it yet, keep looking. Don't settle." */}
+      {/*     </p> */}
+      {/*   </div> */}
+      {/* </FancyBlockquote> */}
       <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
     </div >
   );
