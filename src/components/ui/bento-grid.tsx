@@ -11,11 +11,19 @@ export const FeatureCard = ({
 }: {
   children?: React.ReactNode;
   className?: string;
-  position: "left" | "right" | "full";
+  position: "left" | "right" | "full" | "center";
 }) => {
-  const positionClass = position === "left" ? "px-4 md:px-8 xl:pl-12 2xl:pl-18" : position === "right" ? "px-4 md:px-8 xl:pr-12 2xl:pr-18" : "px-4 md:px-8 xl:px-12 2xl:px-18";
+  const positionClass = position === "left" ? "px-4 md:px-8 xl:pl-12 2xl:pl-18" :
+    position === "right" ? "px-4 md:px-8 xl:pr-12 2xl:pr-18" :
+      "px-4 md:px-8 xl:px-12 2xl:px-18";
   return (
     <div className={cn(`py-16 relative overflow-hidden`, positionClass, className)}>
+      {position === "center" && (
+        <svg className="absolute top-0 left-0 w-full h-1" viewBox="0 0 100 1" preserveAspectRatio="none">
+          <line x1="0" y1="0" x2="100" y2="0" stroke="currentColor" strokeWidth="1"
+            className="animate-draw-line" />
+        </svg>
+      )}
       {children}
     </div>
   );

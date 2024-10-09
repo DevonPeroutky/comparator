@@ -4,7 +4,7 @@
 - [ ] (1) Update README and code 
 - [ ] (1) Fun Title Font / Logo
 - [ ] (1) 3D Pin for quote author?
-- [ ] (1) Fun Share button
+- [x] (1) Fun Share button
 - [ ] (1) Color palette
 - [x] Confetti when add job offer
 - [x] Box Reveal for title and subtitle?

@@ -1,6 +1,8 @@
 import { useToast } from "@/hooks/use-toast"
 import { Button } from "@/components/ui/button"
 import { Share, CircleCheck } from "lucide-react"
+import { AnimatedButton } from "@/animation-test";
+import { ClipboardDocumentIcon } from "@heroicons/react/24/solid";
 
 export const ShareButton: React.FC = () => {
   const { toast } = useToast();
@@ -32,9 +34,15 @@ export const ShareButton: React.FC = () => {
   };
 
   return (
-    <Button onClick={handleShare}>
-      <Share className='mr-2 h-4 w-4' />
-      Copy URL to Share
-    </Button>
+    <AnimatedButton
+      className="font-semibold"
+      text="Copy URL to share"
+      icon={
+        <Share className='h-4 w-4' />
+      }
+      onClick={handleShare}
+      alternativeText="Copied!"
+      alternativeIcon={<ClipboardDocumentIcon className='h-4 w-4' />}
+    />
   );
 };

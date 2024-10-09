@@ -66,7 +66,7 @@ export function AppGrid() {
   ];
 
   return (
-    <div className="relative ">
+    <div className="relative w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-6 mt-12 border-t rounded-md dark:border-neutral-800">
         {features.map((feature, idx) => (
           <FeatureCard key={idx} className={feature.className} position={feature.position}>
