@@ -85,10 +85,11 @@ export const OffersGraph = () => {
             <ChartLegend content={<ChartLegendContent />} />
           </LineChart>
         </ChartContainer>
-        <div className="flex items-center justify-center mt-10">
-          <blockquote className="italic text-muted-foreground">
-            "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable." - Clare Boothe Luce
+        <div className="flex flex-col items-center justify-center mt-10 gap-y-2 text-center text-muted-foreground italic">
+          <blockquote className="">
+            "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable."
           </blockquote>
+          <div>- Clare Boothe Luce</div>
         </div>
       </>
     </BoxReveal >
@@ -98,7 +99,7 @@ export const OffersGraph = () => {
 
 export const OfferGraphTitle = () => {
   return (
-    <div>
+    <div className="flex flex-col items-center md:items-start">
       <MetricSelect />
       <FeatureDescriptionContainer className="mt-4">
         <OfferGraphDescription />
