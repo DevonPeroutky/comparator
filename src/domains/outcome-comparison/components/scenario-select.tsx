@@ -18,7 +18,6 @@ export interface ScenarioSelectProps {
 export const ScenarioSelect: React.FC<ScenarioSelectProps> = ({ jobOfferId }) => {
   const scenarioMap = useAtomValue(scenarioMapState)
   const scenarios: Scenario[] = scenarioMap[jobOfferId]
-  console.log("ScenarioSelect!! ", jobOfferId, scenarioMap)
   const [selectedScenarioIds, setSelectedScenarioIds] = useAtom(selectedScenarioIdState);
 
   const selectedScenarioId = selectedScenarioIds[jobOfferId];

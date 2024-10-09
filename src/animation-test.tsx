@@ -34,7 +34,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (props) => {
     >
       <Button
         onClick={(e) => { setAnimated(curr => !curr); props.onClick?.(e) }}
-        className={cn("flex items-center w-full overflow-hidden", (animated) ? "outline-emerald-700" : "")}
+        className={cn("flex items-center w-full overflow-hidden", (animated) ? "outline-emerald-500" : "")}
         variant={variant}
       >
         <AnimatePresence mode="wait">

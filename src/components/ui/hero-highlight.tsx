@@ -75,8 +75,8 @@ export const Highlight = ({
         backgroundSize: "100% 100%",
       }}
       transition={{
-        duration: 2,
-        ease: "linear",
+        duration: 1,
+        ease: "easeInOut",
         delay: 0.5,
       }}
       style={{

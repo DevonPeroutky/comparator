@@ -3,6 +3,8 @@ import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
 import { PinContainer } from "./3d-pin";
+import { AnimatedBlockquote } from "../app/animated-blockquote";
+import { motion } from "framer-motion";
 
 export const FeatureCard = ({
   children,
@@ -16,8 +18,21 @@ export const FeatureCard = ({
   const positionClass = position === "left" ? "px-4 md:px-8 xl:pl-12 2xl:pl-18" :
     position === "right" ? "px-4 md:px-8 xl:pr-12 2xl:pr-18" :
       "px-4 md:px-8 xl:px-12 2xl:px-18";
+
+  const variants = {
+    left: { x: -50, opacity: 0 },
+    right: { x: 50, opacity: 0 },
+    center: { y: 50, opacity: 0 },
+    full: { scale: 0.9, opacity: 0 },
+  };
+
   return (
-    <div className={cn(`py-16 relative overflow-hidden`, positionClass, className)}>
+    <motion.div
+      className={cn(`py-16 relative overflow-hidden`, positionClass, className)}
+      initial={variants[position]}
+      animate={{ x: 0, y: 0, scale: 1, opacity: 1, transition: { duration: 1, ease: "easeInOut" } }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
       {position === "center" && (
         <svg className="absolute top-0 left-0 w-full h-1" viewBox="0 0 100 1" preserveAspectRatio="none">
           <line x1="0" y1="0" x2="100" y2="0" stroke="currentColor" strokeWidth="1"
@@ -25,7 +40,7 @@ export const FeatureCard = ({
         </svg>
       )}
       {children}
-    </div>
+    </motion.div>
   );
 };
 
@@ -55,10 +70,14 @@ export const GlobeCard = () => {
   return (
     <div className="h-60 md:h-60  flex flex-col items-start bg-transparent dark:bg-transparent mt-12">
       <div className="flex flex-col max-w-[200px] gap-y-4 italic text-muted-foreground">
-        <blockquote className="">
-          "Wealth consists not in having great possessions, but in having few wants."
-        </blockquote>
-        <div>- Epictetus</div>
+        <AnimatedBlockquote>
+          <p>
+            "Wealth consists not in having great possessions, but in having few wants."
+          </p>
+          <footer className="mt-2">
+            — Epicetus
+          </footer>
+        </AnimatedBlockquote>
       </div>
       <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
     </div >

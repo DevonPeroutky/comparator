@@ -14,7 +14,7 @@ export const MetricSelect: React.FC = () => {
 
   return (
     <Select value={selectedMetric} onValueChange={(value) => setSelectedMetric(value as Metric)}>
-      <SelectTrigger className="w-fit text-2xl gap-x-2 dark:text-white">
+      <SelectTrigger className="w-fit text-2xl gap-x-2 text-stripeNavy dark:text-white">
         <SelectValue placeholder="Select Metric" className="text-4xl font-bold dark:text-white" />
       </SelectTrigger>
       <SelectContent className="cursor-pointer">

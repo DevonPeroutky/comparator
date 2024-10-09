@@ -1,0 +1,161 @@
+import { motion, AnimatePresence } from 'framer-motion';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+
+type HoverAnimatedBorderProps = {
+  children: ReactNode,
+  className?: string,
+  radius?: number
+}
+const HoverAnimatedBorder: React.FC<HoverAnimatedBorderProps> = ({
+  children,
+  className = "",
+  radius = 8
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        setDimensions({
+          width: containerRef.current.offsetWidth,
+          height: containerRef.current.offsetHeight
+        });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  console.log("DIMENSIONS ", dimensions)
+  return (
+    <div
+      className="relative flex"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Content */}
+      <div className={`relative z-10 p-6 ${className}`} ref={containerRef}>
+        {children}
+      </div>
+
+      {/* Animated Border */}
+      <AnimatePresence>
+        <svg
+          className="absolute inset-0 w-full h-full text-yellow-500"
+          // preserveAspectRatio='none'
+          viewBox="0 0 100 100"
+          fill="none"
+        >
+          <motion.rect
+            x="0"
+            y="0"
+            // width={dimensions.width}
+            // height={dimensions.height}
+            // width={100}
+            // height={100}
+            width="100%"
+            height="100%"
+            rx={radius}
+            stroke="currentColor"
+            strokeWidth="0.5"
+            variants={{
+              initial: { pathLength: 1, opacity: 0.5 },
+              hover: { pathLength: 1, opacity: 1 },
+              exit: { pathLength: 0, opacity: 0 }
+            }}
+            initial="initial"
+            animate={isHovered ? "hover" : "initial"}
+            exit="exit"
+            transition={{
+              pathLength: { duration: 0.5, ease: "easeInOut" },
+              opacity: { duration: 0.2 }
+            }}
+          />
+        </svg>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// Example usage
+export const Example2 = () => {
+  return (
+    <div className="space-y-8 p-8">
+      {/* <HoverAnimatedBorder className="w-full cursor-pointer"> */}
+      {/*   <p className="text-white">Hover me to see the border animate!</p> */}
+      {/* </HoverAnimatedBorder> */}
+      <RectWrapper className="w-full cursor-pointer">
+        <p className="">TEST</p>
+      </RectWrapper>
+    </div>
+  );
+};
+
+export const RectWrapper: React.FC<HoverAnimatedBorderProps> = ({ children }) => {
+  const contentRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+
+  const lineVariants = {
+    initial: {
+      pathLength: 0,
+      opacity: 0
+    },
+    animate: {
+      pathLength: 1,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (contentRef.current) {
+        const { width, height } = contentRef.current.getBoundingClientRect();
+        setDimensions({ width, height });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  return (
+    <div className="relative">
+      <svg
+        overflow={"visible"}
+        className="absolute top-0 left-0 -z-10"
+        width={dimensions.width}
+        height={dimensions.height}
+      >
+        <motion.rect
+          y="0"
+          width="100%"
+          height="100%"
+          // width={dimensions.width}
+          // height={dimensions.height}
+          rx={8}
+          fill="none"
+          stroke="blue"
+          strokeWidth="1"
+          variants={lineVariants}
+          initial={{ pathLength: 0, opacity: 0 }}
+        // animate={{ pathLength: 1, opacity: 1, transition: { duration: 1, ease: "easeInOut" } }}
+        />
+      </svg>
+      <div ref={contentRef} className="p-4">
+        {children}
+      </div>
+    </div>
+  );
+}

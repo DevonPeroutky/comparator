@@ -60,9 +60,7 @@ type DilutionTimelineProps = {
   scenarios: Scenario[]
 }
 export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, scenarios }) => {
-  console.log("Timeline Props: ", companyId, scenarios);
   const chartConfig = useAtomValue(chartConfigAtom);
-  console.log("Chart Config: ", chartConfig);
   const color = chartConfig[companyId].color
   const companyName = useCompanyName()(companyId);
 
@@ -108,7 +106,6 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
 
 export const EquityJourney = () => {
   const [scenarioMap, _] = useAtom(scenarioMapState);
-  console.log("Scenario Map: ", scenarioMap)
 
   return (
     <div className="flex flex-wrap gap-8 justify-center md:justify-start">

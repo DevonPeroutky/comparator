@@ -4,12 +4,12 @@
 - [ ] (1) Update README and code 
 - [ ] (1) Fun Title Font / Logo
 - [ ] (1) 3D Pin for quote author?
-- [x] (1) Fun Share button
-- [ ] (1) Color palette
-  - [ ] (1) Handle more job offers?
+  - [ ] (1) 
+- [ ] (1) Fun Share button
 
 # Future
 - [ ] Cleanup code
+ - [ ] Move animate-test 
 - [ ] Public Job Offers
 
 ## Offers Graph
@@ -19,8 +19,5 @@
 - [ ] Add agreement checkbox.
 
 ## Styling
-- [ ] Logo
+- [ ] Logo / Title Text
 - [ ] Dark Mode
- - [ ] Animated border around certain buttons/menus?
-- [ ] Border Beam/Card focus
-- [] Font?

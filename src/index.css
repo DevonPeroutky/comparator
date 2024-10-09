@@ -10,6 +10,11 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+    --chart-6: 280 65% 60%;
+    --chart-7: 330 70% 50%;
+    --chart-8: 60 80% 60%;
+    --chart-9: 200 75% 55%;
+    --chart-10: 150 60% 40%;
   }
 
   .dark {
@@ -18,6 +23,11 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --chart-6: 190 70% 50%;
+    --chart-7: 60 75% 45%;
+    --chart-8: 310 65% 55%;
+    --chart-9: 100 60% 50%;
+    --chart-10: 240 70% 60%;
   }
 }
 /* End of ShadCN */
@@ -157,16 +167,33 @@ button:focus-visible {
   }
 }
 
-
-/* Line Animations */
-@keyframes drawLine {
-  to {
-    stroke-dashoffset: 0;
+@layer base {
+  h1 {
+    @apply text-stripeBlack;
+    @apply font-medium;
+  }
+  h2 {
+    @apply text-stripeNavy;
+    @apply font-medium;
+  }
+  p {
+    @apply text-gray-500;
+  }
+  blockquote {
+    @apply text-gray-400;
+    @apply italic;
+    /*@apply text-muted-foreground;*/
   }
 }
 
 .animate-draw-line {
   stroke-dasharray: 100;
   stroke-dashoffset: 100;
-  animation: drawLine 1s ease-out forwards;
+  animation: drawLine 1s ease-out both;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
 }

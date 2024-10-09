@@ -1,4 +1,6 @@
 const svgToDataUri = require("mini-svg-data-uri");
+const plugin = require('tailwindcss/plugin')
+
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
@@ -18,6 +20,9 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)'
       },
       colors: {
+        stripeBlack: "#0a2540",
+        stripeNavy: "#0a2540",
+        stripeSlate: "#425466",
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         card: {
