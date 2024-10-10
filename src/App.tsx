@@ -23,22 +23,22 @@ export default function App() {
 
   return (
     <div className='relative z-20 py-10 lg:py-40 w-screen flex flex-col items-center'>
-      <FancyBlockquote author="Steve Jobs" className="">
-        <div className="w-[200px] h-[200px] flex justify-center items-center p-4">
-          <p className="text-lg italic">
-            "The only way to do great work is to love what you do.
-            If you haven't found it yet, keep looking. Don't settle."
-          </p>
-        </div>
-      </FancyBlockquote>
-      <PinContainer title="Steve Jobs" >
-        <div className="w-[200px] h-[200px]">
-          <p className="text-lg italic">
-            "The only way to do great work is to love what you do.
-            If you haven't found it yet, keep looking. Don't settle."
-          </p>
-        </div>
-      </PinContainer>
+      {/* <FancyBlockquote author="Steve Jobs" className="" stemHeight={150}> */}
+      {/*   <div className="flex justify-center items-center p-4 w-[200px] h-[200px]"> */}
+      {/*     <p className="text-lg italic"> */}
+      {/*       "The only way to do great work is to love what you do. */}
+      {/*       If you haven't found it yet, keep looking. Don't settle." */}
+      {/*     </p> */}
+      {/*   </div> */}
+      {/* </FancyBlockquote> */}
+      {/* <PinContainer title="Steve Jobs" > */}
+      {/*   <div className="w-[200px] h-[200px]"> */}
+      {/*     <p className="text-lg italic"> */}
+      {/*       "The only way to do great work is to love what you do. */}
+      {/*       If you haven't found it yet, keep looking. Don't settle." */}
+      {/*     </p> */}
+      {/*   </div> */}
+      {/* </PinContainer> */}
       <div className="flex flex-col items-center text-center mx-auto px-10">
         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white uppercase">{title}</h1>
         <p className="mb-4 text-lg font-normal text-gray-500 dark:text-gray-400">

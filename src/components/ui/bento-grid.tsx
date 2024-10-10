@@ -47,7 +47,7 @@ export const FeatureCard = ({
 
 export const FeatureTitle = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <div className="text-left tracking-tight text-black dark:text-white text-xl md:text-2xl md:leading-snug mb-4">
+    <div className="text-left tracking-tight text-black dark:text-white text-xl md:text-2xl md:leading-snug">
       {children}
     </div>
   );
@@ -69,33 +69,14 @@ export const FeatureDescription = ({ children, className }: { children?: React.R
 
 export const GlobeCard = () => {
   return (
-    <div className="min-h-60 md:min-h-60  flex flex-col items-start bg-transparent dark:bg-transparent mt-12">
-      {/* <div className="flex flex-col max-w-[200px] gap-y-4 italic text-muted-foreground"> */}
-      {/*   <AnimatedBlockquote> */}
-      {/*     <p> */}
-      {/*       "Wealth consists not in having great possessions, but in having few wants." */}
-      {/*     </p> */}
-      {/*     <footer className="mt-2"> */}
-      {/*       — Epicetus */}
-      {/*     </footer> */}
-      {/*   </AnimatedBlockquote> */}
-      {/* </div> */}
-      <PinContainer title="Steve Jobs" >
-        <div className="w-[200px] h-[200px]">
-          <p className="text-lg italic">
-            "The only way to do great work is to love what you do.
-            If you haven't found it yet, keep looking. Don't settle."
-          </p>
-        </div>
-      </PinContainer>
-      {/* <FancyBlockquote author="Steve Jobs" className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 min-w-[250px]"> */}
-      {/*   <div className="flex basis-full flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 min-w-[250px]"> */}
-      {/*     <p className="text-lg italic"> */}
-      {/*       "The only way to do great work is to love what you do. */}
-      {/*       If you haven't found it yet, keep looking. Don't settle." */}
-      {/*     </p> */}
-      {/*   </div> */}
-      {/* </FancyBlockquote> */}
+    <div className="min-h-60 md:min-h-60  flex flex-col items-start bg-transparent dark:bg-transparent">
+      <FancyBlockquote author="Epicetus" className="" stemHeight={85}>
+        <AnimatedBlockquote>
+          <blockquote className="italic w-[200px] p-4">
+            "Wealth consists not in having great possessions, but in having few wants."
+          </blockquote>
+        </AnimatedBlockquote>
+      </FancyBlockquote>
       <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
     </div >
   );

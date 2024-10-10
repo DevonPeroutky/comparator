@@ -7,7 +7,7 @@ type AnimatedBlockquoteProps = {
   className?: string;
   strokeWidth?: number;
 };
-export const AnimatedBlockquote = ({ children }) => {
+export const AnimatedBlockquote: React.FC<AnimatedBlockquoteProps> = ({ children, className }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   const borderVariants = {
@@ -27,7 +27,7 @@ export const AnimatedBlockquote = ({ children }) => {
 
   return (
     <div
-      className="relative p-1 max-w-2xl"
+      className={cn("relative", className)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -76,7 +76,7 @@ export const AnimatedBlockquote = ({ children }) => {
       </svg>
 
       {/* Actual Blockquote */}
-      <blockquote className="p-6">
+      <div className="p-1">
         <motion.div
           initial={{ opacity: 0.9 }}
           whileHover={{ opacity: 1 }}
@@ -84,7 +84,7 @@ export const AnimatedBlockquote = ({ children }) => {
         >
           {children}
         </motion.div>
-      </blockquote>
+      </div>
     </div>
   );
 };

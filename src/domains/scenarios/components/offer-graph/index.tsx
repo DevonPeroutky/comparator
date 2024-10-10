@@ -17,6 +17,8 @@ import { OfferGraphDescription } from "./graph-description"
 import { FeatureDescriptionContainer } from "@/components/ui/bento-grid"
 import BoxReveal from "@/components/ui/box-reveal"
 import { selectedMetricState } from "../../atoms"
+import { FancyBlockquote } from "@/components/app/animated-blockquote/3d-blockquote"
+import { AnimatedBlockquote } from "@/components/app/animated-blockquote"
 
 export const OffersGraph = () => {
   const offers = useAtomValue(jobOffersState);
@@ -82,11 +84,16 @@ export const OffersGraph = () => {
           <ChartLegend content={<ChartLegendContent />} />
         </LineChart>
       </ChartContainer>
-      <div className="flex flex-col items-center justify-center mt-10 gap-y-2 text-center">
-        <blockquote className="">
-          "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable."
-        </blockquote>
-        <blockquote>- Clare Boothe Luce</blockquote>
+      <div className="flex flex-col items-center justify-center text-center">
+        <FancyBlockquote author="Clare Booth Luce" containerClassName="" stemHeight={50} className="flex justify-center items-center w-[800px]">
+          {/* <div className="flex justify-center items-center w-[800px]"> */}
+          <AnimatedBlockquote>
+            <blockquote className="italic">
+              "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable."
+            </blockquote>
+          </AnimatedBlockquote>
+          {/* </div> */}
+        </FancyBlockquote>
       </div>
     </>
   )
