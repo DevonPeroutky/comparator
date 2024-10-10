@@ -84,14 +84,14 @@ export const OffersGraph = () => {
           <ChartLegend content={<ChartLegendContent />} />
         </LineChart>
       </ChartContainer>
-      <div className="flex flex-col items-center justify-center text-center">
+      <div className="flex flex-col items-center justify-center text-center mt-4">
         <FancyBlockquote author="Clare Booth Luce" containerClassName="" stemHeight={50} className="flex justify-center items-center w-[800px]">
           {/* <div className="flex justify-center items-center w-[800px]"> */}
-          <AnimatedBlockquote>
-            <blockquote className="italic">
-              "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable."
-            </blockquote>
-          </AnimatedBlockquote>
+          {/* <AnimatedBlockquote> */}
+          <blockquote className="italic p-4">
+            "Money can't buy happiness, but it can make you awfully comfortable while you're being miserable."
+          </blockquote>
+          {/* </AnimatedBlockquote> */}
           {/* </div> */}
         </FancyBlockquote>
       </div>

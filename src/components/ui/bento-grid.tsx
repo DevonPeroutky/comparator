@@ -71,11 +71,11 @@ export const GlobeCard = () => {
   return (
     <div className="min-h-60 md:min-h-60  flex flex-col items-start bg-transparent dark:bg-transparent">
       <FancyBlockquote author="Epicetus" className="" stemHeight={85}>
-        <AnimatedBlockquote>
-          <blockquote className="italic w-[200px] p-4">
-            "Wealth consists not in having great possessions, but in having few wants."
-          </blockquote>
-        </AnimatedBlockquote>
+        {/* <AnimatedBlockquote> */}
+        <blockquote className="italic w-[200px] p-4">
+          "Wealth consists not in having great possessions, but in having few wants."
+        </blockquote>
+        {/* </AnimatedBlockquote> */}
       </FancyBlockquote>
       <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
     </div >

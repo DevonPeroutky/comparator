@@ -32,50 +32,54 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (props) => {
       transition={{ type: "spring", stiffness: 400, damping: 17 }}
       key="animated"
     >
-      <Button
-        onClick={(e) => { setAnimated(curr => !curr); props.onClick?.(e) }}
-        className={cn("flex items-center w-full overflow-hidden", (animated) ? "outline-emerald-500" : "")}
-        variant={variant}
-      >
-        <AnimatePresence mode="wait">
-          {animated ? (
-            <motion.div
-              key="animated"
-              className="flex items-center justify-start gap-x-2"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } }}
-              exit={{ y: 0, opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
-            >
-              <motion.span
-                initial={{ scale: 0, rotate: "-360deg" }}
-                animate={{ scale: 1, rotate: "360deg", transition: { duration: 0.4, ease: "easeInOut" } }}
-                exit={{ scale: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
-                className="text-emerald-600 dark:text-emerald-400">{alternativeIcon}</motion.span>
-              <StaggeredText text={alternativeText} className="text-emerald-600 dark:text-emerald-400" />
-            </motion.div>
-          ) : (
-            <motion.div
-              className="flex items-center justify-start gap-x-2"
-            >
-              <motion.span
+      <div className="relative inline-flex group cursor-pointer">
+        <div
+          className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-emerald-400 via-teal-400 to-green-400 rounded-xl blur-lg group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-200 animate-tilt" />
+        <Button
+          onClick={(e) => { setAnimated(curr => !curr); props.onClick?.(e) }}
+          className={cn("flex items-center w-full overflow-hidden z-10", (animated) ? "outline-emerald-500" : "")}
+          variant={variant}
+        >
+          <AnimatePresence mode="wait">
+            {animated ? (
+              <motion.div
                 key="animated"
-                className="initial-icon"
-                initial={{ y: 0, opacity: 0, }}
-                animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } }}
-                exit={{ scale: 0, rotate: "360deg", transition: { duration: 0.2, ease: "easeInOut" } }}
-              >{icon}</motion.span>
-              <motion.span
+                className="flex items-center justify-start gap-x-2"
+                initial={{ y: 50, opacity: 0 }}
+                animate={{ y: 0, opacity: 1, transition: { duration: 0.3, ease: "easeInOut" } }}
+                exit={{ y: 0, opacity: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
+              >
+                <motion.span
+                  initial={{ scale: 0, rotate: "-360deg" }}
+                  animate={{ scale: 1, rotate: "360deg", transition: { duration: 0.4, ease: "easeInOut" } }}
+                  exit={{ scale: 0, transition: { duration: 0.4, ease: "easeInOut" } }}
+                  className="text-emerald-400 dark:text-emerald-400">{alternativeIcon}</motion.span>
+                <StaggeredText text={alternativeText} className="text-emerald-400 dark:text-emerald-400" />
+              </motion.div>
+            ) : (
+              <motion.div
+                className="flex items-center justify-start gap-x-2"
+              >
+                <motion.span
+                  key="animated"
+                  className="initial-icon"
+                  initial={{ y: 0, opacity: 0, }}
+                  animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } }}
+                  exit={{ scale: 0, rotate: "360deg", transition: { duration: 0.2, ease: "easeInOut" } }}
+                >{icon}</motion.span>
+                <motion.span
 
-                key="initial"
-                initial={{ y: 0, opacity: 0, }}
-                animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } }}
-                exit={{ y: -50, opacity: 0, transition: { duration: 0.1, ease: "easeInOut" } }}
+                  key="initial"
+                  initial={{ y: 0, opacity: 0, }}
+                  animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } }}
+                  exit={{ y: -50, opacity: 0, transition: { duration: 0.1, ease: "easeInOut" } }}
 
-                className="initial-text">{text}</motion.span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </Button >
+                  className="initial-text">{text}</motion.span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Button >
+      </div>
     </motion.div >
   )
 }
