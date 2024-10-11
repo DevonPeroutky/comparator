@@ -13,34 +13,33 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useAtom } from "jotai"
-import { jobOffersState } from "../../atoms"
-import { JobOffer } from "../../types"
+import { jobOffersState } from "../../../atoms"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
 import { generateScenarioForJobOffer, generateScenarios } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
+import { PublicJobOffer } from "@/domains/offers/types"
 
-const jobOfferFormSchema = z.object({
+const publicJobOfferFormSchema = z.object({
   id: z.string().default(() => uuidv4()),
   company_name: z.string(),
   salary: z.number().min(1).max(1000000000),
-  number_of_shares: z.optional(z.number().int().min(0)),
-  total_number_of_outstanding_shares: z.optional(z.number().int().min(0)),
-  percentage_ownership: z.optional(z.number().min(0).max(100)),
-  strike_price: z.optional(z.number().min(0).max(100000)),
-  latest_company_valuation: z.number(),
   vesting_years: z.number().min(1).max(10),
+  number_of_shares: z.optional(z.number().int().min(0)),
+  stock_price: z.number().min(0).max(100000),
+  equity_valution: z.optional(z.number().min(0).max(100000)),
+  market_cap: z.optional(z.number().min(0).max(100000)),
 });
 
-type FormData = z.infer<typeof jobOfferFormSchema>;
+type FormData = z.infer<typeof publicJobOfferFormSchema>;
 
-export function JobOfferForm({ onClick }: { onClick: () => void }) {
+export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
   const [jobOffers, setJobOffers] = useAtom(jobOffersState)
   const addScenarios = useAddScenarios();
 
-  const form = useForm<z.infer<typeof jobOfferFormSchema>>({
-    resolver: zodResolver(jobOfferFormSchema),
+  const form = useForm<z.infer<typeof publicJobOfferFormSchema>>({
+    resolver: zodResolver(publicJobOfferFormSchema),
     defaultValues: {
       vesting_years: 4,
     }
@@ -48,63 +47,51 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
   const { register, setValue, control, handleSubmit } = form;
 
   const onSubmit = (data: FormData) => {
-    if (!data.percentage_ownership && (!data.number_of_shares || !data.total_number_of_outstanding_shares)) {
+    if (!data.equity_valution || !data.number_of_shares) {
       form.setError("root", {
         type: "manual",
-        message: "The company should either give you the Percentage Ownership OR the Number of shares AND Number of Outstanding Shares. Insist that you get one of thoses, as it's impossible to evaluate their offer without it."
+        message: "You need the number of shares to estimate the equity package. The company should either provide you with this information, or they gave you the equity value of your RSU"
       });
       return;
     }
 
-    if (data.percentage_ownership && data.number_of_shares && data.total_number_of_outstanding_shares) {
-      const calculatedPercentage = (data.number_of_shares / data.total_number_of_outstanding_shares) * 100;
-      const marginOfError = 0.1; // 0.1% margin of error
-      if (Math.abs(calculatedPercentage - data.percentage_ownership) > marginOfError) {
-        form.setError("root", {
-          type: "manual",
-          message: "The provided percentage ownership doesn't align with the calculated percentage based on the number of shares and total outstanding shares.",
-        });
-        return;
-      }
+    // Calculate number of shares if it's empty
+    if (!data.number_of_shares && data.stock_price && data.equity_valution) {
+      data.number_of_shares = Math.floor(data.equity_valution / data.number_of_shares);
     }
 
-    // Calculate percentage_ownership if it's empty
-    if (!data.percentage_ownership && data.number_of_shares && data.total_number_of_outstanding_shares) {
-      data.percentage_ownership = (data.number_of_shares / data.total_number_of_outstanding_shares) * 100;
-    }
-
-    // Convert  decimal percentage to percentage
-    data.percentage_ownership = data.percentage_ownership! / 100;
-
-    const newJobOffer: JobOffer = jobOfferFormSchema.parse(data);
+    const newJobOffer: PublicJobOffer = publicJobOfferFormSchema.parse(data);
 
     // Add new Job offer to the list
     setJobOffers([...jobOffers, newJobOffer])
 
-    // TODO: Reactively generate scenarios for job offers if they don't already exist in scenarioMap
+    // Generate scenarios for the new job offer
     const newScenarios = generateScenarioForJobOffer(newJobOffer);
-    addScenarios(newJobOffer.id, newScenarios);
+    addScenarios(newJobOffer.company_name, newScenarios);
 
     onClick();
   };
 
+  console.log(`DATA: `, form.getValues());
+  console.log(`Number of share: `, form.getFieldState('number_of_shares'), form.getValues('number_of_shares'));
 
-  const total_number_of_shares = useWatch({
+  const equity_valuation = useWatch({
     control,
-    name: 'total_number_of_outstanding_shares'
+    name: 'equity_valution'
   });
 
-  const number_of_shares = useWatch({
+  const stock_price = useWatch({
     control,
-    name: 'number_of_shares'
+    name: 'stock_price'
   });
 
   // Whenever fieldAValue changes, set the value of 'fieldB'
   useEffect(() => {
-    if (total_number_of_shares && number_of_shares) {
-      setValue('percentage_ownership', (number_of_shares / total_number_of_shares) * 100);
+    if (equity_valuation && stock_price) {
+      console.log('SETTING number_of_shares', Math.floor((equity_valuation / stock_price)));
+      setValue('number_of_shares', Math.floor((equity_valuation / stock_price)));
     }
-  }, [total_number_of_shares, number_of_shares, setValue]);
+  }, [equity_valuation, stock_price, setValue]);
 
   return (
     <Form {...form} >
@@ -161,16 +148,16 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
         />
         <FormField
           control={form.control}
-          name="latest_company_valuation"
+          name="equity_valution"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <FormLabel>Company Valuation</FormLabel>
+              <FormLabel>RSU Amount</FormLabel>
               <FormControl>
                 <FormattedInput
-                  placeholder="$1000000000"
+                  placeholder="$250,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="valuation"
+                  formatter="currency"
                 />
               </FormControl>
               <FormMessage />
@@ -179,19 +166,19 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
         />
         <FormField
           control={form.control}
-          name="strike_price"
+          name="stock_price"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <FormLabel>Strike Price</FormLabel>
+              <FormLabel>Stock Price</FormLabel>
               <FormControl>
                 <FormattedInput
-                  placeholder="$.47"
+                  placeholder="$56"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
                   formatter="currency"
                 />
               </FormControl>
-              <FormDescription>The price that you'll pay for the stock</FormDescription>
+              <FormDescription></FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -199,28 +186,33 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
         <FormField
           control={form.control}
           name="number_of_shares"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel># of Shares</FormLabel>
-              <FormControl>
-                <FormattedInput
-                  placeholder="20,000"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatter="number"
-                />
-              </FormControl>
-              <FormDescription>The amount of shares in your equity packages</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            console.log('FIELD: ', field);
+            return (
+
+              <FormItem className="flex-1">
+                <FormLabel># of Shares</FormLabel>
+                <FormControl>
+                  <FormattedInput
+                    key={`# of shares-${field.value}`}
+                    placeholder="20,000"
+                    value={field.value}
+                    onChange={(value) => field.onChange(value)}
+                    formatter="number"
+                  />
+                </FormControl>
+                <FormDescription>The amount of shares in your equity packages</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )
+          }}
         />
         <FormField
           control={form.control}
-          name="total_number_of_outstanding_shares"
+          name="market_cap"
           render={({ field }) => (
             <FormItem className="flex-1">
-              <FormLabel># of Outstanding Shares</FormLabel>
+              <FormLabel>Market Cap</FormLabel>
               <FormControl>
                 <FormattedInput
                   placeholder="25,467,000"
@@ -229,26 +221,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   formatter="number"
                 />
               </FormControl>
-              <FormDescription>The total number of shares for the company.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="percentage_ownership"
-          render={({ field }) => (
-            <FormItem className="flex-1">
-              <FormLabel>Percentage Ownership</FormLabel>
-              <FormControl>
-                <FormattedInput
-                  placeholder=".2%"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatter="percentage"
-                />
-              </FormControl>
-              <FormDescription></FormDescription>
+              <FormDescription>The company's current market cap</FormDescription>
               <FormMessage />
             </FormItem>
           )}
