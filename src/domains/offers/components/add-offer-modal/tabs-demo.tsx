@@ -25,11 +25,11 @@ export function TabsDemo() {
         <TabsTrigger value="startup">Startup</TabsTrigger>
         <TabsTrigger value="password">Public Company</TabsTrigger>
       </TabsList>
-      <TabsContent value="startup">
-        <JobOfferForm onClick={closeDialog} />
-      </TabsContent>
       <TabsContent value="password">
         <PublicJobOfferForm onClick={closeDialog} />
+      </TabsContent>
+      <TabsContent value="startup">
+        <JobOfferForm onClick={closeDialog} />
       </TabsContent>
     </Tabs>
   )

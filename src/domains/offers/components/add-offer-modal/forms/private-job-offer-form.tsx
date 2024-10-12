@@ -20,6 +20,7 @@ import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
 import { generateScenarioForJobOffer, generateScenarios } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
+import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PercentageColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
 
 const jobOfferFormSchema = z.object({
   id: z.string().default(() => uuidv4()),
@@ -133,8 +134,8 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$100,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="currency"
                   onBlur={() => field.onBlur()}
+                  formatOptions={LargeCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -152,7 +153,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="4"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -170,7 +171,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$1000000000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="valuation"
+                  formatOptions={LargeCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -188,7 +189,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$.47"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="currency"
+                  formatOptions={PreciseCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormDescription>The price that you'll pay for the stock</FormDescription>
@@ -207,7 +208,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="20,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
               <FormDescription>The amount of shares in your equity packages</FormDescription>
@@ -226,7 +227,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="25,467,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
               <FormDescription>The total number of shares for the company.</FormDescription>
@@ -245,7 +246,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder=".2%"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="percentage"
+                  formatOptions={PercentageColumnFormatOptions}
                 />
               </FormControl>
               <FormDescription></FormDescription>

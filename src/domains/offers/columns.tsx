@@ -9,6 +9,8 @@ import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, Percentag
 
 const JobOfferEditableCell: React.FC<BaseEditableCellProps<JobOffer, Primitive>> = ({ row, fieldName, formatOptions }) => {
   const updateListItem = useUpdateListItemChanges(jobOffersState);
+  // TODO: Update className(with background) if public or private
+  // TODO: Update disabled if public
   return BaseEditableCell({ row, fieldName, formatOptions, updateListItem });
 }
 

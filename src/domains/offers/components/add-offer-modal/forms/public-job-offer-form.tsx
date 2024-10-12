@@ -20,6 +20,7 @@ import { FormattedInput } from "@/components/ui/formatted-input"
 import { generateScenarioForJobOffer, generateScenarios } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
 import { PublicJobOffer } from "@/domains/offers/types"
+import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
 
 const publicJobOfferFormSchema = z.object({
   id: z.string().default(() => uuidv4()),
@@ -72,8 +73,8 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
     onClick();
   };
 
-  console.log(`DATA: `, form.getValues());
-  console.log(`Number of share: `, form.getFieldState('number_of_shares'), form.getValues('number_of_shares'));
+  // console.log(`DATA: `, form.getValues());
+  // console.log(`Number of share: `, form.getFieldState('number_of_shares'), form.getValues('number_of_shares'));
 
   const equity_valuation = useWatch({
     control,
@@ -88,7 +89,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
   // Whenever fieldAValue changes, set the value of 'fieldB'
   useEffect(() => {
     if (equity_valuation && stock_price) {
-      console.log('SETTING number_of_shares', Math.floor((equity_valuation / stock_price)));
+      // console.log('SETTING number_of_shares', Math.floor((equity_valuation / stock_price)));
       setValue('number_of_shares', Math.floor((equity_valuation / stock_price)));
     }
   }, [equity_valuation, stock_price, setValue]);
@@ -120,7 +121,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$100,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="currency"
+                  formatOptions={LargeCurrencyColumnFormatOptions}
                   onBlur={() => field.onBlur()}
                 />
               </FormControl>
@@ -139,7 +140,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="4"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -157,7 +158,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$250,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="currency"
+                  formatOptions={LargeCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -175,7 +176,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$56"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="currency"
+                  formatOptions={PreciseCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormDescription></FormDescription>
@@ -187,18 +188,16 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
           control={form.control}
           name="number_of_shares"
           render={({ field }) => {
-            console.log('FIELD: ', field);
             return (
 
               <FormItem className="flex-1">
                 <FormLabel># of Shares</FormLabel>
                 <FormControl>
                   <FormattedInput
-                    key={`# of shares-${field.value}`}
                     placeholder="20,000"
                     value={field.value}
                     onChange={(value) => field.onChange(value)}
-                    formatter="number"
+                    formatOptions={IntegerColumnFormatOptions}
                   />
                 </FormControl>
                 <FormDescription>The amount of shares in your equity packages</FormDescription>
@@ -218,7 +217,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="25,467,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={LargeCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormDescription>The company's current market cap</FormDescription>
