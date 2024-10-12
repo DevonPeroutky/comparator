@@ -70,7 +70,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
       <h4 className='capitalized text-xl text-muted-foreground' style={{ color: color }}>{companyName}</h4>
       <ol className={`relative border-l border-solid  border-[${color}] dark:border-gray-700`} style={{ borderLeftColor: color }}>
         {scenarios.map((scenario, index) => (
-          <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-gray-500 dark:text-gray-400">
+          <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-start text-gray-500 dark:text-gray-400">
             <div className={`absolute w-3 h-3 bg-[${color}] rounded-full mt-1.5 -start-1.5 dark:border-gray-900 dark:bg-gray-700`} style={{ backgroundColor: color }} />
             <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{(index == 0) ? "Current Valuation" : "Funding Round"}</time>
             <div className="flex text-lg font-semibold dark:text-white text-muted-foreground">
@@ -120,8 +120,8 @@ export const EquityJourney = () => {
 
 export const ScenarioBuilderDescription = () => {
   return (
-    <span className="text-center text-lg font-normal text-gray-500 dark:text-gray-400 leading-relaxed">
-      The dilution has been estimated from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' className='text-sky-600 hover:underline hover:cursor-pointer'>Carta</a> and other sources. Update the <mark className='px-1 bg-green-600 rounded py-1 text-white font-medium'>valuations</mark> and <mark className="px-1 text-white bg-blue-400 rounded dark:bg-blue-600 py-1 font-medium" >dilution</mark> to compare outcomes in the table below.
-    </span>
+    <p className="text-center md:text-start text-lg font-normal text-gray-500 dark:text-gray-400 leading-relaxed">
+      The dilution has been estimated from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' rel="noopener noreferrer" className='text-sky-600 hover:underline hover:cursor-pointer'>Carta</a> and other sources. Update the <span className='px-1 bg-green-600 rounded py-1 text-white font-medium'>valuations</span> and <span className="px-1 text-white bg-blue-400 rounded dark:bg-blue-600 py-1 font-medium">dilution</span> to compare outcomes in the table below.
+    </p>
   )
 }

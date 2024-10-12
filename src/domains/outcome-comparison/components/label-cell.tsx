@@ -17,22 +17,24 @@ export const LabelCell: React.FC<LabelCellProps> = ({ label, tooltip }) => {
 
   return (
     <TableCell className="w-fit">
-      <div className="flex items-center gap-x-2 text-muted-foreground font-semibold">
+      <div className="flex justify-start items-center gap-x-2 text-muted-foreground font-semibold text-start">
         <span className="capitalize">
           {label}
         </span>
-        {tooltip &&
-          (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <QuestionMarkCircleIcon className="w-6 h-6 cursor-pointer" />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>{tooltip}</p>
-              </TooltipContent>
-            </Tooltip>
-          )
-        }
+        {tooltip && (
+          <div className="hidden md:block">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <QuestionMarkCircleIcon className="w-6 h-6 cursor-pointer" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{tooltip}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </div>
+        )}
       </div>
     </TableCell>
   )
