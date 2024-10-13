@@ -29,7 +29,7 @@ const publicJobOfferFormSchema = z.object({
   vesting_years: z.number().min(1).max(10),
   number_of_shares: z.optional(z.number().int().min(0)),
   stock_price: z.number().min(0).max(100000),
-  equity_valution: z.optional(z.number().min(0).max(100000)),
+  equity_valution: z.optional(z.number().min(0).max(99999999)),
   market_cap: z.optional(z.number().min(0).max(100000)),
 });
 
@@ -68,13 +68,10 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
 
     // Generate scenarios for the new job offer
     const newScenarios = generateScenarioForJobOffer(newJobOffer);
-    addScenarios(newJobOffer.company_name, newScenarios);
+    addScenarios(newJobOffer.id, newScenarios);
 
     onClick();
   };
-
-  // console.log(`DATA: `, form.getValues());
-  // console.log(`Number of share: `, form.getFieldState('number_of_shares'), form.getValues('number_of_shares'));
 
   const equity_valuation = useWatch({
     control,

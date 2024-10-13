@@ -3,13 +3,17 @@ import { AppGrid } from './app-grid';
 import { useAtomValue } from 'jotai';
 import { ShareButton } from './components/app/share-button';
 import SparklesText from "./components/ui/sparkles-text";
+import { scenarioMapState } from './domains/scenarios/atoms';
 
 export default function App() {
   const d = useAtomValue(defaultJobOfferState);
   const u = useAtomValue(userJobOfferState);
   const s = useAtomValue(jobOffersState);
   const p = useAtomValue(persistedJobOffersState);
+  const sc = useAtomValue(scenarioMapState);
   const title = "Comparator";
+  console.log(s)
+  console.log("ScenarioMap: ", sc)
 
   return (
     <div className='relative z-20 py-10 lg:py-40 w-screen flex flex-col items-center'>

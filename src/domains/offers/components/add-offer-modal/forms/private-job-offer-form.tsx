@@ -75,7 +75,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     }
 
     // Convert  decimal percentage to percentage
-    data.percentage_ownership = data.percentage_ownership! / 100;
+    data.percentage_ownership = data.percentage_ownership!;
 
     const newJobOffer: PrivateJobOffer = jobOfferFormSchema.parse(data);
 
@@ -103,7 +103,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
   // Whenever fieldAValue changes, set the value of 'fieldB'
   useEffect(() => {
     if (total_number_of_shares && number_of_shares) {
-      setValue('percentage_ownership', (number_of_shares / total_number_of_shares) * 100);
+      setValue('percentage_ownership', (number_of_shares / total_number_of_shares));
     }
   }, [total_number_of_shares, number_of_shares, setValue]);
 

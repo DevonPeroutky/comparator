@@ -61,8 +61,11 @@ type DilutionTimelineProps = {
 }
 export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, scenarios }) => {
   const chartConfig = useAtomValue(chartConfigAtom);
+  console.log(chartConfig)
+  console.log(companyId)
   const color = chartConfig[companyId].color
   const companyName = useCompanyName()(companyId);
+
 
 
   return (
