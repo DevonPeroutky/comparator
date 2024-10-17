@@ -55,13 +55,6 @@ export const rowDefs: ComparisonRowDef[] = [
 ];
 
 export const footerDefs = [
-  // {
-  //   "labelProps": {
-  //     label: "Total Annual Compensation",
-  //     tooltip: "Your estimated total annual compensation including salary and equity for this scenario"
-  //   },
-  //   cell: (offerScenario: JobOfferScenario) => <TableCell key={`total_annual_compensation_${offerScenario.id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualCompensation(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation, offerScenario.vesting_years, offerScenario.salary))}</TableCell>
-  // },
   {
     "labelProps": {
       label: "Total Annual Compensation",

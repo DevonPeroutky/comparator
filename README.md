@@ -1,5 +1,14 @@
 # To-Do
 
+- [ ] JobOfferScenario --> calculate then and there
+- [ ] Style Offers grid
+- [x] Fix timeline
+- [ ] Merge overlaps on graphs
+
+- [ ] NEW BRANCH
+  - [ ] FIX THE FORMATTED INPUT ONCE AND FOR ALL
+
+
 ## (4) Styling
 - [ ] (1) Update README and code 
 - [ ] (1) Fun Title Font / Logo

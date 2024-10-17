@@ -68,7 +68,6 @@ export const PublicTimelineItem: React.FC<TimelineProps> = ({ companyId, scenari
     <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-start text-gray-500 dark:text-gray-400">
       <div className={`absolute w-3 h-3 bg-[${color}] rounded-full mt-1.5 -start-1.5 dark:border-gray-900 dark:bg-gray-700`} style={{ backgroundColor: color }} />
       <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{(index == 0) ? `Current ${label}` : label}</time>
-      {/* <div className="flex text-lg font-semibold dark:text-white text-muted-foreground"> */}
       <EditableText
         value={scenario.valuation}
         formatter={formatLargeCurrency}
@@ -79,7 +78,6 @@ export const PublicTimelineItem: React.FC<TimelineProps> = ({ companyId, scenari
         className="flex text-lg font-semibold dark:text-white text-muted-foreground"
         onChange={(c) => console.log(c)}
       />
-      {/* </div> */}
     </li>
   )
 }
@@ -102,19 +100,22 @@ export const PrivateTimelineItem: React.FC<TimelineProps> = ({ companyId, scenar
         className="flex text-lg font-semibold dark:text-white text-muted-foreground"
         onChange={(c) => console.log(c)}
       />
-      {/* <span>Dilution: </span> */}
-      <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Dilution:</time>
-      <EditableText
-        value={scenario.round_dilution}
-        placeholder='0.00%'
-        formatter={formatPercentage}
-        mapValue={mapPercentage}
-        scenario={scenario}
-        companyId={companyId}
-        fieldName="round_dilution"
-        className="flex text-lg font-semibold dark:text-white text-muted-foreground"
-        onChange={(c) => console.log(c)}
-      />
+      {(index != 0) ?
+        <>
+          <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Dilution</time>
+          <EditableText
+            value={scenario.round_dilution}
+            placeholder='0.00%'
+            formatter={formatPercentage}
+            mapValue={mapPercentage}
+            scenario={scenario}
+            companyId={companyId}
+            fieldName="round_dilution"
+            className="flex text-lg font-semibold dark:text-white text-muted-foreground"
+            onChange={(c) => console.log(c)}
+          />
+        </> : null
+      }
     </li>
   )
 }
@@ -133,7 +134,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
       <h4 className='capitalized text-xl text-muted-foreground' style={{ color: color }}>{companyName}</h4>
       <ol className={`relative border-l border-solid  border-[${color}] dark:border-gray-700`} style={{ borderLeftColor: color }}>
         {scenarios.map((scenario, index) => (
-          (scenario.round_dilution) ? <PrivateTimelineItem companyId={companyId} scenario={scenario} index={index} label="Valuation" /> : <PublicTimelineItem companyId={companyId} scenario={scenario} index={index} label="MarketCap" />
+          (scenario.round_dilution !== undefined) ? <PrivateTimelineItem companyId={companyId} scenario={scenario} index={index} label="Valuation" /> : <PublicTimelineItem companyId={companyId} scenario={scenario} index={index} label="Market Cap" />
         ))}
       </ol>
     </div >

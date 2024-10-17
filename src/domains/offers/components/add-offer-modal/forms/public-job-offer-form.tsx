@@ -16,7 +16,7 @@ import { jobOffersState } from "../../../atoms"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
-import { generateScenarioForJobOffer } from "@/domains/scenarios/utils"
+import { generateScenarioForPublicJobOffer } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
 import { PublicJobOffer } from "@/domains/offers/types"
 import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
@@ -67,7 +67,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
     setJobOffers([...jobOffers, newJobOffer])
 
     // Generate scenarios for the new job offer
-    const newScenarios = generateScenarioForJobOffer(newJobOffer);
+    const newScenarios = generateScenarioForPublicJobOffer(newJobOffer);
     addScenarios(newJobOffer.id, newScenarios);
 
     onClick();
@@ -75,7 +75,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
 
   const equity_valuation = useWatch({
     control,
-    name: 'equity_valution'
+    name: 'equity_valuation'
   });
 
   const stock_price = useWatch({
@@ -83,13 +83,21 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
     name: 'stock_price'
   });
 
-  // Whenever fieldAValue changes, set the value of 'fieldB'
+  console.log('EQUITY VALUATION: ', form.getValues());
+
   useEffect(() => {
+    console.log(form.getValues());
+  }, [form.getValues()]);
+
+
+  // Whenever equity_valuation or stock_price changes, update number_of_shares
+  useEffect(() => {
+    console.log('SETTING number_of_shares', equity_valuation, stock_price);
     if (equity_valuation && stock_price) {
-      // console.log('SETTING number_of_shares', Math.floor((equity_valuation / stock_price)));
-      setValue('number_of_shares', Math.floor((equity_valuation / stock_price)));
+      setValue('number_of_shares', Math.floor(equity_valuation / stock_price));
     }
   }, [equity_valuation, stock_price, setValue]);
+
 
   return (
     <Form {...form} >
@@ -184,6 +192,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
           control={form.control}
           name="number_of_shares"
           render={({ field }) => {
+            console.log('FIELD: ', field);
             return (
               <FormItem className="flex-1">
                 <FormLabel># of Shares</FormLabel>

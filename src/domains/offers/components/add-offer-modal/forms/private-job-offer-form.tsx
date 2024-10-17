@@ -18,7 +18,7 @@ import { PrivateJobOffer } from "../../../types"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
-import { generateScenarioForJobOffer } from "@/domains/scenarios/utils"
+import { generateScenarioForPrivateJobOffer } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
 import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PercentageColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
 
@@ -84,7 +84,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     setJobOffers([...jobOffers, newJobOffer])
 
     // TODO: Reactively generate scenarios for job offers if they don't already exist in scenarioMap
-    const newScenarios = generateScenarioForJobOffer(newJobOffer);
+    const newScenarios = generateScenarioForPrivateJobOffer(newJobOffer);
     addScenarios(newJobOffer.id, newScenarios);
 
     onClick();

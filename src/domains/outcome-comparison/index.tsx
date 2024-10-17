@@ -23,10 +23,6 @@ export const ComparisonTable = () => {
   const selectedScenarioIds = useAtomValue(selectedScenarioIdState);
   var jobOfferScenarios: JobOfferScenario[] = []
 
-  console.log("scenarioMap", scenarioMap);
-  console.log("jobOffers", jobOffers);
-
-
   if (Object.keys(scenarioMap).length > 0) {
     jobOfferScenarios = jobOffers.map(offer => {
       const scenarios = scenarioMap[offer.id]
@@ -35,6 +31,8 @@ export const ComparisonTable = () => {
       return { ...offer, ...selectedScenario, offer_id: offer.id, scenario_id: selectedScenario.id }
     })
   }
+
+  console.log("jobOfferScenarios", jobOfferScenarios)
 
   const getCompanyColor = (companyId: string) => chartConfig[companyId]?.color || "gray"
 

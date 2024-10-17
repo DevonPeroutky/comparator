@@ -2,7 +2,7 @@ import { atomWithDefault, atomWithStorage, createJSONStorage } from 'jotai/utils
 import { atom, useAtom } from 'jotai';
 import { Metric, Scenario } from './types';
 import { jobOffersState } from '../offers/atoms';
-import { generateScenarioForJobOffer } from './utils';
+import { generateScenarioForPrivateJobOffer, generateScenarioForPublicJobOffer } from './utils';
 import { calcTotalDilution } from '@/lib/calculations';
 
 // Which scenario is selected for each column in the CompareOffer table
@@ -12,7 +12,7 @@ export const selectedScenarioIdState = atomWithStorage<Record<string, string>>("
 export const defaultScenarioMapState = atom<Record<string, Scenario[]>>(
   (get) => {
     const scenarioMap = get(jobOffersState).reduce((acc, offer) => {
-      const scenarios = generateScenarioForJobOffer(offer);
+      const scenarios = ("percentage_ownership" in offer) ? generateScenarioForPrivateJobOffer(offer) : generateScenarioForPublicJobOffer(offer);
       acc[offer.id] = scenarios;
       return acc;
     }, {} as Record<string, Scenario[]>);

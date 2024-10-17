@@ -7,7 +7,7 @@ import { jobOffersState } from "./atoms";
 import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PercentageColumnFormatOptions, PreciseCurrencyColumnFormatOptions, StringColumnFormatOptions } from "@/lib/columns/constants";
 
 
-const JobOfferEditableCell: React.FC<BaseEditableCellProps<JobOffer, Primitive>> = ({ row, fieldName, formatOptions }) => {
+const JobOfferEditableCell: React.FC<BaseEditableCellProps<PublicJobOffer | PrivateJobOffer, Primitive>> = ({ row, fieldName, formatOptions }) => {
   const updateListItem = useUpdateListItemChanges(jobOffersState);
   // TODO: Update className(with background) if public or private
   // TODO: Update disabled if public
@@ -67,6 +67,11 @@ export const PUBLIC_OFFER_COLUMNS: ColumnDef<PublicJobOffer>[] = [
     accessorKey: "salary",
     header: "Salary",
     cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="salary" formatOptions={LargeCurrencyColumnFormatOptions} />
+  },
+  {
+    accessorKey: "equity_valuation",
+    header: "RSU Valuation",
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="equity_valuation" formatOptions={LargeCurrencyColumnFormatOptions} />
   },
   {
     accessorKey: "number_of_shares",

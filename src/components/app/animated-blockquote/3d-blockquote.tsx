@@ -42,7 +42,7 @@ export const FancyBlockquote = ({
           transform: transform,
         }}
         className={cn(
-          "relative p-2 flex justify-start items-start rounded-2xl border border-white/[0.1] group-hover/pin:border-white/[0.2] transition duration-700 overflow-hidden group-hover/pin:shadow-[0_8px_16px_rgb(0_0_0/0.4)]")}
+          "relative p-2 flex justify-start items-start rounded-2xl group-hover/pin:border-white/[0.2] transition duration-700 overflow-hidden group-hover/pin:shadow-[0_8px_16px_rgb(0_0_0/0.4)]")}
       >
         {/* The content block adjusts the parent size */}
         {/* <div className={cn("relative z-50", className)}>{children}</div> */}

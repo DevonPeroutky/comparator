@@ -12,7 +12,9 @@ export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, val
   const [localValue, setLocalValue] = useState(formatter(value));
 
   useEffect(() => {
-    setLocalValue(formatter(value));
+    if (!localValue) {
+      setLocalValue(formatter(value));
+    }
   }, [value, formatter]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,11 +24,15 @@ export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, val
       const mappedValue = mapValue(inputValue)
 
       if (validate(mappedValue) && (e.target.value.endsWith('.') || e.target.value.endsWith('0'))) {
+        console.log(`Updating value: ${mappedValue}`);
         setLocalValue(e.target.value)
         onChange(mappedValue);
       } else if (validate(mappedValue)) {
+        console.log(`CHANGIN? `, mappedValue)
+        setLocalValue(e.target.value)
         onChange(mappedValue);
       } else {
+        console.log(`local? `)
         setLocalValue(e.target.value);
       }
     }

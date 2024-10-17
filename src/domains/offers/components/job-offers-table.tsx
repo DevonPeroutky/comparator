@@ -14,12 +14,6 @@ export const JobOfferTable = () => {
   const publicJobOffers: PublicJobOffer[] = offers.filter((offer): offer is PublicJobOffer => 'equity_valuation' in offer && 'stock_price' in offer);
   const rows = activeTab === 'startup' ? privateJobOffers : publicJobOffers
 
-  console.log('---');
-  console.log(`Offers: `, offers)
-  console.log(`Private Job Offers: `, privateJobOffers)
-  console.log(`PUBLIC Job Offers: `, publicJobOffers)
-  console.log(`Rows: `, rows)
-
   // Use this to force the DataTable to fully re-render when offers change
   const tableKey = React.useMemo(() => JSON.stringify(rows), [rows]);
 
