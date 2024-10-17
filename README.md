@@ -3,14 +3,14 @@
 - [x] JobOfferScenario --> calculate then and there
 - [x] Fix timeline
 - [x] Style Offers grid
-- [ ] Merge overlaps on graphs
+- [x] Merge overlaps on graphs
 
 - [ ] NEW BRANCH
   - [ ] FIX THE FORMATTED INPUT ONCE AND FOR ALL
 
 - [ ] Styling branch
   - [x] Consistent add offer modal size
-  - [ ] Better empty table styling (font, text)
+  - [x] Better empty table styling (font, text)
   - [ ] Better copy button
   - [ ] Animated border around Scenario Select
 

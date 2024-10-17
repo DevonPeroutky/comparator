@@ -1,5 +1,5 @@
 import { determineRoundDilution } from "../dilution/utils";
-import { JobOffer, PrivateJobOffer, PublicJobOffer } from "../offers/types";
+import { PrivateJobOffer, PublicJobOffer } from "../offers/types";
 import { scenarioMapState } from "./atoms";
 import { Scenario } from "./types";
 import { Metric } from "./types";
@@ -63,37 +63,20 @@ export const useBuildScenarioListForGraphing = () => {
   const scenarioMap = useAtomValue(scenarioMapState);
   const offers = useAtomValue(jobOffersState);
 
-  // TODO: UPdate this to change when scenario or offers change ????
   return (selectedMetric: Metric): Record<string, number>[] => {
-    // const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => [scenarios[0], scenarios[scenarios.length - 1]]);
-    const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => scenarios);
-    scenarios.sort((a, b) => a.valuation - b.valuation);
+    const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => scenarios).sort((a, b) => a.valuation - b.valuation);
 
+    return scenarios.map(scenario => {
+      const outcome = { scenario_valuation: scenario.valuation };
 
-    const datapoints: Record<string, number>[] = Object.entries(scenarioMap).map(([offerId, scenarios]) => {
-      console.log('Scenarios ', scenarios)
-      const outcomes: Record<string, number>[] = scenarios.map(scenario => {
-        const outcome = { scenario_valuation: scenario.valuation };
-        const offer = offers.find(o => o.id === offerId);
-        outcome[offerId] = ("percentage_ownership" in offer) ? calculatePrivateOutcome(scenario, offer as PrivateJobOffer, selectedMetric) : calculatePublicOutcome(scenario, offer as PublicJobOffer, selectedMetric);
-        return outcome
-      })
-      console.log('Outcomes ', outcomes)
-      return outcomes
-    });
+      offers.forEach(offer => {
+        if (offer.latest_company_valuation <= scenario.valuation && scenario.valuation <= 100 * offer.latest_company_valuation) {
+          outcome[offer.id] = ("percentage_ownership" in offer) ? calculatePrivateOutcome(scenario, offer as PrivateJobOffer, selectedMetric) : calculatePublicOutcome(scenario, offer as PublicJobOffer, selectedMetric);
+        }
+      });
 
-    console.log('Data Points ', datapoints.flat())
-    return datapoints.flat().sort((a, b) => a.scenario_valuation - b.scenario_valuation);
-
-    // return scenarios.map(scenario => {
-    //   const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
-    //
-    //   offers.filter(o => o.latest_company_valuation <= scenario.valuation).forEach(offer => {
-    //     outcome[offer.id] = calculateOutcome(scenario, offer, selectedMetric)
-    //   });
-    //
-    //   return outcome
-    // })
+      return outcome
+    })
   }
 }
 
