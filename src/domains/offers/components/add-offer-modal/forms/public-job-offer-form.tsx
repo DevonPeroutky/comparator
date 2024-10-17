@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,7 +16,7 @@ import { jobOffersState } from "../../../atoms"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
-import { generateScenarioForJobOffer, generateScenarios } from "@/domains/scenarios/utils"
+import { generateScenarioForJobOffer } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
 import { PublicJobOffer } from "@/domains/offers/types"
 import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
@@ -29,8 +28,8 @@ const publicJobOfferFormSchema = z.object({
   vesting_years: z.number().min(1).max(10),
   number_of_shares: z.optional(z.number().int().min(0)),
   stock_price: z.number().min(0).max(100000),
-  equity_valution: z.optional(z.number().min(0).max(99999999)),
-  market_cap: z.optional(z.number().min(0).max(100000)),
+  equity_valuation: z.optional(z.number().min(0).max(99999999)),
+  latest_company_valuation: z.number().min(0).max(999999999999999),
 });
 
 type FormData = z.infer<typeof publicJobOfferFormSchema>;
@@ -48,7 +47,8 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
   const { register, setValue, control, handleSubmit } = form;
 
   const onSubmit = (data: FormData) => {
-    if (!data.equity_valution || !data.number_of_shares) {
+    console.log(`DATA: `, data);
+    if (!data.equity_valuation || !data.number_of_shares) {
       form.setError("root", {
         type: "manual",
         message: "You need the number of shares to estimate the equity package. The company should either provide you with this information, or they gave you the equity value of your RSU"
@@ -57,8 +57,8 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
     }
 
     // Calculate number of shares if it's empty
-    if (!data.number_of_shares && data.stock_price && data.equity_valution) {
-      data.number_of_shares = Math.floor(data.equity_valution / data.number_of_shares);
+    if (!data.number_of_shares && data.stock_price && data.equity_valuation) {
+      data.number_of_shares = Math.floor(data.equity_valuation / data.number_of_shares);
     }
 
     const newJobOffer: PublicJobOffer = publicJobOfferFormSchema.parse(data);
@@ -146,7 +146,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
         />
         <FormField
           control={form.control}
-          name="equity_valution"
+          name="equity_valuation"
           render={({ field }) => (
             <FormItem className="flex-1">
               <FormLabel>RSU Amount</FormLabel>
@@ -176,7 +176,6 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                   formatOptions={PreciseCurrencyColumnFormatOptions}
                 />
               </FormControl>
-              <FormDescription></FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -186,7 +185,6 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
           name="number_of_shares"
           render={({ field }) => {
             return (
-
               <FormItem className="flex-1">
                 <FormLabel># of Shares</FormLabel>
                 <FormControl>
@@ -197,7 +195,6 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                     formatOptions={IntegerColumnFormatOptions}
                   />
                 </FormControl>
-                <FormDescription>The amount of shares in your equity packages</FormDescription>
                 <FormMessage />
               </FormItem>
             )
@@ -205,7 +202,7 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
         />
         <FormField
           control={form.control}
-          name="market_cap"
+          name="latest_company_valuation"
           render={({ field }) => (
             <FormItem className="flex-1">
               <FormLabel>Market Cap</FormLabel>
@@ -217,7 +214,6 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
                   formatOptions={LargeCurrencyColumnFormatOptions}
                 />
               </FormControl>
-              <FormDescription>The company's current market cap</FormDescription>
               <FormMessage />
             </FormItem>
           )}

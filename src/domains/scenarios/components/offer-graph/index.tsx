@@ -2,23 +2,18 @@ import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { useState } from "react"
 import { useAtom, useAtomValue } from "jotai"
 import { chartConfigAtom, jobOffersState } from "../../../offers/atoms"
 import { MetricSelect } from "../metric-select"
-import { Metric } from "../../types"
 import { useBuildScenarioListForGraphing } from "../../utils"
 import { OfferGraphDescription } from "./graph-description"
 import { FeatureDescriptionContainer } from "@/components/ui/bento-grid"
-import BoxReveal from "@/components/ui/box-reveal"
 import { selectedMetricState } from "../../atoms"
 import { FancyBlockquote } from "@/components/app/animated-blockquote/3d-blockquote"
-import { AnimatedBlockquote } from "@/components/app/animated-blockquote"
 
 export const OffersGraph = () => {
   const offers = useAtomValue(jobOffersState);
@@ -27,13 +22,8 @@ export const OffersGraph = () => {
 
   const chartData = buildScenarioList(selectedMetric)
   const chartConfig = useAtomValue(chartConfigAtom);
-  // const chartConfig = offers.reduce((config, offer, idx) => {
-  //   config[offer.company_name] = {
-  //     label: offer.company_name,
-  //     color: `hsl(var(--chart-${idx + 1}))`,
-  //   };
-  //   return config;
-  // }, {} as ChartConfig);
+
+  console.log(`Chart Data`, chartData)
 
   return (
     <>

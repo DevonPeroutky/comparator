@@ -1,5 +1,5 @@
 import { ColumnDef, Row } from "@tanstack/react-table";
-import { JobOffer } from "./types";
+import { JobOffer, PrivateJobOffer, PublicJobOffer } from "./types";
 import { BaseEditableCell, BaseEditableCellProps } from "@/lib/columns/base_columns";
 import { useUpdateListItemChanges } from "@/lib/columns/hooks";
 import { Primitive } from "react-hook-form";
@@ -14,7 +14,7 @@ const JobOfferEditableCell: React.FC<BaseEditableCellProps<JobOffer, Primitive>>
   return BaseEditableCell({ row, fieldName, formatOptions, updateListItem });
 }
 
-export const columns: ColumnDef<JobOffer>[] = [
+export const PRIVATE_OFFER_COLUMNS: ColumnDef<PrivateJobOffer>[] = [
   {
     accessorKey: "company_name",
     header: "Company Name",
@@ -54,6 +54,39 @@ export const columns: ColumnDef<JobOffer>[] = [
     accessorKey: "total_number_of_outstanding_shares",
     header: "Outstanding Shares",
     cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="total_number_of_outstanding_shares" formatOptions={IntegerColumnFormatOptions} />
+  },
+];
+
+export const PUBLIC_OFFER_COLUMNS: ColumnDef<PublicJobOffer>[] = [
+  {
+    accessorKey: "company_name",
+    header: "Company Name",
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="company_name" formatOptions={StringColumnFormatOptions} />
+  },
+  {
+    accessorKey: "salary",
+    header: "Salary",
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="salary" formatOptions={LargeCurrencyColumnFormatOptions} />
+  },
+  {
+    accessorKey: "number_of_shares",
+    header: "Shares",
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="number_of_shares" formatOptions={IntegerColumnFormatOptions} />
+  },
+  {
+    accessorKey: "latest_company_valuation",
+    header: "Market Cap",
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="latest_company_valuation" formatOptions={LargeCurrencyColumnFormatOptions} />
+  },
+  {
+    accessorKey: "stock_price",
+    header: "Stock Price",
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="stock_price" formatOptions={PreciseCurrencyColumnFormatOptions} />
+  },
+  {
+    accessorKey: "vesting_years",
+    header: "Vesting Years",
+    cell: ({ row }) => <JobOfferEditableCell row={row} fieldName="vesting_years" formatOptions={IntegerColumnFormatOptions} />
   },
 ];
 

@@ -21,7 +21,6 @@ export const ShareButton: React.FC = () => {
 
     navigator.clipboard.writeText(currentUrl)
       .then(() => {
-        console.log('URL copied to clipboard: ', currentUrl);
         toast({
           title: "Sharable link copied to clipboard",
           description: "Share this link with your friends & colleagues!",

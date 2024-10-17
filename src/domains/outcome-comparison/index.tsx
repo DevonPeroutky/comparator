@@ -14,7 +14,6 @@ import { JobOfferScenario } from "./types";
 import { footerDefs, rowDefs } from "./rows";
 import { LabelCell } from "./components/label-cell";
 import { FancyBlockquote } from "@/components/app/animated-blockquote/3d-blockquote";
-import { AnimatedBlockquote } from "@/components/app/animated-blockquote";
 
 
 export const ComparisonTable = () => {
@@ -23,6 +22,9 @@ export const ComparisonTable = () => {
   const scenarioMap = useAtomValue(scenarioMapState);
   const selectedScenarioIds = useAtomValue(selectedScenarioIdState);
   var jobOfferScenarios: JobOfferScenario[] = []
+
+  console.log("scenarioMap", scenarioMap);
+  console.log("jobOffers", jobOffers);
 
 
   if (Object.keys(scenarioMap).length > 0) {
@@ -71,12 +73,9 @@ export const ComparisonDescription = () => {
   return (
     <div className="max-w-prose md:max-w-4xl md:flex flex-col mx-auto my-4 px-4 text-muted-foreground italic text-center">
       <FancyBlockquote author="Steve Jobs" containerClassName="" stemHeight={75} className="flex justify-center items-center w-[800px] p-4">
-        {/* <div className="flex justify-center items-center w-[800px]"> */}
-        {/* <AnimatedBlockquote> */}
         <blockquote className="p-4">
-          Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle. As with all matters of the heart, you’ll know when you find it.”
+          "Your work is going to fill a large part of your life, and the only way to be truly satisfied is to do what you believe is great work. And the only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle. As with all matters of the heart, you’ll know when you find it.”
         </blockquote>
-        {/* </AnimatedBlockquote> */}
       </FancyBlockquote>
     </div >
   )

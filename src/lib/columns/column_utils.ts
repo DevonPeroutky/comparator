@@ -7,7 +7,10 @@ export const mapNumber = (proposedValue: string): number => {
 };
 
 export const mapPercentage = (proposedValue: string): number => {
+  // if (proposedValue === '0') return 0
+  // if (proposedValue === '.') return 0
   return parseFloat(proposedValue.replace(/[^0-9.-]+/g, "")) / 100;
+  // return parseFloat(proposedValue);
 };
 
 export const validateString = (proposedValue: string): boolean => {

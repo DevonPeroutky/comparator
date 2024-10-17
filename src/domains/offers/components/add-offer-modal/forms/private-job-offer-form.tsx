@@ -18,7 +18,7 @@ import { PrivateJobOffer } from "../../../types"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
-import { generateScenarioForJobOffer, generateScenarios } from "@/domains/scenarios/utils"
+import { generateScenarioForJobOffer } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
 import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PercentageColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
 
@@ -49,6 +49,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
   const { register, setValue, control, handleSubmit } = form;
 
   const onSubmit = (data: FormData) => {
+    console.log(`Data: `, data);
     if (!data.percentage_ownership && (!data.number_of_shares || !data.total_number_of_outstanding_shares)) {
       form.setError("root", {
         type: "manual",
@@ -58,7 +59,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     }
 
     if (data.percentage_ownership && data.number_of_shares && data.total_number_of_outstanding_shares) {
-      const calculatedPercentage = (data.number_of_shares / data.total_number_of_outstanding_shares) * 100;
+      const calculatedPercentage = (data.number_of_shares / data.total_number_of_outstanding_shares);
       const marginOfError = 0.1; // 0.1% margin of error
       if (Math.abs(calculatedPercentage - data.percentage_ownership) > marginOfError) {
         form.setError("root", {
@@ -246,7 +247,9 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder=".2%"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatOptions={PercentageColumnFormatOptions}
+                  formatOptions={{
+                    ...PercentageColumnFormatOptions,
+                  }}
                 />
               </FormControl>
               <FormDescription></FormDescription>

@@ -1,32 +1,43 @@
-import { useState } from "react";
 import { Input } from "./input";
 import { ColumnFormattingOptions } from "@/lib/columns/types";
+import { useEffect, useState } from "react";
 import { Primitive } from "zod";
 
 export interface FormattedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   formatOptions: ColumnFormattingOptions<Primitive>
 }
 
-
 export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatOptions, onBlur: propOnBlur }) => {
-  const { formatter, mapValue, softFormat } = formatOptions;
+  const { formatter, mapValue, softFormat, validate } = formatOptions;
+  const [localValue, setLocalValue] = useState(formatter(value));
+
+  useEffect(() => {
+    setLocalValue(formatter(value));
+  }, [value, formatter]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value.replace(/^\$/, '').replace(/,/g, ''); // Remove leading $ and commas
-    const isValidNumber = /^-?\d*\.?\d*$/.test(inputValue);
+    const inputValue = e.target.value.replace(/[$,%]/g, '');
+    const isValidInput = /\d*(\.\d*)?$/.test(inputValue);
+    if (isValidInput) {
+      const mappedValue = mapValue(inputValue)
 
-    console.log("RAW VALUE: ", inputValue, '->', isValidNumber);
-    if (isValidNumber) {
-      const newValue = inputValue ? mapValue(inputValue) : '';
-      onChange(newValue);
+      if (validate(mappedValue) && (e.target.value.endsWith('.') || e.target.value.endsWith('0'))) {
+        setLocalValue(e.target.value)
+        onChange(mappedValue);
+      } else if (validate(mappedValue)) {
+        onChange(mappedValue);
+      } else {
+        setLocalValue(e.target.value);
+      }
     }
   }
+
   return (
     <Input
       placeholder={placeholder}
-      value={formatter(value)}
+      value={localValue}
       onChange={handleChange}
-      onBlur={propOnBlur}
+    // onBlur={() => onBlur(value)}
     />
   );
 }

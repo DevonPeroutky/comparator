@@ -2,11 +2,11 @@ export const formatNumber = (options: Intl.NumberFormatOptions) => (value: numbe
   return value ? new Intl.NumberFormat("en-US", options).format(value) : "";
 }
 
-export const formatPreciseCurrency = (value: number): string => value ? `$${formatInteger(value)}` : "";
+export const formatPreciseCurrency = (value: number): string => value ? `$${value}` : "";
 export const formatLargeCurrency = formatNumber({ style: "currency", currency: "USD", maximumFractionDigits: 0 });
 export const formatInteger = formatNumber({ useGrouping: true, maximumFractionDigits: 0 });
-// export const formatPercentage = (value: number) => formatNumber({ style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 });
-export const formatPercentage = formatNumber({ style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 });
+export const formatPercentage = (value: number) => formatNumber({ style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 })(value);
+// export const formatPercentage = (value: number) => value;
 
 export const softFormat = (prefix?: string) => (val: string | undefined): string => {
   if (val === undefined || val === '') return '';

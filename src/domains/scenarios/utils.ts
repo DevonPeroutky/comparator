@@ -20,16 +20,29 @@ export const calculateOutcome = (scenario: Scenario, offer: JobOffer, metric: Me
   }
 }
 
-export const generateScenarios = (jobOffer: JobOffer, projected_valuation_journey: number[]): Scenario[] => {
-  const projectTotalDilution = (index: number) => calcTotalDilution(projectRoundsOfDilution(projected_valuation_journey.slice(1, index + 1)));
-  return projected_valuation_journey.map((valuation, index) => ({
-    id: `${jobOffer.id}-${index}`,
-    multiple: valuation / jobOffer.latest_company_valuation,
-    valuation: valuation,
-    total_dilution: projectTotalDilution(index),
-    round_dilution: (index == 0) ? 0 : determineRoundDilution(valuation),
-    number_of_rounds: index
-  }));
+const generateScenarios = (jobOffer: JobOffer, projected_valuation_journey: number[]): Scenario[] => {
+  console.log(`Generating scenarios for job offer: `, jobOffer)
+  if ('percentage_ownership' in jobOffer) {
+    // This is a PrivateJobOffer
+    const projectTotalDilution = (index: number) => calcTotalDilution(projectRoundsOfDilution(projected_valuation_journey.slice(1, index + 1)));
+    return projected_valuation_journey.map((valuation, index) => ({
+      id: `${jobOffer.id}-${index}`,
+      multiple: valuation / jobOffer.latest_company_valuation,
+      valuation: valuation,
+      total_dilution: projectTotalDilution(index),
+      round_dilution: (index == 0) ? 0 : determineRoundDilution(valuation),
+      number_of_rounds: index
+    }));
+  } else {
+    // This is a PublicJobOffer
+    return projected_valuation_journey.map((valuation, index) => ({
+      id: `${jobOffer.id}-${index}`,
+      // multiple: stock_price / jobOffer.current_stock_price,
+      valuation: valuation,
+      stock_price: jobOffer.stock_price,
+      number_of_rounds: index
+    }));
+  }
 }
 
 export const generateScenarioForJobOffer = (jobOffer: JobOffer): Scenario[] => {
@@ -43,12 +56,13 @@ export const useBuildScenarioListForGraphing = () => {
   const scenarioMap = useAtomValue(scenarioMapState);
   const offers = useAtomValue(jobOffersState);
 
+  console.log(`SCENARIO MAP: `, scenarioMap)
   return (selectedMetric: Metric): Record<string, number>[] => {
     const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => [scenarios[0], scenarios[scenarios.length - 1]]);
+    // const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => ...scenarios]);
     scenarios.sort((a, b) => a.valuation - b.valuation);
 
-    // TODO: We need to calculate the dilution for this scenario for each offer, otherwise we end up using the base amount
-
+    console.log(`SCENARIOS --> `, scenarios);
     return scenarios.map(scenario => {
       const outcome: { [key: string]: any } = { scenario_valuation: scenario.valuation };
 
