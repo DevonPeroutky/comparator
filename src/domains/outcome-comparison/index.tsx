@@ -14,6 +14,7 @@ import { JobOfferScenario } from "./types";
 import { footerDefs, rowDefs } from "./rows";
 import { LabelCell } from "./components/label-cell";
 import { FancyBlockquote } from "@/components/app/animated-blockquote/3d-blockquote";
+import { deriveJobOfferScenario } from "./lib/utils";
 
 
 export const ComparisonTable = () => {
@@ -28,7 +29,7 @@ export const ComparisonTable = () => {
       const scenarios = scenarioMap[offer.id]
       const selectedScenarioId = selectedScenarioIds[offer.id]
       const selectedScenario = scenarios.find(scenario => scenario.id === selectedScenarioId) || scenarios[0]
-      return { ...offer, ...selectedScenario, offer_id: offer.id, scenario_id: selectedScenario.id }
+      return deriveJobOfferScenario(offer, selectedScenario)
     })
   }
 

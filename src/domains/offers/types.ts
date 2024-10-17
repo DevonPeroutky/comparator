@@ -27,4 +27,8 @@ export type PublicJobOffer = {
 } & BaseJobOffer;
 
 
+export const isPrivateJobOffer = (offer: JobOffer): Boolean => {
+  return (offer as PrivateJobOffer).percentage_ownership !== undefined;
+}
+
 export type JobOffer = PrivateJobOffer | PublicJobOffer;

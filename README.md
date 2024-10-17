@@ -1,8 +1,8 @@
 # To-Do
 
-- [ ] JobOfferScenario --> calculate then and there
-- [ ] Style Offers grid
+- [x] JobOfferScenario --> calculate then and there
 - [x] Fix timeline
+- [ ] Style Offers grid
 - [ ] Merge overlaps on graphs
 
 - [ ] NEW BRANCH

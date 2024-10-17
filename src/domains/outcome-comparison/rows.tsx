@@ -4,6 +4,7 @@ import { JobOfferScenario } from "./types";
 import { deriveAnnualCompensation, deriveAnnualEquityValue, deriveDilutionPercentageOwned, deriveEquityValue, deriveExerciseCost } from "@/lib/calculations";
 import { ScenarioSelect } from "./components/scenario-select";
 import NumberTicker from "@/components/ui/number-ticker";
+import { formatLargeCurrency, formatPercentage, formatPreciseCurrency } from "@/lib/format_utils";
 
 export const rowDefs: ComparisonRowDef[] = [
   {
@@ -29,28 +30,28 @@ export const rowDefs: ComparisonRowDef[] = [
       label: "Exercise Cost",
       tooltip: "The cost to exercise your options, not including taxes."
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`exercise_cost_${offerScenario.scenario_id}`}>{(offerScenario.strike_price && offerScenario.number_of_shares) ? new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD" }).format(deriveExerciseCost(offerScenario.strike_price, offerScenario.number_of_shares)) : "-"}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`exercise_cost_${offerScenario.scenario_id}`}>{(offerScenario.exercise_cost) ? formatLargeCurrency(offerScenario.exercise_cost) : "-"}</TableCell>
   },
   {
     "labelProps": {
       label: "Fully Diluted Percentage",
       tooltip: "Your estimated ownership percentage of the company after factoring in the dilution from each round of funding in the scenario"
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`fully_diluted_percentage_${offerScenario.scenario_id}`}>{new Intl.NumberFormat("en-US", { style: "percent", maximumFractionDigits: 4, minimumFractionDigits: 2 }).format(deriveDilutionPercentageOwned(offerScenario.percentage_ownership, offerScenario.total_dilution))}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`fully_diluted_percentage_${offerScenario.scenario_id}`}>{(offerScenario.total_dilution) ? formatPercentage(offerScenario.total_dilution) : '-'}</TableCell>
   },
   {
     "labelProps": {
       label: "Equity Value",
       tooltip: "The estimated total value of your equity package"
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`equity_value_${offerScenario.scenario_id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveEquityValue(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation))}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`equity_value_${offerScenario.scenario_id}`}>{formatLargeCurrency(offerScenario.equity_value)}</TableCell>
   },
   {
     "labelProps": {
       label: "Annual Equity Value",
       tooltip: "The estimated annual value of your equity package"
     },
-    cell: (offerScenario: JobOfferScenario) => <TableCell key={`annual_equity_value_${offerScenario.scenario_id}`}>{new Intl.NumberFormat("en-US", { useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(deriveAnnualEquityValue(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation, offerScenario.vesting_years))}</TableCell>
+    cell: (offerScenario: JobOfferScenario) => <TableCell key={`annual_equity_value_${offerScenario.scenario_id}`}>{formatLargeCurrency(offerScenario.equity_value / offerScenario.vesting_years)}</TableCell>
   }
 ];
 
@@ -61,7 +62,7 @@ export const footerDefs = [
       tooltip: "Your estimated total annual compensation including salary and equity for this scenario"
     },
     cell: (offerScenario: JobOfferScenario) => <TableCell key={`total_annual_compensation_${offerScenario.scenario_id}`}>
-      <NumberTicker formatOptions={{ useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }} value={deriveAnnualCompensation(offerScenario.percentage_ownership, offerScenario.total_dilution, offerScenario.valuation, offerScenario.vesting_years, offerScenario.salary)} />
+      <NumberTicker formatOptions={{ useGrouping: true, style: "currency", currency: "USD", maximumFractionDigits: 0 }} value={(offerScenario.equity_value / offerScenario.vesting_years) + offerScenario.salary} />
     </TableCell >
   },
 ];

@@ -12,6 +12,10 @@ export const deriveEquityValue = (percentageOwnership: number, dilution: number,
   return Math.round(valuation * deriveDilutionPercentageOwned(percentageOwnership, dilution));
 }
 
+export const derivePublicEquityValue = (stockPrice: number, numberOfShares: number): number => {
+  return Math.round(stockPrice * numberOfShares);
+}
+
 export const deriveAnnualEquityValue = (percentageOwnership: number, dilution: number, valuation: number, vestingYears: number): number => {
   return Math.round(deriveEquityValue(percentageOwnership, dilution, valuation) / vestingYears);
 }
