@@ -77,7 +77,7 @@ export const GlobeCard = () => {
         </blockquote>
         {/* </AnimatedBlockquote> */}
       </FancyBlockquote>
-      <Globe className="absolute -right-10 md:-right-10 -bottom-80 md:-bottom-72" />
+      <Globe className="absolute -right-10 md:right-[-150px] -bottom-80 md:-bottom-72" />
     </div >
   );
 };

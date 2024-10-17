@@ -1,7 +1,7 @@
 import { atomWithStorage, createJSONStorage } from 'jotai/utils'
-import { JobOffer } from './types';
+import { JobOffer, PrivateJobOffer, PublicJobOffer } from './types';
 import { atomWithLocation, atomWithHash } from 'jotai-location'
-import { atom, useAtomValue } from 'jotai';
+import { Atom, atom, useAtomValue } from 'jotai';
 import { ChartConfig } from '@/components/ui/chart';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
@@ -32,17 +32,30 @@ const TEST_JOB_OFFERS: JobOffer[] = [
 const storage = createJSONStorage(
   () => localStorage, // or sessionStorage, asyncStorage or alike
 )
-export const defaultJobOfferState = atom<JobOffer[]>(TEST_JOB_OFFERS,);
-export const userJobOfferState = atomWithStorage<JobOffer[] | null>("userJobOfferState", null, storage, { getOnInit: true });
-export const persistedJobOffersState = atomWithHash<JobOffer[] | null>("userJobOfferURLState", null);
+const defaultJobOfferState = atom<JobOffer[]>(TEST_JOB_OFFERS,);
+const userJobOfferState = atomWithStorage<JobOffer[] | null>("userJobOfferState", null, storage, { getOnInit: true });
+const persistedJobOffersState = atomWithHash<JobOffer[] | null>("userJobOfferURLState", null);
 export const jobOffersState = atom<JobOffer[]>(
-  (get) => get(persistedJobOffersState) ?? get(userJobOfferState) ?? get(defaultJobOfferState),
-  (get, set, newValue) => {
+  (get) => get(persistedJobOffersState) ?? get(userJobOfferState) ?? get(defaultJobOfferState), (get, set, newValue) => {
     const nextValue = typeof newValue === 'function' ? newValue(get(jobOffersState)) : newValue;
     set(userJobOfferState, nextValue)
     set(persistedJobOffersState, nextValue)
   },
 );
+
+export const publicJobOffersState: Atom<PublicJobOffer[]> = atom((get) => {
+  const offers = get(jobOffersState);
+  return offers.filter((offer): offer is PublicJobOffer =>
+    'equity_valuation' in offer && 'stock_price' in offer
+  );
+});
+
+export const privateJobOffersState: Atom<PrivateJobOffer[]> = atom((get) => {
+  const offers = get(jobOffersState);
+  return offers.filter((offer): offer is PrivateJobOffer =>
+    'percentage_ownership' in offer
+  );
+});
 
 export const chartConfigAtom = atom((get) => {
   const offers = get(jobOffersState);

@@ -10,9 +10,10 @@ export type Scenario = {
   name?: string;
   multiple: number;
   valuation: number;
-  total_dilution: number;
-  round_dilution: number;
-  number_of_rounds: number;
+  total_dilution?: number;
+  round_dilution?: number;
+  number_of_rounds?: number;
+  stock_price?: number;
 };
 
 export type EquityJourney = {

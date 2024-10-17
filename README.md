@@ -1,9 +1,23 @@
 # To-Do
 
+- [x] JobOfferScenario --> calculate then and there
+- [x] Fix timeline
+- [x] Style Offers grid
+- [ ] Merge overlaps on graphs
+
+- [ ] NEW BRANCH
+  - [ ] FIX THE FORMATTED INPUT ONCE AND FOR ALL
+
+- [ ] Styling branch
+  - [x] Consistent add offer modal size
+  - [ ] Better empty table styling (font, text)
+  - [ ] Better copy button
+  - [ ] Animated border around Scenario Select
+
+- [ ] Logo
+
 ## (4) Styling
 - [ ] (1) Update README and code 
-- [ ] (1) Fun Title Font / Logo
-- [ ] (1) Fun Share button
 
 # Future
 - [ ] Cleanup code

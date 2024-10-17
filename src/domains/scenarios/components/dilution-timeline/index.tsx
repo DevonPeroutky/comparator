@@ -4,11 +4,10 @@ import { Scenario } from '../../types';
 import { scenarioMapState, useUpdateScenario } from '../../atoms';
 import { Primitive } from 'zod';
 import { useState } from 'react';
-import { formatLargeCurrency, formatPercentage } from '@/lib/format_utils';
+import { formatLargeCurrency, formatPercentage, formatPreciseCurrency } from '@/lib/format_utils';
 import { cn } from '@/lib/utils';
 import { mapNumber, mapPercentage, validateNumber } from '@/lib/columns/column_utils';
 import { chartConfigAtom, useCompanyName } from '@/domains/offers/atoms';
-import { ComputedAttribute } from '@react-three/drei';
 
 type EditableTextProps<C extends Primitive> = {
   scenario: Scenario;
@@ -54,6 +53,72 @@ const EditableText: React.FC<EditableTextProps<Primitive>> = ({ companyId, field
     />
   );
 };
+type TimelineProps = {
+  companyId: string;
+  scenario: Scenario
+  label: string;
+  index: number;
+}
+
+export const PublicTimelineItem: React.FC<TimelineProps> = ({ companyId, scenario, index, label }) => {
+  const chartConfig = useAtomValue(chartConfigAtom);
+  const color = chartConfig[companyId].color
+
+  return (
+    <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-start text-gray-500 dark:text-gray-400">
+      <div className={`absolute w-3 h-3 bg-[${color}] rounded-full mt-1.5 -start-1.5 dark:border-gray-900 dark:bg-gray-700`} style={{ backgroundColor: color }} />
+      <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{(index == 0) ? `Current ${label}` : label}</time>
+      <EditableText
+        value={scenario.valuation}
+        formatter={formatLargeCurrency}
+        mapValue={mapNumber}
+        scenario={scenario}
+        companyId={companyId}
+        fieldName="valuation"
+        className="flex text-lg font-semibold dark:text-white text-muted-foreground"
+        onChange={(c) => console.log(c)}
+      />
+    </li>
+  )
+}
+
+export const PrivateTimelineItem: React.FC<TimelineProps> = ({ companyId, scenario, index, label }) => {
+  const chartConfig = useAtomValue(chartConfigAtom);
+  const color = chartConfig[companyId].color
+
+  return (
+    <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-start text-gray-500 dark:text-gray-400">
+      <div className={`absolute w-3 h-3 bg-[${color}] rounded-full mt-1.5 -start-1.5 dark:border-gray-900 dark:bg-gray-700`} style={{ backgroundColor: color }} />
+      <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{(index == 0) ? `Current ${label}` : `Valuation`}</time>
+      <EditableText
+        value={scenario.valuation}
+        formatter={formatLargeCurrency}
+        mapValue={mapNumber}
+        scenario={scenario}
+        companyId={companyId}
+        fieldName="valuation"
+        className="flex text-lg font-semibold dark:text-white text-muted-foreground"
+        onChange={(c) => console.log(c)}
+      />
+      {(index != 0) ?
+        <>
+          <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">Dilution</time>
+          <EditableText
+            value={scenario.round_dilution}
+            placeholder='0.00%'
+            formatter={formatPercentage}
+            mapValue={mapPercentage}
+            scenario={scenario}
+            companyId={companyId}
+            fieldName="round_dilution"
+            className="flex text-lg font-semibold dark:text-white text-muted-foreground"
+            onChange={(c) => console.log(c)}
+          />
+        </> : null
+      }
+    </li>
+  )
+}
 
 type DilutionTimelineProps = {
   companyId: string;
@@ -64,43 +129,15 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
   const color = chartConfig[companyId].color
   const companyName = useCompanyName()(companyId);
 
-
   return (
     <div className="flex items-start justify-start bg-white flex-col gap-y-4 max-w-[225px]">
       <h4 className='capitalized text-xl text-muted-foreground' style={{ color: color }}>{companyName}</h4>
       <ol className={`relative border-l border-solid  border-[${color}] dark:border-gray-700`} style={{ borderLeftColor: color }}>
         {scenarios.map((scenario, index) => (
-          <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-start text-gray-500 dark:text-gray-400">
-            <div className={`absolute w-3 h-3 bg-[${color}] rounded-full mt-1.5 -start-1.5 dark:border-gray-900 dark:bg-gray-700`} style={{ backgroundColor: color }} />
-            <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{(index == 0) ? "Current Valuation" : "Funding Round"}</time>
-            <div className="flex text-lg font-semibold dark:text-white text-muted-foreground">
-              <EditableText
-                value={scenario.valuation}
-                formatter={formatLargeCurrency}
-                mapValue={mapNumber}
-                scenario={scenario}
-                companyId={companyId}
-                fieldName="valuation"
-                onChange={(c) => console.log(c)}
-              />
-            </div>
-            <div className="text-base font-normal flex gap-x-1">
-              <span>Dilution: </span>
-              <EditableText
-                value={scenario.round_dilution}
-                placeholder='0.00%'
-                formatter={formatPercentage}
-                mapValue={mapPercentage}
-                scenario={scenario}
-                companyId={companyId}
-                fieldName="round_dilution"
-                onChange={(c) => console.log(c)}
-              />
-            </div>
-          </li>
+          (scenario.round_dilution !== undefined) ? <PrivateTimelineItem companyId={companyId} scenario={scenario} index={index} label="Valuation" /> : <PublicTimelineItem companyId={companyId} scenario={scenario} index={index} label="Market Cap" />
         ))}
       </ol>
-    </div>
+    </div >
   )
 }
 
@@ -110,7 +147,7 @@ export const EquityJourney = () => {
   return (
     <div className="flex flex-wrap gap-8 justify-center md:justify-start">
       {Object.entries(scenarioMap).map(([companyId, scenarios]) => (
-        <div key={companyId} className="flex-grow-0 flex-shrink-0 items-center justify-center md:justify-start bg-yellow-200">
+        <div key={companyId} className="flex-grow-0 flex-shrink-0 items-center justify-center md:justify-start">
           <DilutionTimeline companyId={companyId} scenarios={scenarios} />
         </div>
       ))}

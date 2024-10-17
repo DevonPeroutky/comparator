@@ -1,128 +1,49 @@
-import { useState } from "react";
 import { Input } from "./input";
+import { ColumnFormattingOptions } from "@/lib/columns/types";
+import { useEffect, useState } from "react";
+import { Primitive } from "zod";
 
 export interface FormattedInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  formatter: 'currency' | 'percentage' | 'number' | 'valuation'
+  formatOptions: ColumnFormattingOptions<Primitive>
 }
 
-const format_currency = (val: string | undefined): string => {
-  if (val === undefined || val === '') return '';
+export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatOptions, onBlur: propOnBlur }) => {
+  const { formatter, mapValue, softFormat, validate } = formatOptions;
+  const [localValue, setLocalValue] = useState(formatter(value));
 
-
-  // Handle case where user is typing a decimal
-  if (val && !isNaN(parseFloat(val)) && val.endsWith('.')) {
-    return `$${Number(val).toLocaleString()}.`;
-  }
-
-  if (val && !isNaN(parseFloat(val)) && val.endsWith('.0')) {
-    return `$${Number(val).toLocaleString()}.0`;
-  }
-
-  if (val && !isNaN(parseFloat(val))) {
-    return `$${Number(val).toLocaleString()}`;
-  }
-
-  return val
-}
-
-export const FormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatter, onBlur: propOnBlur }) => {
-  const formatValue = (val: string | undefined): string => {
-    if (val === undefined) return '';
-
-    switch (formatter) {
-      case 'currency':
-        return format_currency(val);
-      case 'percentage':
-        return val.toLocaleString();
-      case 'number':
-        return val ? `${Math.round(Number(val)).toLocaleString()}` : '';
-      case 'valuation':
-        return `$${Math.round(Number(val)).toLocaleString()}`;
+  useEffect(() => {
+    if (!localValue) {
+      setLocalValue(formatter(value));
     }
-  };
-
-  const [displayValue, setDisplayValue] = useState(() => formatValue(value));
+  }, [value, formatter]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/[$,%]/g, '');
-    const numericValue = parseFloat(rawValue);
+    const inputValue = e.target.value.replace(/[$,%]/g, '');
+    const isValidInput = /\d*(\.\d*)?$/.test(inputValue);
+    if (isValidInput) {
+      const mappedValue = mapValue(inputValue)
 
-    if (rawValue === '' || /^[0-9]*\.?[0-9]*$/.test(rawValue)) {
-      setDisplayValue(formatValue(rawValue));
+      if (validate(mappedValue) && (e.target.value.endsWith('.') || e.target.value.endsWith('0'))) {
+        console.log(`Updating value: ${mappedValue}`);
+        setLocalValue(e.target.value)
+        onChange(mappedValue);
+      } else if (validate(mappedValue)) {
+        console.log(`CHANGIN? `, mappedValue)
+        setLocalValue(e.target.value)
+        onChange(mappedValue);
+      } else {
+        console.log(`local? `)
+        setLocalValue(e.target.value);
+      }
     }
-
-    if (numericValue && !isNaN(numericValue)) {
-      onChange(numericValue);
-    }
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (formatter === 'percentage' && e.target.value) {
-      const numericValue = parseFloat(e.target.value.replace(/[$,%]/g, ''));
-      setDisplayValue(`${numericValue.toFixed(2)}%`);
-    }
-    if (propOnBlur) {
-      propOnBlur(e);
-    }
-  };
+  }
 
   return (
     <Input
       placeholder={placeholder}
-      value={displayValue}
+      value={localValue}
       onChange={handleChange}
-      onBlur={handleBlur}
+    // onBlur={() => onBlur(value)}
     />
   );
-};
-
-export const UnstyledFormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatter, onBlur: propOnBlur }) => {
-  const formatValue = (val: string | undefined): string => {
-    if (val === undefined) return '';
-
-    switch (formatter) {
-      case 'currency':
-        return format_currency(val);
-      case 'percentage':
-        return val.toLocaleString();
-      case 'number':
-        return val ? `${Math.round(Number(val)).toLocaleString()}` : '';
-      case 'valuation':
-        return `$${Math.round(Number(val)).toLocaleString()}`;
-    }
-  };
-
-  const [displayValue, setDisplayValue] = useState(() => formatValue(value));
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/[$,%]/g, '');
-    const numericValue = parseFloat(rawValue);
-
-    if (rawValue === '' || /^[0-9]*\.?[0-9]*$/.test(rawValue)) {
-      setDisplayValue(formatValue(rawValue));
-    }
-
-    if (numericValue && !isNaN(numericValue)) {
-      onChange(numericValue);
-    }
-  };
-
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (formatter === 'percentage' && e.target.value) {
-      const numericValue = parseFloat(e.target.value.replace(/[$,%]/g, ''));
-      setDisplayValue(`${numericValue.toFixed(2)}%`);
-    }
-    if (propOnBlur) {
-      propOnBlur(e);
-    }
-  };
-
-  return (
-    <Input
-      placeholder={placeholder}
-      value={displayValue}
-      onChange={handleChange}
-      onBlur={handleBlur}
-    />
-  );
-};
+}

@@ -13,13 +13,14 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useAtom } from "jotai"
-import { jobOffersState } from "../../atoms"
-import { JobOffer } from "../../types"
+import { jobOffersState } from "../../../atoms"
+import { PrivateJobOffer } from "../../../types"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
 import { FormattedInput } from "@/components/ui/formatted-input"
-import { generateScenarioForJobOffer, generateScenarios } from "@/domains/scenarios/utils"
+import { generateScenarioForPrivateJobOffer } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
+import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PercentageColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
 
 const jobOfferFormSchema = z.object({
   id: z.string().default(() => uuidv4()),
@@ -48,6 +49,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
   const { register, setValue, control, handleSubmit } = form;
 
   const onSubmit = (data: FormData) => {
+    console.log(`Data: `, data);
     if (!data.percentage_ownership && (!data.number_of_shares || !data.total_number_of_outstanding_shares)) {
       form.setError("root", {
         type: "manual",
@@ -57,7 +59,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     }
 
     if (data.percentage_ownership && data.number_of_shares && data.total_number_of_outstanding_shares) {
-      const calculatedPercentage = (data.number_of_shares / data.total_number_of_outstanding_shares) * 100;
+      const calculatedPercentage = (data.number_of_shares / data.total_number_of_outstanding_shares);
       const marginOfError = 0.1; // 0.1% margin of error
       if (Math.abs(calculatedPercentage - data.percentage_ownership) > marginOfError) {
         form.setError("root", {
@@ -74,15 +76,15 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     }
 
     // Convert  decimal percentage to percentage
-    data.percentage_ownership = data.percentage_ownership! / 100;
+    data.percentage_ownership = data.percentage_ownership!;
 
-    const newJobOffer: JobOffer = jobOfferFormSchema.parse(data);
+    const newJobOffer: PrivateJobOffer = jobOfferFormSchema.parse(data);
 
     // Add new Job offer to the list
     setJobOffers([...jobOffers, newJobOffer])
 
     // TODO: Reactively generate scenarios for job offers if they don't already exist in scenarioMap
-    const newScenarios = generateScenarioForJobOffer(newJobOffer);
+    const newScenarios = generateScenarioForPrivateJobOffer(newJobOffer);
     addScenarios(newJobOffer.id, newScenarios);
 
     onClick();
@@ -102,7 +104,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
   // Whenever fieldAValue changes, set the value of 'fieldB'
   useEffect(() => {
     if (total_number_of_shares && number_of_shares) {
-      setValue('percentage_ownership', (number_of_shares / total_number_of_shares) * 100);
+      setValue('percentage_ownership', (number_of_shares / total_number_of_shares));
     }
   }, [total_number_of_shares, number_of_shares, setValue]);
 
@@ -133,8 +135,8 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$100,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="currency"
                   onBlur={() => field.onBlur()}
+                  formatOptions={LargeCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -152,7 +154,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="4"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -170,7 +172,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$1000000000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="valuation"
+                  formatOptions={LargeCurrencyColumnFormatOptions}
                 />
               </FormControl>
               <FormMessage />
@@ -188,10 +190,9 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="$.47"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="currency"
+                  formatOptions={PreciseCurrencyColumnFormatOptions}
                 />
               </FormControl>
-              <FormDescription>The price that you'll pay for the stock</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -207,10 +208,9 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="20,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
-              <FormDescription>The amount of shares in your equity packages</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -226,7 +226,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder="25,467,000"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="number"
+                  formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
               <FormDescription>The total number of shares for the company.</FormDescription>
@@ -245,7 +245,9 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   placeholder=".2%"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
-                  formatter="percentage"
+                  formatOptions={{
+                    ...PercentageColumnFormatOptions,
+                  }}
                 />
               </FormControl>
               <FormDescription></FormDescription>

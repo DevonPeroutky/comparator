@@ -23,28 +23,16 @@ export const BaseEditableCell = <T, C extends Primitive>({ row, fieldName, forma
   // OnBlur
   const commitOrRollbackChange = (proposedValue: string) => {
     const finalizedValidValue: C = updateListItem(proposedValue, row, fieldName, mapValue, validate);
-    console.log("FINALIZED VALUE: ", finalizedValidValue);
-    console.log("FORMATTED VALUE: ", formatter(finalizedValidValue));
     setLocalValue(formatter(finalizedValidValue));
   }
 
   // OnChange
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[$,%]/g, '');
-
-    console.log("RAW VALUE: ", rawValue);
-    console.log("NUMERIC VALUE: ", rawValue);
-    console.log("SOft formatted VALUE: ", softFormat(rawValue));
-
-    // if (rawValue === '' || /^[0-9]*\.?[0-9]*$/.test(rawValue)) {
-    //   setLocalValue(rawValue);
-    // }
     setLocalValue(rawValue);
   };
 
-  // console.log(`LOCAL ${fieldName} VALUE : `, localValue);
   const displayValue = localValue ? localValue : '';
-  // console.log(`LOCAL ${fieldName} DIPLAY VALUE : `, displayValue);
 
   return (
     <input

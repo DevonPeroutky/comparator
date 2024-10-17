@@ -1,14 +1,8 @@
-import { defaultJobOfferState, jobOffersState, persistedJobOffersState, userJobOfferState } from './domains/offers/atoms';
 import { AppGrid } from './app-grid';
-import { useAtomValue } from 'jotai';
 import { ShareButton } from './components/app/share-button';
 import SparklesText from "./components/ui/sparkles-text";
 
 export default function App() {
-  const d = useAtomValue(defaultJobOfferState);
-  const u = useAtomValue(userJobOfferState);
-  const s = useAtomValue(jobOffersState);
-  const p = useAtomValue(persistedJobOffersState);
   const title = "Comparator";
 
   return (
