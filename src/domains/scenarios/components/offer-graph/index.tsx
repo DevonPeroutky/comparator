@@ -1,4 +1,4 @@
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
 import { ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
 import {
@@ -38,10 +38,23 @@ export const OffersGraph = () => {
           }}
         >
           <CartesianGrid vertical={true} horizontal={true} />
+          <YAxis
+            tickLine={true}
+            axisLine={true}
+            tickMargin={8}
+            tickFormatter={(value) => new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+              maximumFractionDigits: 0,
+            }).format(value)}
+          />
           <XAxis
             dataKey="scenario_valuation"
-            tickLine={false}
-            axisLine={false}
+            scale={"auto"}
+            // type={"number"}
+            // domain={['dataMin - 100', 'dataMax + 100']}
+            tickLine={true}
+            axisLine={true}
             tickMargin={8}
             tickFormatter={(value) => new Intl.NumberFormat("en-US", {
               style: "currency",
