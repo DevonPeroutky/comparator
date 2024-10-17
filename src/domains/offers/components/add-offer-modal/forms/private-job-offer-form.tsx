@@ -193,7 +193,6 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   formatOptions={PreciseCurrencyColumnFormatOptions}
                 />
               </FormControl>
-              <FormDescription>The price that you'll pay for the stock</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -212,7 +211,6 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
                   formatOptions={IntegerColumnFormatOptions}
                 />
               </FormControl>
-              <FormDescription>The amount of shares in your equity packages</FormDescription>
               <FormMessage />
             </FormItem>
           )}

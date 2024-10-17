@@ -227,10 +227,11 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
             </FormItem>
           )}
         />
+        <div />
         {form.formState.errors.root && (
           <div className="col-span-2 text-red-500 text-sm font-semibold">{form.formState.errors.root.message}</div>
         )}
-        <Button type="submit" className="mt-auto flex items-center justify-center">Add Job</Button>
+        <Button type="submit" className="mt-auto flex items-center justify-center grid-cols-2">Add Job</Button>
       </form>
     </Form>
   )

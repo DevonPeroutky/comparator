@@ -4,6 +4,9 @@ import { jobOffersState } from '../atoms';
 import { PRIVATE_OFFER_COLUMNS, PUBLIC_OFFER_COLUMNS } from '../columns';
 import React from 'react';
 import { PrivateJobOffer, PublicJobOffer } from '../types';
+import { ChartBarSquareIcon, RocketLaunchIcon } from '@heroicons/react/24/outline';
+import { AddOfferModal } from './add-offer-modal/add-offer-modal';
+import { ClearOffersTableButton } from './clear-table-button';
 
 
 export const JobOfferTable = () => {
@@ -21,43 +24,46 @@ export const JobOfferTable = () => {
     setActiveTab(tab);
   };
 
-
   return (
-    <div>
-      <div className="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+    <>
+      <div className="flex flex-col-reverse gap-y-2 md:flex-row justify-between">
         <ul className="flex flex-wrap -mb-px">
-          <li className="me-2">
-            <a
-              href="#"
+          <li className="">
+            <h2
               onClick={() => handleTabClick('startup')}
-              className={`inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 ${activeTab === 'startup'
+              className={`md:text-4xl font-bold flex items-center gap-x-2 cursor-pointer p-4 border-b-2 rounded-t-lg ${activeTab === 'startup'
                 ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
-                : 'border-transparent'
+                : 'hover:text-blue-400 border-transparent hover:border-blue-300 dark:text-gray-400 dark:hover:text-blue-300'
                 }`}
             >
+              <RocketLaunchIcon className="h-6 w-6 mt-1" />
               Startup Offers
-            </a>
+            </h2>
           </li>
           <li>
-            <a
-              href="#"
+            <h2
               onClick={() => handleTabClick('public')}
-              className={`inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300 ${activeTab === 'public'
+              className={`font-bold md:text-4xl cursor-pointer flex items-center gap-x-2 p-4 border-b-2 rounded-t-lg ${activeTab === 'public'
                 ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
-                : 'border-transparent'
+                : 'hover:text-blue-400 border-transparent hover:border-blue-300 dark:text-gray-400 dark:hover:text-blue-300'
                 }`}
             >
-              Public Company Offers
-            </a>
+              <ChartBarSquareIcon className="h-6 w-6 mt-1" />
+              Public Offers
+            </h2>
           </li>
         </ul>
+        <div className="flex gap-y-2 items-center gap-x-4">
+          <AddOfferModal />
+          <ClearOffersTableButton />
+        </div>
       </div>
       <DataTable
         columns={activeTab === 'startup' ? PRIVATE_OFFER_COLUMNS : PUBLIC_OFFER_COLUMNS}
         data={rows}
         key={tableKey}
       />
-    </div>
+    </>
   )
 }
 

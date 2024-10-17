@@ -9,18 +9,7 @@ import {
 import { CirclePlus } from "lucide-react"
 import { JobOfferForm } from "./forms/private-job-offer-form"
 import { useRef, useState } from "react"
-import { ConfettiRef } from "@/components/ui/confetti"
 import confetti from "canvas-confetti"
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import {
   Tabs,
   TabsContent,
@@ -45,14 +34,14 @@ export function AddOfferModal() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" onClick={() => openDialog()}><CirclePlus className="mr-2 h-4 w-4 cursor-pointer" /> Add Job Offer</Button>
+        <Button variant="outline" onClick={() => openDialog()}><CirclePlus className="mr-2 h-4 w-4 cursor-pointer" /> Add Offer</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[750px] md:px-10">
         <DialogHeader>
           <DialogTitle>Add Job Offer</DialogTitle>
         </DialogHeader>
         {/* <JobOfferForm onClick={closeDialog} /> */}
-        <Tabs defaultValue="public" className="w-full">
+        <Tabs defaultValue="public" className="w-full md:min-h-[500px]">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="startup">Startup</TabsTrigger>
             <TabsTrigger value="public">Public Company</TabsTrigger>

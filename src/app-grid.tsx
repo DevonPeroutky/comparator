@@ -1,13 +1,9 @@
 import { ReactNode } from "react";
 import { FeatureCard, FeatureDescriptionContainer, FeatureTitle, GlobeCard, } from "./components/ui/bento-grid";
-import { AddOfferModal } from "./domains/offers/components/add-offer-modal/add-offer-modal";
 import { JobOfferTable } from "./domains/offers/components/job-offers-table";
 import { OfferGraphTitle, OffersGraph } from "./domains/scenarios/components/offer-graph";
 import { ComparisonDescription, ComparisonTable } from "./domains/outcome-comparison/index";
 import { EquityJourney, ScenarioBuilderDescription } from "./domains/scenarios/components/dilution-timeline";
-import { ClearOffersTableButton } from "./domains/offers/components/clear-table-button";
-import BoxReveal from "./components/ui/box-reveal";
-import { Highlight } from "./components/ui/hero-highlight";
 
 type BentoCardProps = {
   title?: ReactNode;
@@ -20,13 +16,7 @@ type BentoCardProps = {
 export function AppGrid() {
   const features: BentoCardProps[] = [
     {
-      title: <div className='flex flex-col gap-y-4 lg:flex-row items-center justify-between mb-4'>
-        <h2 className="text-4xl font-bold dark:text-white">Offers</h2>
-        <div className="flex gap-y-2 items-center gap-x-4">
-          <AddOfferModal />
-          <ClearOffersTableButton />
-        </div>
-      </div>,
+      title: null,
       position: "left",
       description: null,
       content: <JobOfferTable />,
