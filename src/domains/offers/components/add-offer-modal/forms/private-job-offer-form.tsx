@@ -17,10 +17,9 @@ import { jobOffersState } from "../../../atoms"
 import { PrivateJobOffer } from "../../../types"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
-import { FormattedInput } from "@/components/ui/formatted-input"
 import { generateScenarioForPrivateJobOffer } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
-import { IntegerColumnFormatOptions, LargeCurrencyColumnFormatOptions, PercentageColumnFormatOptions, PreciseCurrencyColumnFormatOptions } from "@/lib/columns/constants"
+import { NumericFormat } from "react-number-format"
 
 const jobOfferFormSchema = z.object({
   id: z.string().default(() => uuidv4()),
@@ -131,13 +130,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Annual Salary</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="$100,000"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  onBlur={() => field.onBlur()}
-                  formatOptions={LargeCurrencyColumnFormatOptions}
-                />
+                <NumericFormat value={field.value} onValueChange={(v) => field.onChange(v.floatValue)} customInput={Input} thousandSeparator allowNegative={false} prefix="$" placeholder="$150,000" decimalScale={0} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -150,12 +143,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Vesting Schedule (years)</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="4"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={IntegerColumnFormatOptions}
-                />
+                <NumericFormat value={field.value} onValueChange={(v) => field.onChange(v.floatValue)} customInput={Input} thousandSeparator allowNegative={false} prefix="" placeholder="4" decimalScale={0} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -168,12 +156,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Company Valuation</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="$1000000000"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={LargeCurrencyColumnFormatOptions}
-                />
+                <NumericFormat value={field.value} onValueChange={(v) => field.onChange(v.floatValue)} customInput={Input} thousandSeparator allowNegative={false} prefix="$" placeholder="$56,000,000" decimalScale={0} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -186,12 +169,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Strike Price</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="$.47"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={PreciseCurrencyColumnFormatOptions}
-                />
+                <NumericFormat value={field.value} onValueChange={(v) => field.onChange(v.floatValue)} customInput={Input} thousandSeparator allowNegative={false} prefix="$" placeholder="$1.47" decimalScale={2} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -204,12 +182,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel># of Shares</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="20,000"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={IntegerColumnFormatOptions}
-                />
+                <NumericFormat value={field.value} onValueChange={(v) => field.onChange(v.floatValue)} customInput={Input} thousandSeparator allowNegative={false} placeholder="20,000" decimalScale={0} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -222,12 +195,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel># of Outstanding Shares</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="25,467,000"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={IntegerColumnFormatOptions}
-                />
+                <NumericFormat value={field.value} onValueChange={(v) => field.onChange(v.floatValue)} customInput={Input} thousandSeparator allowNegative={false} placeholder="25,467,000" decimalScale={0} />
               </FormControl>
               <FormDescription>The total number of shares for the company.</FormDescription>
               <FormMessage />
@@ -241,13 +209,16 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Percentage Ownership</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder=".2%"
+                <NumericFormat
                   value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={{
-                    ...PercentageColumnFormatOptions,
-                  }}
+                  onValueChange={(v) => field.onChange(v.floatValue)}
+                  customInput={Input}
+                  thousandSeparator
+                  allowNegative={false}
+                  placeholder=".25%"
+                  decimalScale={2}
+                  fixedDecimalScale
+                  suffix="%"
                 />
               </FormControl>
               <FormDescription></FormDescription>

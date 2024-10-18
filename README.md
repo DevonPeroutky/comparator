@@ -1,10 +1,5 @@
 # To-Do
 
-- [x] JobOfferScenario --> calculate then and there
-- [x] Fix timeline
-- [x] Style Offers grid
-- [x] Merge overlaps on graphs
-
 - [ ] NEW BRANCH
   - [ ] FIX THE FORMATTED INPUT ONCE AND FOR ALL
 

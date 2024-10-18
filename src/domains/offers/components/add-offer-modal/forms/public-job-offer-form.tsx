@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { NumericFormat } from 'react-number-format';
 import { useForm, useWatch } from "react-hook-form"
 import { z } from "zod"
 import { Button } from "@/components/ui/button"
@@ -90,7 +91,6 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
   }, [form.getValues()]);
 
 
-  // Whenever equity_valuation or stock_price changes, update number_of_shares
   useEffect(() => {
     console.log('SETTING number_of_shares', equity_valuation, stock_price);
     if (equity_valuation && stock_price) {
@@ -122,12 +122,15 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Annual Salary</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="$100,000"
+                <NumericFormat
                   value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={LargeCurrencyColumnFormatOptions}
-                  onBlur={() => field.onBlur()}
+                  onValueChange={(values) => field.onChange(values.floatValue)}
+                  customInput={Input}
+                  thousandSeparator
+                  allowNegative={false}
+                  placeholder="$100,000"
+                  decimalScale={0}
+                  prefix="$"
                 />
               </FormControl>
               <FormMessage />
@@ -141,11 +144,13 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Vesting Schedule (years)</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="4"
+                <NumericFormat
                   value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={IntegerColumnFormatOptions}
+                  onValueChange={(values) => field.onChange(values.floatValue)}
+                  customInput={Input}
+                  allowNegative={false}
+                  placeholder="4"
+                  decimalScale={0}
                 />
               </FormControl>
               <FormMessage />
@@ -159,11 +164,15 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>RSU Amount</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="$250,000"
+                <NumericFormat
                   value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={LargeCurrencyColumnFormatOptions}
+                  onValueChange={(values) => field.onChange(values.floatValue)}
+                  customInput={Input}
+                  thousandSeparator
+                  allowNegative={false}
+                  placeholder="$250,000"
+                  prefix="$"
+                  decimalScale={0}
                 />
               </FormControl>
               <FormMessage />
@@ -177,11 +186,15 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Stock Price</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="$56"
+                <NumericFormat
                   value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={PreciseCurrencyColumnFormatOptions}
+                  onValueChange={(values) => field.onChange(values.floatValue)}
+                  customInput={Input}
+                  thousandSeparator
+                  allowNegative={false}
+                  placeholder="$56"
+                  prefix="$"
+                  decimalScale={2}
                 />
               </FormControl>
               <FormMessage />
@@ -197,11 +210,14 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
               <FormItem className="flex-1">
                 <FormLabel># of Shares</FormLabel>
                 <FormControl>
-                  <FormattedInput
-                    placeholder="20,000"
+                  <NumericFormat
                     value={field.value}
-                    onChange={(value) => field.onChange(value)}
-                    formatOptions={IntegerColumnFormatOptions}
+                    onValueChange={(values) => field.onChange(values.floatValue)}
+                    customInput={Input}
+                    thousandSeparator
+                    allowNegative={false}
+                    placeholder="23,000"
+                    decimalScale={0}
                   />
                 </FormControl>
                 <FormMessage />
@@ -216,11 +232,15 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
             <FormItem className="flex-1">
               <FormLabel>Market Cap</FormLabel>
               <FormControl>
-                <FormattedInput
-                  placeholder="25,467,000"
+                <NumericFormat
                   value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  formatOptions={LargeCurrencyColumnFormatOptions}
+                  onValueChange={(values) => field.onChange(values.floatValue)}
+                  customInput={Input}
+                  thousandSeparator
+                  allowNegative={false}
+                  prefix="$"
+                  placeholder="$25,467,300"
+                  decimalScale={0}
                 />
               </FormControl>
               <FormMessage />
