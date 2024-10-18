@@ -5,6 +5,7 @@ import { deriveDilutionPercentageOwned, deriveEquityValue, deriveExerciseCost, d
 
 export const deriveJobOfferScenario = (offer: JobOffer, scenario: Scenario): JobOfferScenario => {
   return {
+    id: `${offer.id}-${scenario.id}`,
     scenario_id: scenario.id,
     offer_id: offer.id,
 

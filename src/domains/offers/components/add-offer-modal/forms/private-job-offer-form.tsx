@@ -71,7 +71,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
 
     // Calculate percentage_ownership if it's empty
     if (!data.percentage_ownership && data.number_of_shares && data.total_number_of_outstanding_shares) {
-      data.percentage_ownership = (data.number_of_shares / data.total_number_of_outstanding_shares) * 100;
+      data.percentage_ownership = (data.number_of_shares / data.total_number_of_outstanding_shares);
     }
 
     // Convert  decimal percentage to percentage

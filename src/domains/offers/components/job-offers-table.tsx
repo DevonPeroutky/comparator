@@ -24,6 +24,8 @@ export const JobOfferTable = () => {
     setActiveTab(tab);
   };
 
+  console.log('offers', offers);
+
   return (
     <>
       <div className="flex flex-col-reverse gap-y-2 md:flex-row justify-between">

@@ -2,13 +2,17 @@ import { FormattedInputProps } from "@/components/ui/formatted-input";
 import { Row } from "@tanstack/react-table";
 import { useState } from 'react';
 import { Primitive } from "zod";
-import { ColumnFormattingOptions } from "./types";
+import { NumericFormatProps } from "react-number-format";
 
-export interface BaseEditableCellProps<T, C extends Primitive> {
+export type BaseEditableCellProps<T, C extends Primitive> = {
   row: Row<T>
   fieldName: keyof T
-  formatOptions: ColumnFormattingOptions<C>
+  mapValue: (proposedValue: C) => C
 }
+
+export type NumericEditableCellProps<T, C extends Primitive> = {
+  numericformatProps: NumericFormatProps
+} & BaseEditableCellProps<T, C>
 
 export type EditableCellProps<T, C extends Primitive> = BaseEditableCellProps<T, C> & {
   updateListItem: (proposedValue: string, row: Row<T>, fieldName: keyof T, mapValue: (proposedValue: string) => C, validate: (proposedValue: C) => boolean) => C
