@@ -4,16 +4,13 @@ import { Primitive } from "zod";
 import { NumberFormatValues, NumericFormat, NumericFormatProps } from "react-number-format";
 import { ComparatorPrimitive } from "@/domains/types";
 import { useUpdateListItem } from "./hooks";
-import { WritableAtom } from "jotai";
+import { GlobalInputProps } from "@/components/app/global-inputs/types";
 
-export type BaseEditableCellProps<T, C extends Primitive> = {
+export type BaseEditableCellProps<T extends ComparatorPrimitive, C extends Primitive> = {
   row: Row<T>
-  state: WritableAtom<T[], unknown[], unknown>
-  fieldName: keyof T
-  mapValue: (proposedValue: C) => C
-}
+} & GlobalInputProps<T, C>
 
-export type NumericEditableCellProps<T, C extends Primitive> = {
+export type NumericEditableCellProps<T extends ComparatorPrimitive, C extends Primitive> = {
   numericformatProps: NumericFormatProps
 } & BaseEditableCellProps<T, C>
 
@@ -40,7 +37,7 @@ export const StringCell = <T extends ComparatorPrimitive>({ row, fieldName, mapV
   )
 }
 
-export const NumericCell = <T extends ComparatorPrimitive>({ row, fieldName, mapValue, state, numericformatProps }: NumericEditableCellProps<T, number>): React.ReactElement => {
+export const NumericCell = <T extends ComparatorPrimitive>({ row, fieldName, mapValue, state, numericformatProps, displayValue }: NumericEditableCellProps<T, number>): React.ReactElement => {
   const updateListItem = useUpdateListItem(state);
   const [values, setValues] = useState<NumberFormatValues>();
 
@@ -53,11 +50,11 @@ export const NumericCell = <T extends ComparatorPrimitive>({ row, fieldName, map
 
   return (
     <NumericFormat
-      value={row.getValue(fieldName)}
       onValueChange={(values) => setValues(values)}
       onBlur={handleBlur}
       className="bg-white"
       {...numericformatProps}
+      value={displayValue ? displayValue(row.getValue(fieldName)) : row.getValue(fieldName)}
     />
   )
 }

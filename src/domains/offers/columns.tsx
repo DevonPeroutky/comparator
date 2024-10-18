@@ -2,7 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { PrivateJobOffer, PublicJobOffer } from "./types";
 import { NumericCell, StringCell } from "@/lib/columns/base_columns";
 import { jobOffersState } from "./atoms";
-import { mapString } from "@/lib/columns/column_utils";
+import { displayPercentage, mapPercentage, mapString } from "@/lib/columns/column_utils";
 
 export const PRIVATE_OFFER_COLUMNS: ColumnDef<PrivateJobOffer>[] = [
   {
@@ -83,7 +83,8 @@ export const PRIVATE_OFFER_COLUMNS: ColumnDef<PrivateJobOffer>[] = [
       decimalScale: 4,
       suffix: "%"
     }}
-      mapValue={(proposedValue: number) => proposedValue / 100}
+      mapValue={mapPercentage}
+      displayValue={displayPercentage}
       state={jobOffersState}
     />
   },
@@ -152,7 +153,8 @@ export const PUBLIC_OFFER_COLUMNS: ColumnDef<PublicJobOffer>[] = [
     cell: ({ row }) => <NumericCell row={row} fieldName="latest_company_valuation" numericformatProps={{
       thousandSeparator: true,
       allowNegative: false,
-      placeholder: "43,000,000,000",
+      placeholder: "$43,000,000,000",
+      prefix: "$",
       decimalScale: 0,
     }}
       state={jobOffersState}

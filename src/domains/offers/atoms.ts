@@ -6,8 +6,8 @@ import { ChartConfig } from '@/components/ui/chart';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
   {
-    id: "acme",
-    company_name: "Acme",
+    id: "bitter",
+    company_name: "Bitter",
     salary: 225000,
     number_of_shares: 91000,
     latest_company_valuation: 55000000,
@@ -16,8 +16,8 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     percentage_ownership: .0025,
   },
   {
-    id: "valon",
-    company_name: "Valon",
+    id: "fairbnb",
+    company_name: "FairBnb",
     salary: 180000,
     number_of_shares: 3267,
     latest_company_valuation: 584000000,
@@ -27,6 +27,16 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     percentage_ownership: 3267 / 2698775,
   },
   // Commented out offers remain the same
+  {
+    id: "betahog",
+    company_name: "BetaHog",
+    salary: 230000,
+    latest_company_valuation: 43000000000,
+    vesting_years: 4,
+    stock_price: 127.70,
+    equity_valuation: 170000 * 4,
+    number_of_shares: Math.ceil((170000 * 4) / 127.70),
+  },
 ];
 
 const storage = createJSONStorage(

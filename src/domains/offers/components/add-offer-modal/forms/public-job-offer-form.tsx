@@ -16,7 +16,6 @@ import { useAtom } from "jotai"
 import { jobOffersState } from "../../../atoms"
 import { v4 as uuidv4 } from 'uuid'
 import { useEffect } from "react"
-import { FormattedInput } from "@/components/ui/formatted-input"
 import { generateScenarioForPublicJobOffer } from "@/domains/scenarios/utils"
 import { useAddScenarios } from "@/domains/scenarios/atoms"
 import { PublicJobOffer } from "@/domains/offers/types"

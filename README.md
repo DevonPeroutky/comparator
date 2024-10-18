@@ -1,32 +1,26 @@
 # To-Do
+- [ ] Cleanup
+ - [ ] Move animate-test 
 
-- [ ] NEW BRANCH
-  - [ ] FIX THE FORMATTED INPUT ONCE AND FOR ALL
-
-- [ ] Styling branch
-  - [x] Consistent add offer modal size
-  - [x] Better empty table styling (font, text)
+# Styling
   - [ ] Better copy button
+    - [ ] Animated border
+    - [ ] Hover color change
   - [ ] Animated border around Scenario Select
-
-- [ ] Logo
+  - [ ] Logo
+  - [ ] Dark Mode
 
 ## (4) Styling
 - [ ] (1) Update README and code 
 
 # Future
-- [ ] Cleanup code
- - [ ] Move animate-test 
-- [ ] Public Job Offers
+# - [ ] Recalculate certain things on changes
 
 ## Offers Graph
 - [ ] Tooltip for that it's raw (non-dilution?)
 
 ## Styling
-- [ ] Logo / Title Text
+- [ ] Better Tooltips
 - [ ] Dark Mode
 - [ ] Animate Line Drawing
   - [ ] [Animate electrons?](https://ibelick.com/blog/create-shooting-star-border-tailwind-css)
-- [ ] Button
-  - [ ] Gradient Background
-- [ ] Better Tooltips
