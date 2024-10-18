@@ -1,11 +1,14 @@
-import { FormattedInputProps } from "@/components/ui/formatted-input";
 import { Row } from "@tanstack/react-table";
 import { useState } from 'react';
 import { Primitive } from "zod";
-import { NumericFormatProps } from "react-number-format";
+import { NumberFormatValues, NumericFormat, NumericFormatProps } from "react-number-format";
+import { ComparatorPrimitive } from "@/domains/types";
+import { useUpdateListItem } from "./hooks";
+import { WritableAtom } from "jotai";
 
 export type BaseEditableCellProps<T, C extends Primitive> = {
   row: Row<T>
+  state: WritableAtom<T[], unknown[], unknown>
   fieldName: keyof T
   mapValue: (proposedValue: C) => C
 }
@@ -18,68 +21,43 @@ export type EditableCellProps<T, C extends Primitive> = BaseEditableCellProps<T,
   updateListItem: (proposedValue: string, row: Row<T>, fieldName: keyof T, mapValue: (proposedValue: string) => C, validate: (proposedValue: C) => boolean) => C
 }
 
-export const BaseEditableCell = <T, C extends Primitive>({ row, fieldName, formatOptions, updateListItem }: EditableCellProps<T, C>) => {
-  const { formatter, mapValue, validate, softFormat } = formatOptions;
+export const StringCell = <T extends ComparatorPrimitive>({ row, fieldName, mapValue, state }: BaseEditableCellProps<T, string>) => {
+  const updateListItem = useUpdateListItem(state);
+  const [value, setValue] = useState<string | undefined>(row.getValue(fieldName));
 
-  const rawValue: C = row.getValue(fieldName)
-  const [localValue, setLocalValue] = useState<string>(formatter(rawValue));
-
-  // OnBlur
-  const commitOrRollbackChange = (proposedValue: string) => {
-    const finalizedValidValue: C = updateListItem(proposedValue, row, fieldName, mapValue, validate);
-    setLocalValue(formatter(finalizedValidValue));
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const updatedValue = mapValue(e.target.value);
+    updateListItem(updatedValue, row, fieldName);
   }
-
-  // OnChange
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/[$,%]/g, '');
-    setLocalValue(rawValue);
-  };
-
-  const displayValue = localValue ? localValue : '';
 
   return (
     <input
-      value={displayValue}
-      onChange={(e) => handleChange(e)}
-      onBlur={() => commitOrRollbackChange(displayValue)}
+      value={value}
+      onChange={(e) => setValue(e.target.value)}
+      onBlur={handleBlur}
       className="bg-white"
     />
   )
 }
 
-export const UnstyledFormattedInput: React.FC<FormattedInputProps> = ({ placeholder, value, onChange, formatter, onBlur: propOnBlur }) => {
-
-  const [displayValue, setDisplayValue] = useState(() => formatter(value));
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const rawValue = e.target.value.replace(/[$,%]/g, '');
-    const numericValue = parseFloat(rawValue);
-
-    if (rawValue === '' || /^[0-9]*\.?[0-9]*$/.test(rawValue)) {
-      setDisplayValue(formatter(rawValue));
-    }
-
-    if (numericValue && !isNaN(numericValue)) {
-      onChange(numericValue);
-    }
-  };
+export const NumericCell = <T extends ComparatorPrimitive>({ row, fieldName, mapValue, state, numericformatProps }: NumericEditableCellProps<T, number>): React.ReactElement => {
+  const updateListItem = useUpdateListItem(state);
+  const [values, setValues] = useState<NumberFormatValues>();
 
   const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-    if (propOnBlur) {
-      propOnBlur(e);
-    }
-    const numericValue = parseFloat(e.target.value.replace(/[$,%]/g, ''));
-    setDisplayValue(formatter(numericValue));
-  };
+    const { floatValue } = values;
+
+    const mappedValue = mapValue ? mapValue(floatValue) : floatValue;
+    updateListItem(mappedValue, row, fieldName);
+  }
 
   return (
-    <input
-      placeholder={placeholder}
-      value={displayValue}
-      onChange={handleChange}
+    <NumericFormat
+      value={row.getValue(fieldName)}
+      onValueChange={(values) => setValues(values)}
       onBlur={handleBlur}
       className="bg-white"
+      {...numericformatProps}
     />
-  );
-};
+  )
+}
