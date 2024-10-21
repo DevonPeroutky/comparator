@@ -1,0 +1,48 @@
+@property --opacity {
+  syntax: "<number>";
+  initial-value: 0.0;
+  inherits: false;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.rainbow-border {
+  --border-size: 2px;
+  border: var(--border-size) solid black;
+  background-image: linear-gradient(
+    to right,
+    rgb(255 255 255 / 0),
+    rgb(255 255 255 / 0)
+  ),
+  conic-gradient(
+    from var(--angle),
+    #d53e33 0deg 90deg,
+    #d53e33 90deg 180deg,
+    #377af5 180deg 270deg,
+    #377af5 270deg 360deg
+  );
+  background-origin: border-box;
+  transition: all 0.3s ease-in-out;
+}
+
+.rainbow-border:hover {
+  border: var(--border-size) solid transparent;
+  animation: rotate 4s linear infinite;
+  animation-play-state: running;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}

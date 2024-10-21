@@ -1,5 +1,6 @@
 import { AppGrid } from './app-grid';
-import { ShareButton } from './components/app/share-button';
+import { AnimatedShareButton, ShareButton, TestButton } from './components/app/share-button';
+import { Button } from './components/ui/button';
 import SparklesText from "./components/ui/sparkles-text";
 
 export default function App() {
@@ -18,8 +19,15 @@ export default function App() {
           <SparklesText text="100% private." sparklesCount={5} duration={5} className="mx-1" />
         </div>
         <ShareButton />
-      </div>
-      <AppGrid />
-    </div >
+        {/* <AnimatedShareButton className='mb-10'> */}
+        {/*   <button className='flex items-center w-fit h-10 px-4 py-2 dark:bg-white  bg-white rounded-none outline-none hover:border-transparent'>Copy URL to Share</button> */}
+        {/* </AnimatedShareButton> */}
+        {/* <AnimatedShareButton> */}
+        {/*   <Button className='hover:border-transparent'>Copy URL to Share</Button> */}
+        {/* </AnimatedShareButton> */}
+        {/* <TestButton /> */}
+        <AppGrid />
+      </div >
+    </div>
   );
 }

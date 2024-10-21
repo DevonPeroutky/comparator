@@ -1,8 +1,10 @@
 import { useToast } from "@/hooks/use-toast"
-import { Button } from "@/components/ui/button"
 import { Share, CircleCheck } from "lucide-react"
 import { AnimatedButton } from "@/animation-test";
 import { ClipboardDocumentIcon } from "@heroicons/react/24/solid";
+import { CSSProperties, useEffect, useRef } from "react";
+import "./index.css";
+import { cn } from "@/lib/utils";
 
 export const ShareButton: React.FC = () => {
   const { toast } = useToast();
@@ -45,3 +47,21 @@ export const ShareButton: React.FC = () => {
     />
   );
 };
+
+
+interface AnimatedShareButtonProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export const AnimatedShareButton: React.FC<AnimatedShareButtonProps> = ({ children, className }) => {
+  return (
+    <div className={cn("rainbow-border rounded-lg overflow-hidden", className)}>{children}</div>
+  );
+};
+
+export const TestButton = () => {
+  return (
+    <div className="rainbow-border"><button>Copy URL to share</button></div>
+  )
+}
