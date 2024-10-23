@@ -24,7 +24,7 @@ export const LabelCell: React.FC<LabelCellProps> = ({ label, tooltip }) => {
         {tooltip && (
           <div className="hidden md:block">
             <TooltipProvider>
-              <Tooltip>
+              <Tooltip delayDuration={0.1}>
                 <TooltipTrigger asChild>
                   <QuestionMarkCircleIcon className="w-6 h-6 cursor-pointer" />
                 </TooltipTrigger>

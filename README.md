@@ -1,8 +1,6 @@
 # To-Do
 - [ ] Cleanup
- - [ ] Consolidate colors
- - [ ] Use variables defined in css in tailwind
-- [ ] Stifle dark mode 
+- [x] Stifle dark mode 
 - [ ] Verify it works on large screen
 
 ## (4) Styling
