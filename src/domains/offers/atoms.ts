@@ -26,7 +26,6 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     total_number_of_outstanding_shares: 2698775,
     percentage_ownership: 3267 / 2698775,
   },
-  // Commented out offers remain the same
   {
     id: "betahog",
     company_name: "BetaHog",

@@ -74,7 +74,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     }
 
     // Convert  decimal percentage to percentage
-    data.percentage_ownership = data.percentage_ownership!;
+    data.percentage_ownership = data.percentage_ownership! / 100;
 
     const newJobOffer: PrivateJobOffer = jobOfferFormSchema.parse(data);
 
