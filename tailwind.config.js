@@ -20,7 +20,19 @@ module.exports = {
         sm: 'calc(var(--radius) - 4px)'
       },
       colors: {
+        lightPear: 'hsl(76.25 45.28% 79.22%)',
+        darkPear: 'hsl(66.96deg 61.54% 64.31%)',
+        leafGreen: 'hsl(131.51deg 33.95% 57.84%)',
+        berkeleyBlue: 'hsl(210, 73%, 20%)',
+        // darkPear: "#C0C51B",
+        chefBlue: "#5386e4",
+        lightBlue: "#bedcfe",
+        taupe: "#949396",
+        calPolyGreen: "#214e34",
+        jasperRed: "#c84630",
+        mountbattenPink: "#b287a3",
         stripeBlack: "#0a2540",
+
         stripeNavy: "#0a2540",
         stripeSlate: "#425466",
         background: 'hsl(var(--background))',
@@ -61,7 +73,7 @@ module.exports = {
           '2': 'hsl(var(--chart-2))',
           '3': 'hsl(var(--chart-3))',
           '4': 'hsl(var(--chart-4))',
-          '5': 'hsl(var(--chart-5))'
+          '5': 'hsl(var(--chart-5))',
         }
       },
       animation: {

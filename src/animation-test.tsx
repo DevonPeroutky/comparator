@@ -34,7 +34,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (props) => {
     >
       <div className="relative inline-flex group cursor-pointer">
         <div
-          className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-emerald-400 via-[#FF44EC]  to-[#44BCFF] rounded-xl blur-sm group-hover:blur-md group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-500 animate-tilt " />
+          className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-leafGreen via-chefBlue to-darkPear rounded-xl blur-sm group-hover:blur-md group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-500 animate-tilt " />
         <Button
           onClick={(e) => { setAnimated(curr => !curr); props.onClick?.(e) }}
           className={cn("flex items-center w-full overflow-hidden z-10 min-w-[200px] hover:text-gray-300", (animated) ? "outline-emerald-500" : "")}

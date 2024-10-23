@@ -72,7 +72,7 @@ export const chartConfigAtom = atom((get) => {
   return offers.reduce((config, offer, idx) => {
     config[offer.id] = {
       label: offer.company_name,
-      color: `hsl(var(--chart-${idx + 1}))`,
+      color: `var(--color-${idx + 1})`,
     };
     return config;
   }, {} as ChartConfig);

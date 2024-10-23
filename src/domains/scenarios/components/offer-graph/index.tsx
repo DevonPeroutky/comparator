@@ -72,10 +72,10 @@ export const OffersGraph = () => {
                 key={offer.id}
                 dataKey={offer.id}
                 type="natural"
-                stroke={`hsl(var(--chart-${idx + 1}))`}
+                stroke={`var(--color-${idx + 1})`}
                 strokeWidth={2}
                 dot={{
-                  fill: `hsl(var(--chart-${idx + 1}))`,
+                  fill: `var(--color-${idx + 1})`,
                 }}
                 activeDot={{
                   r: 6,

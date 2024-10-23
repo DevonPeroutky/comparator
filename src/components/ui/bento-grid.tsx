@@ -47,7 +47,7 @@ export const FeatureCard = ({
 
 export const FeatureTitle = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <div className="text-left tracking-tight text-black dark:text-white text-xl md:text-2xl md:leading-snug">
+    <div className="text-left tracking-tight dark:text-white text-xl md:text-2xl md:leading-snug">
       {children}
     </div>
   );

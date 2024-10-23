@@ -90,8 +90,8 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
   const companyName = useCompanyName()(companyId);
 
   return (
-    <div className="flex items-start justify-start bg-white flex-col gap-y-4 max-w-[225px]">
-      <h4 className='capitalized text-xl text-muted-foreground' style={{ color: color }}>{companyName}</h4>
+    <div className="flex items-center justify-center md:items-start md:justify-start bg-white flex-col gap-y-4 max-w-[225px]">
+      <h4 className='capitalized text-xl text-muted-foreground font-medium' style={{ color: color }}>{companyName}</h4>
       <ol className={`relative border-l border-solid  border-[${color}] dark:border-gray-700`} style={{ borderLeftColor: color }}>
         {scenarios.map((scenario, index) => (
           (scenario.round_dilution !== undefined) ? <PrivateTimelineItem companyId={companyId} scenario={scenario} index={index} label="Valuation" /> : <PublicTimelineItem companyId={companyId} scenario={scenario} index={index} label="Market Cap" />
