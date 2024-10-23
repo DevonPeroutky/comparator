@@ -57,12 +57,12 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
     }
 
     if (data.percentage_ownership && data.number_of_shares && data.total_number_of_outstanding_shares) {
-      const calculatedPercentage = (data.number_of_shares / data.total_number_of_outstanding_shares);
+      const calculatedPercentage = (data.number_of_shares / data.total_number_of_outstanding_shares) * 100;
       const marginOfError = 0.1; // 0.1% margin of error
       if (Math.abs(calculatedPercentage - data.percentage_ownership) > marginOfError) {
         form.setError("root", {
           type: "manual",
-          message: "The provided percentage ownership doesn't align with the calculated percentage based on the number of shares and total outstanding shares.",
+          message: `The provided percentage ownership (${data.percentage_ownership}) doesn't align with the calculated percentage based on the number of shares and total outstanding shares (${calculatedPercentage}).`,
         });
         return;
       }
@@ -102,7 +102,7 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
   // Whenever fieldAValue changes, set the value of 'fieldB'
   useEffect(() => {
     if (total_number_of_shares && number_of_shares) {
-      setValue('percentage_ownership', (number_of_shares / total_number_of_shares));
+      setValue('percentage_ownership', (number_of_shares / total_number_of_shares) * 100);
     }
   }, [total_number_of_shares, number_of_shares, setValue]);
 
