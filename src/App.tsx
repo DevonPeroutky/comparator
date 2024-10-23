@@ -1,10 +1,10 @@
-import { ShareButton } from './components/app/share-button';
-import SparklesText from "./components/ui/sparkles-text";
+import { useState } from 'react';
 import Lottie from 'react-lottie-player';
 import animationData from './assets/animations/compare-light.json';
-import { useState } from 'react';
-import { cn } from './lib/utils';
 import { AppGrid } from './components/app/app-grid';
+import { ShareButton } from './components/app/share-button';
+import SparklesText from "./components/ui/sparkles-text";
+import { cn } from './lib/utils';
 
 export default function App() {
   const [animationCompleted, setAnimationCompleted] = useState(false);

@@ -23,8 +23,6 @@ export const OffersGraph = () => {
   const chartData = buildScenarioList(selectedMetric)
   const chartConfig = useAtomValue(chartConfigAtom);
 
-  console.log(`Chart Data`, chartData)
-
   return (
     <>
       <ChartContainer config={chartConfig}>

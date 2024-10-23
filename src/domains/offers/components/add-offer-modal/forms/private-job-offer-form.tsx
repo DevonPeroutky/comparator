@@ -45,10 +45,9 @@ export function JobOfferForm({ onClick }: { onClick: () => void }) {
       vesting_years: 4,
     }
   })
-  const { register, setValue, control, handleSubmit } = form;
+  const { setValue, control } = form;
 
   const onSubmit = (data: FormData) => {
-    console.log(`Data: `, data);
     if (!data.percentage_ownership && (!data.number_of_shares || !data.total_number_of_outstanding_shares)) {
       form.setError("root", {
         type: "manual",

@@ -41,7 +41,6 @@ export const useUpdateScenario = () => {
   // TODO: Recalculate the total dilution for the scenario
   return (offerId: string, scenario: Scenario) => {
     // Get list of scenarios up until this current scenario
-    console.log("Updating scenario", scenario, offerId);
     const scenarios: Scenario[] = scenarioMap[offerId];
     const currentScenarioIndex = scenarios.findIndex(s => s.id === scenario.id);
     const scenariosUpToCurrent = [...scenarios.slice(0, currentScenarioIndex), scenario];

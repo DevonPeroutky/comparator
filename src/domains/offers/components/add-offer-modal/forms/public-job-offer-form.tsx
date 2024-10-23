@@ -47,7 +47,6 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
   const { register, setValue, control, handleSubmit } = form;
 
   const onSubmit = (data: FormData) => {
-    console.log(`DATA: `, data);
     if (!data.equity_valuation || !data.number_of_shares) {
       form.setError("root", {
         type: "manual",
@@ -83,15 +82,8 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
     name: 'stock_price'
   });
 
-  console.log('EQUITY VALUATION: ', form.getValues());
 
   useEffect(() => {
-    console.log(form.getValues());
-  }, [form.getValues()]);
-
-
-  useEffect(() => {
-    console.log('SETTING number_of_shares', equity_valuation, stock_price);
     if (equity_valuation && stock_price) {
       setValue('number_of_shares', Math.floor(equity_valuation / stock_price));
     }
@@ -204,7 +196,6 @@ export function PublicJobOfferForm({ onClick }: { onClick: () => void }) {
           control={form.control}
           name="number_of_shares"
           render={({ field }) => {
-            console.log('FIELD: ', field);
             return (
               <FormItem className="flex-1">
                 <FormLabel># of Shares</FormLabel>

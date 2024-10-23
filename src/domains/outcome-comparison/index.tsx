@@ -33,9 +33,6 @@ export const ComparisonTable = () => {
     })
   }
 
-  console.log("scenarios", scenarioMap)
-  console.log("jobOfferScenarios", jobOfferScenarios)
-
   const getCompanyColor = (companyId: string) => chartConfig[companyId]?.color || "gray"
 
   const tableHeaders = [

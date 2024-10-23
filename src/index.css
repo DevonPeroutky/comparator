@@ -5,56 +5,39 @@
 /* ShadCN charts */
 @layer base {
   :root {
-    /*--light-pear: #e4e95d;*/
-    /*--dark-pear: #C0C51B;*/
-    /*--light-pear: rgb(213 226 178, 100);*/
     --light-pear: 76.25 45.28% 79.22%;
-    --dark-pear: rgb(207 220 108, 100);
-    --chef-blue: #5386e4;
-    --light-blue: #bedcfe;
-    --taupe: #949396;
-    --cal-poly-green: #214e34;
-    --jasper-red: #c84630;
-    --mountbatten-pink: #b287a3;
-    --stripe-black: #0a2540;
-    --stripe-navy: #0a2540;
-    --stripe-slate: #425466;
+    --dark-pear: 65 48% 64%;
+    --chef-blue: 217 74% 61%;
+    --light-blue: 214 95% 87%;
+    --taupe: 240 2% 58%;
+    --cal-poly-green: 147 42% 22%;
+    --jasper-red: 9 64% 49%;
+    --mountbatten-pink: 320 21% 62%;
+    --stripe-black: 213 75% 15%;
+    --stripe-navy: 213 75% 15%;
+    --stripe-slate: 215 22% 33%;
 
-    --color-1: #5386e4;
-    --color-2: #214e34;
-    --color-3: #c84630;
-    --color-4: #425466;
-    --color-5: #C0C51B;
-    --color-6: #949396;
-    --color-7: #b287a3;
-    --color-8: #0a2540;
-    --color-9: #bedcfe;
-    --color-10: #e4e95d;
+    --color-1: var(--chef-blue);
+    --color-2: var(--cal-poly-green);
+    --color-3: var(--jasper-red);
+    --color-4: var(--stripe-slate);
+    --color-5: var(--dark-pear);
+    --color-6: var(--taupe);
+    --color-7: var(--mountbatten-pink);
+    --color-8: var(--stripe-black);
+    --color-9: var(--light-blue);
+    --color-10: var(--light-pear);
 
-    /* HOW TO HAVE VARIABLE */
-    /*--chart-1: 12 76% 61%;*/
+    /*--chart-1: var(--light-pear);*/
     /*--chart-2: 173 58% 39%;*/
-    /*--color-1: ;*/
-    /*--color-2: 173 58% 39%;*/
-    /*--color-3: 197 37% 24%;*/
-    /*--color-4: 43 74% 66%;*/
-    /*--color-5: 27 87% 67%;*/
-    /*--color-6: 280 65% 60%;*/
-    /*--color-7: 330 70% 50%;*/
-    /*--color-8: 60 80% 60%;*/
-    /*--color-9: 200 75% 55%;*/
-    /*--color-10: 150 60% 40%;*/
-
-    --chart-1: var(--light-pear);
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-    --chart-6: 280 65% 60%;
-    --chart-7: 330 70% 50%;
-    --chart-8: 60 80% 60%;
-    --chart-9: 200 75% 55%;
-    --chart-10: 150 60% 40%;
+    /*--chart-3: 197 37% 24%;*/
+    /*--chart-4: 43 74% 66%;*/
+    /*--chart-5: 27 87% 67%;*/
+    /*--chart-6: 280 65% 60%;*/
+    /*--chart-7: 330 70% 50%;*/
+    /*--chart-8: 60 80% 60%;*/
+    /*--chart-9: 200 75% 55%;*/
+    /*--chart-10: 150 60% 40%;*/
   }
 
   .dark {
@@ -160,11 +143,6 @@ button:focus-visible {
     --border: 220 13% 91%;
     --input: 220 13% 91%;
     --ring: 224 71.4% 4.1%;
-    /*--chart-1: 12 76% 61%;*/
-    /*--chart-2: 173 58% 39%;*/
-    /*--chart-3: 197 37% 24%;*/
-    /*--chart-4: 43 74% 66%;*/
-    /*--chart-5: 27 87% 67%;*/
     --radius: 0.5rem;
 
     --light-pear: rgba(213 226 178, 100);
@@ -199,11 +177,6 @@ button:focus-visible {
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 216 12.2% 83.9%;
-    /*--chart-1: 220 70% 50%;*/
-    /*--chart-2: 160 60% 45%;*/
-    /*--chart-3: 30 80% 55%;*/
-    /*--chart-4: 280 65% 60%;*/
-    /*--chart-5: 340 75% 55%;*/
   }
 }
 

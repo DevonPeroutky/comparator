@@ -25,11 +25,9 @@ export const softFormat = (prefix?: string) => (val: string | undefined): string
   }
 
   if (val && !isNaN(parseFloat(val))) {
-    console.log("PARSED FLAOT: ", val);
     return formatNumber({ useGrouping: true })(parseFloat(val));
   }
 
-  console.log("WTF: ", val);
   return val
 
 }

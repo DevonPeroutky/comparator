@@ -23,7 +23,7 @@ export const PublicTimelineItem: React.FC<TimelineProps> = ({ companyId, scenari
       <EditableTimelineText
         numericformatProps={{
           value: scenario.valuation,
-          className: "flex text-lg font-semibold dark:text-white text-muted-foreground",
+          className: "flex text-lg font-semibold text-muted-foreground bg-white",
           placeholder: '$25,000,000',
           prefix: '$',
           thousandSeparator: true,
@@ -47,7 +47,7 @@ export const PrivateTimelineItem: React.FC<TimelineProps> = ({ companyId, scenar
       <EditableTimelineText
         numericformatProps={{
           value: scenario.valuation,
-          className: "flex text-lg font-semibold dark:text-white text-muted-foreground",
+          className: "flex text-lg font-semibold bg-white text-muted-foreground",
           placeholder: '$25,000,000',
           prefix: '$',
           thousandSeparator: true,
@@ -62,7 +62,7 @@ export const PrivateTimelineItem: React.FC<TimelineProps> = ({ companyId, scenar
           <EditableTimelineText
             numericformatProps={{
               value: scenario.round_dilution,
-              className: "flex text-lg font-semibold dark:text-white text-muted-foreground",
+              className: "flex text-lg font-semibold bg-white text-muted-foreground",
               placeholder: '0.00%',
               suffix: '%',
               thousandSeparator: true,
