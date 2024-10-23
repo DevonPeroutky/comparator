@@ -1,14 +1,9 @@
 # To-Do
 - [ ] Cleanup
- - [ ] Move animate-test 
-
-# Styling
-  - [ ] Better copy button
-    - [ ] Animated border
-    - [ ] Hover color change
-  - [ ] Animated border around Scenario Select
-  - [ ] Logo
-  - [ ] Dark Mode
+ - [ ] Consolidate colors
+ - [ ] Use variables defined in css in tailwind
+- [ ] Stifle dark mode 
+- [ ] Verify it works on large screen
 
 ## (4) Styling
 - [ ] (1) Update README and code 
@@ -22,5 +17,3 @@
 ## Styling
 - [ ] Better Tooltips
 - [ ] Dark Mode
-- [ ] Animate Line Drawing
-  - [ ] [Animate electrons?](https://ibelick.com/blog/create-shooting-star-border-tailwind-css)

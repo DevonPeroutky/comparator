@@ -1,7 +1,7 @@
+import { Button, ButtonProps } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { useAnimate, stagger, motion, AnimatePresence } from "framer-motion";
-import { ButtonProps, Button } from "./components/ui/button";
 import { ReactNode, useEffect, useState } from "react";
-import { cn } from "./lib/utils";
 
 type AnimatedButtonProps = {
   text: string
@@ -37,7 +37,7 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (props) => {
           className="absolute transitiona-all duration-1000 opacity-70 -inset-px bg-gradient-to-r from-leafGreen via-chefBlue to-darkPear rounded-xl blur-sm group-hover:blur-md group-hover:opacity-100 group-hover:-inset-1 group-hover:duration-500 animate-tilt " />
         <Button
           onClick={(e) => { setAnimated(curr => !curr); props.onClick?.(e) }}
-          className={cn("flex items-center w-full overflow-hidden z-10 min-w-[200px] hover:text-gray-300", (animated) ? "outline-emerald-500" : "")}
+          className={cn("flex items-center w-full overflow-hidden z-10 min-w-[200px] text-white hover:text-gray-300", (animated) ? "outline-emerald-500" : "")}
           variant={variant}
         >
           <AnimatePresence mode="wait">
@@ -58,23 +58,21 @@ export const AnimatedButton: React.FC<AnimatedButtonProps> = (props) => {
               </motion.div>
             ) : (
               <motion.div
-                className="flex items-center justify-start gap-x-2"
+                className="flex items-center justify-start gap-x-2 group"
               >
                 <motion.span
                   key="animated"
-                  className="initial-icon"
+                  className="initial-icon text-gray-300 group-hover:text-lightBlue"
                   initial={{ y: 0, opacity: 0, }}
                   animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } }}
                   exit={{ scale: 0, rotate: "360deg", transition: { duration: 0.2, ease: "easeInOut" } }}
                 >{icon}</motion.span>
                 <motion.span
-
                   key="initial"
                   initial={{ y: 0, opacity: 0, }}
                   animate={{ y: 0, opacity: 1, transition: { duration: 0.4, ease: "easeInOut" } }}
                   exit={{ y: -50, opacity: 0, transition: { duration: 0.1, ease: "easeInOut" } }}
-
-                  className="initial-text">{text}</motion.span>
+                  className="initial-text text-gray-300 group-hover:text-lightBlue">{text}</motion.span>
               </motion.div>
             )}
           </AnimatePresence>

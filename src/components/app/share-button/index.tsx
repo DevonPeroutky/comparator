@@ -1,10 +1,9 @@
 import { useToast } from "@/hooks/use-toast"
 import { Share, CircleCheck } from "lucide-react"
-import { AnimatedButton } from "@/animation-test";
 import { ClipboardDocumentIcon } from "@heroicons/react/24/solid";
-import { CSSProperties, useEffect, useRef } from "react";
 import "./index.css";
 import { cn } from "@/lib/utils";
+import { AnimatedButton } from "./animation-button";
 
 export const ShareButton: React.FC = () => {
   const { toast } = useToast();

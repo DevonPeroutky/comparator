@@ -2,8 +2,6 @@ import React from "react";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
 import createGlobe from "cobe";
-import { PinContainer } from "./3d-pin";
-import { AnimatedBlockquote } from "../app/animated-blockquote";
 import { motion } from "framer-motion";
 import { FancyBlockquote } from "../app/animated-blockquote/3d-blockquote";
 

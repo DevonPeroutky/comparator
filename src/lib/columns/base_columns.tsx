@@ -11,6 +11,7 @@ export type BaseEditableCellProps<T extends ComparatorPrimitive, C extends Primi
 } & GlobalInputProps<T, C>
 
 export type NumericEditableCellProps<T extends ComparatorPrimitive, C extends Primitive> = {
+
   numericformatProps: NumericFormatProps
 } & BaseEditableCellProps<T, C>
 
