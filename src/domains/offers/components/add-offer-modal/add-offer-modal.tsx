@@ -41,7 +41,7 @@ export function AddOfferModal() {
           <DialogTitle>Add Job Offer</DialogTitle>
         </DialogHeader>
         {/* <JobOfferForm onClick={closeDialog} /> */}
-        <Tabs defaultValue="public" className="w-full md:min-h-[500px]">
+        <Tabs defaultValue="startup" className="w-full md:min-h-[500px]">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="startup">Startup</TabsTrigger>
             <TabsTrigger value="public">Public Company</TabsTrigger>

@@ -41,7 +41,7 @@ export const PrivateTimelineItem: React.FC<TimelineProps> = ({ companyId, scenar
   const color = chartConfig[companyId].color
 
   return (
-    <li key={scenario.id} className="mb-10 ms-4 text-muted-foreground text-start text-gray-500 dark:text-gray-400">
+    <li className="mb-10 ms-4 text-muted-foreground text-start text-gray-500 dark:text-gray-400">
       <div className={`absolute w-3 h-3 bg-[${color}] rounded-full mt-1.5 -start-1.5 dark:border-gray-900 dark:bg-gray-700`} style={{ backgroundColor: color }} />
       <time className="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">{(index == 0) ? `Current ${label}` : `Valuation`}</time>
       <EditableTimelineText
@@ -94,7 +94,7 @@ export const DilutionTimeline: React.FC<DilutionTimelineProps> = ({ companyId, s
       <h4 className='capitalized text-xl text-muted-foreground font-medium' style={{ color: color }}>{companyName}</h4>
       <ol className={`relative border-l border-solid  border-[${color}] dark:border-gray-700`} style={{ borderLeftColor: color }}>
         {scenarios.map((scenario, index) => (
-          (scenario.round_dilution !== undefined) ? <PrivateTimelineItem companyId={companyId} scenario={scenario} index={index} label="Valuation" /> : <PublicTimelineItem companyId={companyId} scenario={scenario} index={index} label="Market Cap" />
+          (scenario.round_dilution !== undefined) ? <PrivateTimelineItem key={`${scenario.id}-${index}`} companyId={companyId} scenario={scenario} index={index} label="Valuation" /> : <PublicTimelineItem key={`${scenario.id}-${index}`} companyId={companyId} scenario={scenario} index={index} label="Market Cap" />
         ))}
       </ol>
     </div >
