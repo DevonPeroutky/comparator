@@ -79,13 +79,6 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
-        chart: {
-          '1': 'hsl(var(--color-1))',
-          '2': 'hsl(var(--color-2))',
-          '3': 'hsl(var(--color-3))',
-          '4': 'hsl(var(--color-4))',
-          '5': 'hsl(var(--color-5))',
-        }
       },
       animation: {
         'shiny-text': 'shiny-text 8s infinite',
