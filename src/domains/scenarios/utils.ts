@@ -1,4 +1,4 @@
-import { determineRoundDilution } from "../dilution/utils";
+import { determineRoundDilution, useEstimateDilutionForScenario } from "../dilution/utils";
 import { PrivateJobOffer, PublicJobOffer } from "../offers/types";
 import { scenarioMapState } from "./atoms";
 import { Scenario } from "./types";
@@ -19,16 +19,21 @@ export const calculatePublicOutcome = (scenario: Scenario, offer: PublicJobOffer
   }
 }
 
-export const calculatePrivateOutcome = (scenario: Scenario, offer: PrivateJobOffer, metric: Metric): number => {
-  switch (metric) {
-    case Metric.TotalEquityPackage:
-      return deriveEquityValue(offer.percentage_ownership, 1, scenario.valuation);
-    case Metric.AnnualCompensation:
-      return deriveAnnualCompensation(offer.percentage_ownership, 1, scenario.valuation, offer.vesting_years, offer.salary);
-    case Metric.AnnualEquityPackage:
-      return deriveAnnualEquityValue(offer.percentage_ownership, 1, scenario.valuation, offer.vesting_years);
-  }
-}
+export const useCalculatePrivateOutcome = () => {
+  const estimateDilution = useEstimateDilutionForScenario();
+
+  return (scenario: Scenario, offer: PrivateJobOffer, metric: Metric): number => {
+    const totalDilution = estimateDilution(scenario.valuation, offer);
+    switch (metric) {
+      case Metric.TotalEquityPackage:
+        return deriveEquityValue(offer.percentage_ownership, totalDilution, scenario.valuation);
+      case Metric.AnnualCompensation:
+        return deriveAnnualCompensation(offer.percentage_ownership, totalDilution, scenario.valuation, offer.vesting_years, offer.salary);
+      case Metric.AnnualEquityPackage:
+        return deriveAnnualEquityValue(offer.percentage_ownership, totalDilution, scenario.valuation, offer.vesting_years);
+    }
+  };
+};
 
 export const generateScenarioForPrivateJobOffer = (jobOffer: PrivateJobOffer): Scenario[] => {
   const numberOfRounds = 5;
@@ -62,6 +67,7 @@ export const generateScenarioForPublicJobOffer = (jobOffer: PublicJobOffer): Sce
 export const useBuildScenarioListForGraphing = () => {
   const scenarioMap = useAtomValue(scenarioMapState);
   const offers = useAtomValue(jobOffersState);
+  const calculatePrivateOutcome = useCalculatePrivateOutcome();
 
   return (selectedMetric: Metric): Record<string, number>[] => {
     const scenarios: Scenario[] = Object.values(scenarioMap).flatMap(scenarios => scenarios).sort((a, b) => a.valuation - b.valuation);
