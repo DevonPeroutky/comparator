@@ -1,16 +1,14 @@
 ![Title](https://github.com/user-attachments/assets/57371821-49c8-4e61-aad9-dbb5eeb4cc4a)
 
 # Compare
-[Compare](https://comparator-one.vercel.app/) is a **free and open-source** compensation comparison tools for tech job offers. The goal of compare is to enable people to better assess startup equity value and make more informed career decisions. Hosted completely for free (with no signup) at [comparator-one.vercel.app](https://comparator-one.vercel.app/)
-
-Compare runs entirely in your browser, so your information is completely private and not sent to an external service.
+[Compare](https://comparator-one.vercel.app/) is a **free and open-source** compensation comparison tool for job offers in the tech industry. Compare aims to help people evaluate startup equity more effectively and make more informed career decisions. Hosted completely for free (with no signup) at [comparator-one.vercel.app](https://comparator-one.vercel.app/). 
 
 
 # Features
 - ✔️ Compare Private and Public company offers
 - 🧮 Estimate and account for in dilution in potential funding rounds
 - 🔗 Share a link to your offers and scenarios 
-- 🔐 Data never leaves your browser, and your information is 100% private
+- 🔐 Runs entirely in your browser, so your information is 100% private and not sent to an external service.
 - 🆓 Completely free
 
 
