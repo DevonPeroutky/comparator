@@ -118,7 +118,7 @@ export const EquityJourney = () => {
 export const ScenarioBuilderDescription = () => {
   return (
     <p className="text-center md:text-start text-lg font-normal text-gray-500 dark:text-gray-400 leading-relaxed">
-      The dilution has been estimated from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' rel="noopener noreferrer" className='text-sky-600 hover:underline hover:cursor-pointer'>Carta</a> and other sources. Update the <span className='px-1 bg-green-600 rounded py-1 text-white font-medium'>valuations</span> and <span className="px-1 text-white bg-blue-400 rounded dark:bg-blue-600 py-1 font-medium">dilution</span> to compare outcomes in the table below.
+      The dilution has been estimated from data published by <a href='https://www.saastr.com/carta-the-actual-real-dilution-from-series-a-b-c-and-d-rounds/' target='_blank' rel="noopener noreferrer" className='text-sky-600 hover:underline hover:cursor-pointer'>Carta</a> and other sources. Feel free to update the <span className='px-1 bg-green-600 rounded py-1 text-white font-medium'>valuations</span> and <span className="px-1 text-white bg-blue-400 rounded dark:bg-blue-600 py-1 font-medium">dilution</span> and use them to compare outcomes in the table below.
     </p>
   )
 }
