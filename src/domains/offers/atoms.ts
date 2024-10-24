@@ -6,8 +6,8 @@ import { ChartConfig } from '@/components/ui/chart';
 
 const TEST_JOB_OFFERS: JobOffer[] = [
   {
-    id: "bitter",
-    company_name: "Bitter",
+    id: "choam",
+    company_name: "Choam",
     salary: 225000,
     number_of_shares: 91000,
     latest_company_valuation: 55000000,
@@ -16,8 +16,8 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     percentage_ownership: .0025,
   },
   {
-    id: "fairbnb",
-    company_name: "FairBnb",
+    id: "pied_piper",
+    company_name: "Pied Piper",
     salary: 180000,
     number_of_shares: 3267,
     latest_company_valuation: 584000000,
@@ -27,8 +27,8 @@ const TEST_JOB_OFFERS: JobOffer[] = [
     percentage_ownership: 3267 / 2698775,
   },
   {
-    id: "betahog",
-    company_name: "BetaHog",
+    id: "wayne_enterprises",
+    company_name: "Wayne Enterprises",
     salary: 230000,
     latest_company_valuation: 43000000000,
     vesting_years: 4,
