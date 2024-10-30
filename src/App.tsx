@@ -15,7 +15,7 @@ export default function App() {
       <div className={cn("flex flex-col items-center text-center mx-auto transition-opacity duration-1000", animationCompleted ? "opacity-100" : "opacity-0")}>
         <span className="px-4 md:px-0 mb-4 text-lg font-normal">
           Free (and <a href='https://github.com/DevonPeroutky/comparator' target='_blank' className='mx-1 font-medium hover:underline'>open-source</a>) way of comparing job offers and equity packages. Your data is
-          <SparklesText text="only stored in your browser" sparklesCount={5} duration={5} className="" /> and is <SparklesText text="100% private." sparklesCount={5} duration={5} className="" />
+          <SparklesText text="stored only in your browser" sparklesCount={5} duration={5} className="ml-1" /> and is <SparklesText text="100% private." sparklesCount={5} duration={5} className="" />
         </span>
         <ShareButton />
         <AppGrid />
